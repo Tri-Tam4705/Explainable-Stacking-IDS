@@ -41,7 +41,7 @@ Cài xong, đầu dòng lệnh có chữ `(.venv)`. Mỗi lần mở PowerShell 
 Có hai cách, chọn một:
 
 1. Chép hai file CSV vào thư mục `data\raw\`, giữ **đúng tên** `NF-UNSW-NB15-v2.csv` và `NF-CSE-CIC-IDS2018-v2.csv`
-   (đây là cách mặc định của `configs\config.yaml`).
+   (đây là cách mặc định của `configs\config.yaml`). Bản nén cùng tên thêm đuôi `.gz` cũng chạy được, không cần giải nén.
 2. Để file ở chỗ khác, rồi mở `configs\config.yaml`, bỏ dấu `#` ở dòng `path:` của từng dataset và sửa thành đường dẫn thật
    (dùng dấu `/`, ví dụ `D:/du_lieu/NF-UNSW-NB15-v2.csv`).
 
@@ -52,7 +52,7 @@ python main.py check
 python -m pytest tests
 ```
 
-`check` liệt kê thư viện, mỗi dòng phải là `[OK]`. `pytest` kỳ vọng 106 test đạt. Có một cảnh báo của LightGBM về định dạng
+`check` liệt kê thư viện, mỗi dòng phải là `[OK]`. `pytest` kỳ vọng 107 test đạt. Có một cảnh báo của LightGBM về định dạng
 đầu ra của SHAP, vô hại.
 
 ## 6. Chạy

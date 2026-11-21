@@ -35,4 +35,7 @@ def dataset_csv_path(cfg: dict, key: str, raw_dir_override=None) -> Path:
         p = Path(ds["path"])
         return p if p.is_absolute() else Path(cfg["_root"]) / p
     base = Path(raw_dir_override) if raw_dir_override else resolve_path(cfg, "raw_dir")
-    return base / ds["file"]
+    p = base / ds["file"]
+    # bản clone từ GitHub chỉ có file nén .csv.gz (Git LFS); pandas tự giải nén khi đọc
+    gz = p.with_name(p.name + ".gz")
+    return gz if not p.exists() and gz.exists() else p

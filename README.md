@@ -22,7 +22,7 @@ configs/
   config.yaml      dữ liệu, làm sạch, chia tập, ngưỡng kiểm toán
   features.yaml    quy tắc chọn đặc trưng (bước 2)
   models.yaml      tham số mô hình, meta-learner, SHAP, LIME (lime và lime_per_dataset)
-data/raw/          CSV gốc (không đưa lên Git)   data/processed/<ds>/   parquet train/val/test, đặc trưng, mẫu giải thích
+data/raw/          CSV gốc; trên GitHub là bản nén .csv.gz (Git LFS)   data/processed/<ds>/   parquet train/val/test, đặc trưng, mẫu giải thích
 models/<ds>/       rf, et, xgb, lgbm, stack (.joblib)
 reports/           JSON/Markdown từng bước, summary.txt, figures/
 scripts/           00 đến 23, gọi qua main.py
@@ -34,7 +34,7 @@ src/xsids/
   explain/         shap_stack (gộp TreeSHAP, A(x)), lime_stack (LIME + độ đo so sánh), stability (ổn định thứ hạng),
                    trust (kiểm chứng A(x) như tín hiệu cảnh báo sai), checks (so sánh lời giải thích, phép xóa trong phân phối)
   report/          console, summaries (bảng chữ), plots (biểu đồ)
-tests/             106 test (pytest)
+tests/             107 test (pytest)
 main.py            điểm vào: python main.py <lệnh>
 ```
 
@@ -57,6 +57,21 @@ Nếu PowerShell chặn `Activate.ps1`, chạy `Set-ExecutionPolicy -Scope Proce
 Hai file CSV: `NF-UNSW-NB15-v2.csv` và `NF-CSE-CIC-IDS2018-v2.csv` (nhóm tác giả bộ NetFlow chuẩn hóa công bố tại
 https://staff.itee.uq.edu.au/marius/NIDS_datasets/). Đặt vào `data/raw/`, hoặc khai báo đường dẫn ở dòng `path:` của từng
 dataset trong `configs/config.yaml` (dùng dấu `/`). `path` có thể trỏ thẳng vào file `.zip` hoặc `.gz` chứa một CSV.
+
+### Lấy dữ liệu khi clone từ GitHub
+
+Repo kèm sẵn hai file nén `data/raw/NF-UNSW-NB15-v2.csv.gz` và `data/raw/NF-CSE-CIC-IDS2018-v2.csv.gz`, lưu bằng
+Git LFS (CSV gốc của CSE nặng 3,2 GB, vượt giới hạn 100 MB của Git thường và 2 GB mỗi file của LFS). Không cần giải nén:
+khi `data/raw/` không có file `.csv`, chương trình tự đọc file `.csv.gz` cùng tên.
+
+```powershell
+git lfs install
+git clone https://github.com/Tri-Tam4705/Explainable-Stacking-IDS.git
+```
+
+Nếu đã clone trước khi cài Git LFS, `data/raw/` chỉ chứa file con trỏ vài trăm byte; chạy `git lfs pull` trong thư mục
+repo để tải dữ liệu thật. Gói GitHub miễn phí cho 10 GiB băng thông LFS mỗi tháng, tính vào tài khoản chủ repo; mỗi lần
+clone đầy đủ dùng khoảng bằng dung lượng hai file nén, nên chỉ clone lại khi cần.
 
 `NF-CSE-CIC-IDS2018-v2` có khoảng 18,9 triệu dòng. Mặc định `sample_frac: 0.25` (lấy mẫu đều, giữ nguyên tỷ lệ tấn công
 tự nhiên). Máy nhiều RAM thì tăng lên 1.0.

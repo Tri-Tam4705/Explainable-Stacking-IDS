@@ -92,3 +92,25 @@ def test_dataset_path_override(cfg, tmp_path):
     assert dataset_csv_path(cfg2, "unsw") == tmp_path / "x.csv"
     assert dataset_csv_path(cfg2, "unsw", raw_dir_override=str(tmp_path / "d")).parent == tmp_path / "d"
     assert dataset_csv_path(cfg, "cse").name == "NF-CSE-CIC-IDS2018-v2.csv"
+
+
+def test_gzip_csv_fallback_reads_same_rows(cfg, tmp_path):
+    """Bản clone chỉ có .csv.gz: đường dẫn tự chuyển sang file nén và đọc ra cùng dữ liệu."""
+    import gzip
+    import shutil
+
+    from xsids.config import dataset_csv_path
+
+    raw = _write_csv(tmp_path, n=3000)
+    name = cfg["datasets"]["unsw"]["file"]
+    d = tmp_path / "raw"
+    d.mkdir()
+    with open(raw, "rb") as src, gzip.open(d / (name + ".gz"), "wb") as dst:
+        shutil.copyfileobj(src, dst)
+    p = dataset_csv_path(cfg, "unsw", raw_dir_override=str(d))
+    assert p.name == name + ".gz"
+    a, _ = read_netflow_csv(raw, "Label", "Attack")
+    b, _ = read_netflow_csv(p, "Label", "Attack", chunksize=700)
+    pd.testing.assert_frame_equal(a.reset_index(drop=True), b.reset_index(drop=True))
+    shutil.copy(raw, d / name)  # có cả CSV gốc thì ưu tiên CSV gốc
+    assert dataset_csv_path(cfg, "unsw", raw_dir_override=str(d)).name == name
