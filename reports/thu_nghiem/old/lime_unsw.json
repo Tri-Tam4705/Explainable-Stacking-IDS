@@ -1,0 +1,327 @@
+{
+  "dataset": "unsw",
+  "target": "proba",
+  "n_lime": 271,
+  "num_perturbations": 5000,
+  "background_size": 20000,
+  "discretizer": "quartile",
+  "kernel_width": null,
+  "top_k": 5,
+  "sample_matches_explain_sample": true,
+  "local_fidelity": {
+    "lime_r2": {
+      "mean": 0.2408367844395393,
+      "p10": 0.21694405424305352,
+      "p50": 0.2339237871302956,
+      "p90": 0.2914944393341299,
+      "n": 271
+    },
+    "frac_r2_below_0.5": 1.0,
+    "local_pred_abs_error": {
+      "mean": 0.553452032378186,
+      "p10": 0.3364834819505262,
+      "p50": 0.5768477680818858,
+      "p90": 0.7130425878262425,
+      "n": 271
+    }
+  },
+  "lime_top1_feature_counts": {
+    "server_psh": 271
+  },
+  "shap_top1_feature_counts": {
+    "bytes_per_pkt_out": 10,
+    "bytes_per_pkt_in": 24,
+    "src_to_dst_bytes_per_s": 5,
+    "shortest_pkt": 232
+  },
+  "agreement_shap_lime": {
+    "feature_spearman_abs": {
+      "mean": 0.3814135679818336,
+      "p10": 0.15923076923076923,
+      "p50": 0.3930769230769231,
+      "p90": 0.5769230769230769,
+      "n": 271
+    },
+    "topk_jaccard": {
+      "mean": 0.3516078017923036,
+      "p10": 0.1111111111111111,
+      "p50": 0.42857142857142855,
+      "p90": 0.42857142857142855,
+      "n": 271
+    },
+    "topk_sign_agreement": {
+      "mean": 0.707011070110701,
+      "p10": 0.4,
+      "p50": 0.8,
+      "p90": 1.0,
+      "n": 271
+    },
+    "group_spearman": {
+      "mean": 0.5141802846599896,
+      "p10": 0.08571428571428572,
+      "p50": 0.5428571428571428,
+      "p90": 0.7714285714285715,
+      "n": 271
+    },
+    "top1_same_rate": 0.0
+  },
+  "global_importance": {
+    "features": [
+      "out_pkts",
+      "out_bytes",
+      "in_byte_frac",
+      "bytes_per_pkt_out",
+      "in_pkt_frac",
+      "bytes_per_pkt_in",
+      "duration_in_ms",
+      "dst_to_src_bytes_per_s",
+      "dst_to_src_throughput",
+      "src_to_dst_bytes_per_s",
+      "src_to_dst_throughput",
+      "longest_pkt",
+      "frac_pkts_le128",
+      "frac_pkts_1024_1514",
+      "frac_pkts_256_512",
+      "frac_pkts_512_1024",
+      "shortest_pkt",
+      "frac_pkts_128_256",
+      "client_psh",
+      "server_psh",
+      "server_fin",
+      "server_syn",
+      "tcp_win_in",
+      "retrans_in_pkts",
+      "is_tcp"
+    ],
+    "shap": [
+      0.025191950054513072,
+      0.03251902469224003,
+      0.027834909158981097,
+      0.09529138481867137,
+      0.018790339779369832,
+      0.050976786034913686,
+      0.010697770667960743,
+      0.028853507961017235,
+      0.02721439221498154,
+      0.061815056115804706,
+      0.03451389419325969,
+      0.04949161506266348,
+      0.013992803399778288,
+      0.005346274301816783,
+      0.010021466904366434,
+      0.0064743152594537055,
+      0.262670625624578,
+      0.014070864029081252,
+      0.008866121775205455,
+      0.10005477107749157,
+      0.02191546354406318,
+      0.020950895644586756,
+      0.042447491103385325,
+      0.008177566692645325,
+      0.021820709889171317
+    ],
+    "lime": [
+      0.015817880162114762,
+      0.014589080255773615,
+      0.01425400513457415,
+      0.011387307926363282,
+      0.007755510080183613,
+      0.1045548341109896,
+      0.02802845134059136,
+      0.018426536118404502,
+      0.03965596448957722,
+      0.060567750847502384,
+      0.04187562176477444,
+      0.015337858860135518,
+      0.00691304347527098,
+      0.009311517118674699,
+      0.007835486096863934,
+      0.009976982605187073,
+      0.121325816792425,
+      0.012156092900915128,
+      0.006525795031472345,
+      0.30784889527983234,
+      0.03495207384397918,
+      0.013227275076791577,
+      0.04518121621308236,
+      0.009575058673046396,
+      0.0429199458014745
+    ],
+    "spearman": 0.7415384615384616,
+    "topk_overlap": 4
+  },
+  "importance_by_family": {
+    "Benign": {
+      "n": 30,
+      "shap_top": [
+        "shortest_pkt",
+        "server_psh",
+        "bytes_per_pkt_out",
+        "src_to_dst_bytes_per_s",
+        "tcp_win_in"
+      ],
+      "lime_top": [
+        "server_psh",
+        "shortest_pkt",
+        "bytes_per_pkt_in",
+        "src_to_dst_bytes_per_s",
+        "is_tcp"
+      ],
+      "overlap": 3,
+      "k": 5
+    },
+    "DoS": {
+      "n": 30,
+      "shap_top": [
+        "shortest_pkt",
+        "server_psh",
+        "bytes_per_pkt_out",
+        "src_to_dst_bytes_per_s",
+        "longest_pkt"
+      ],
+      "lime_top": [
+        "server_psh",
+        "shortest_pkt",
+        "bytes_per_pkt_in",
+        "src_to_dst_bytes_per_s",
+        "dst_to_src_throughput"
+      ],
+      "overlap": 3,
+      "k": 5
+    },
+    "Other": {
+      "n": 211,
+      "shap_top": [
+        "shortest_pkt",
+        "bytes_per_pkt_out",
+        "server_psh",
+        "src_to_dst_bytes_per_s",
+        "bytes_per_pkt_in"
+      ],
+      "lime_top": [
+        "server_psh",
+        "shortest_pkt",
+        "bytes_per_pkt_in",
+        "src_to_dst_bytes_per_s",
+        "tcp_win_in"
+      ],
+      "overlap": 4,
+      "k": 5
+    }
+  },
+  "deletion_test": {
+    "1": {
+      "shap": {
+        "mean_drop": 0.6099712731983415,
+        "flip_rate": 0.8007380073800738
+      },
+      "lime": {
+        "mean_drop": 0.5986602336052258,
+        "flip_rate": 0.7749077490774908
+      },
+      "random": {
+        "mean_drop": 0.0625903924497729,
+        "flip_rate": 0.06642066420664208
+      }
+    },
+    "3": {
+      "shap": {
+        "mean_drop": 0.7139811301770977,
+        "flip_rate": 0.8929889298892989
+      },
+      "lime": {
+        "mean_drop": 0.6684274850538943,
+        "flip_rate": 0.8228782287822878
+      },
+      "random": {
+        "mean_drop": 0.17636385869258175,
+        "flip_rate": 0.1904059040590406
+      }
+    },
+    "5": {
+      "shap": {
+        "mean_drop": 0.7859204080655354,
+        "flip_rate": 1.0
+      },
+      "lime": {
+        "mean_drop": 0.7378289933893889,
+        "flip_rate": 0.9372693726937269
+      },
+      "random": {
+        "mean_drop": 0.32435293772556034,
+        "flip_rate": 0.37269372693726943
+      }
+    },
+    "n_eligible_mean": 18.25092250922509
+  },
+  "deletion_test_unfiltered": {
+    "1": {
+      "shap": {
+        "mean_drop": 0.6099712731983415,
+        "flip_rate": 0.8007380073800738
+      },
+      "lime": {
+        "mean_drop": -2.6628965535289734e-18,
+        "flip_rate": 0.0
+      },
+      "random": {
+        "mean_drop": 0.0428686825820374,
+        "flip_rate": 0.05092250922509225
+      }
+    },
+    "3": {
+      "shap": {
+        "mean_drop": 0.6915936398659076,
+        "flip_rate": 0.8856088560885609
+      },
+      "lime": {
+        "mean_drop": 0.612947030793001,
+        "flip_rate": 0.7859778597785978
+      },
+      "random": {
+        "mean_drop": 0.12649804664191838,
+        "flip_rate": 0.14538745387453875
+      }
+    },
+    "5": {
+      "shap": {
+        "mean_drop": 0.7788894297070076,
+        "flip_rate": 0.992619926199262
+      },
+      "lime": {
+        "mean_drop": 0.6481517150883419,
+        "flip_rate": 0.8191881918819188
+      },
+      "random": {
+        "mean_drop": 0.20822816681283696,
+        "flip_rate": 0.23837638376383766
+      }
+    },
+    "n_eligible_mean": 25.0
+  },
+  "stability_lime": {
+    "repeats": 5,
+    "n_flows": 50,
+    "spearman": {
+      "mean": 0.7463523076923078,
+      "p10": 0.675976923076923,
+      "p50": 0.731423076923077,
+      "p90": 0.8266615384615386,
+      "n": 50
+    },
+    "topk_jaccard": {
+      "mean": 0.7800000000000001,
+      "p10": 0.6276190476190476,
+      "p50": 0.7666666666666668,
+      "p90": 1.0,
+      "n": 50
+    },
+    "top1_same_rate": 1.0,
+    "shap": "xác định (không ngẫu nhiên): spearman = jaccard = 1.0 theo cấu trúc"
+  },
+  "agreement_vs_base_models": {
+    "spearman(shap-lime group agreement, A(x))": 0.04133149266115329
+  },
+  "additivity_ok_shap": true,
+  "seconds": 243.5
+}

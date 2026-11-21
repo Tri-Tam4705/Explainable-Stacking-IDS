@@ -1,0 +1,284 @@
+
+══════════════════════════════════════════════════════════════════════════════
+ TỔNG HỢP KẾT QUẢ HỆ THỐNG EXPLAINABLE STACKING IDS
+══════════════════════════════════════════════════════════════════════════════
+
+MÔ HÌNH — UNSW (tập test, có trọng số về tỷ lệ tấn công tự nhiên)
+─────────────────────────────────────────────────────────────────
+  Mô hình                    │     DR ↑ │     FAR ↓ │ Precision ↑ │ macro-F1 ↑ │ PR-AUC ↑
+  ───────────────────────────────────────────────────────────────────────────────────────
+  Random Forest              │ 0.9855   │ 0.00289   │    0.9340   │   0.9779   │ 0.9780  
+  Extra Trees                │ 0.9851   │ 0.00294   │    0.9328   │   0.9774   │ 0.9648  
+  XGBoost                    │ 0.9803   │ 0.00259 ★ │    0.9400 ★ │   0.9783   │ 0.9802 ★
+  LightGBM                   │ 0.9843   │ 0.00292   │    0.9333   │   0.9774   │ 0.9793  
+  Voting                     │ 0.9854   │ 0.00274   │    0.9372   │   0.9788 ★ │ 0.9734  
+  Stacking (giải thích được) │ 0.9834   │ 0.00269   │    0.9380   │   0.9785   │ 0.9785  
+  Stacking (trên xác suất)   │ 0.9858 ★ │ 0.00285   │    0.9347   │   0.9782   │ 0.9690  
+  ★ = tốt nhất theo cột · Precision tính ở tỷ lệ tấn công tự nhiên
+
+MÔ HÌNH — CSE (tập test, có trọng số về tỷ lệ tấn công tự nhiên)
+────────────────────────────────────────────────────────────────
+  Mô hình                    │     DR ↑ │     FAR ↓ │ Precision ↑ │ macro-F1 ↑ │ PR-AUC ↑
+  ───────────────────────────────────────────────────────────────────────────────────────
+  Random Forest              │ 0.9337   │ 0.00013   │    0.9990   │   0.9805   │ 0.9565  
+  Extra Trees                │ 0.9326   │ 0.00006   │    0.9995   │   0.9803   │ 0.9567  
+  XGBoost                    │ 0.9326   │ 0.00004 ★ │    0.9997 ★ │   0.9804   │ 0.9579  
+  LightGBM                   │ 0.9335   │ 0.00011   │    0.9991   │   0.9805   │ 0.9583 ★
+  Voting                     │ 0.9340 ★ │ 0.00009   │    0.9993   │   0.9807 ★ │ 0.9581  
+  Stacking (giải thích được) │ 0.9337   │ 0.00006   │    0.9995   │   0.9807   │ 0.9578  
+  Stacking (trên xác suất)   │ 0.9340 ★ │ 0.00009   │    0.9993   │   0.9807 ★ │ 0.9581  
+  ★ = tốt nhất theo cột · Precision tính ở tỷ lệ tấn công tự nhiên
+
+SHAP GỘP — UNSW
+────────────────────
+  Giải thích 1203 trong 8147 luồng bị gắn cờ (ngưỡng 0.3916)
+  Kiểm tra tính cộng: ĐẠT (sai số tối đa 5.5e-06)
+
+  Trọng số meta-learner (z = b + Σ wₖ·fₖ):
+    Mô hình       │      wₖ │ |wₖ| tương đối
+    ────────────────────────────────────────
+    Random Forest │ -0.3677 │ ██░░░░░░░░░░░░
+    Extra Trees   │ +2.3927 │ ██████████████
+    XGBoost       │ +0.5205 │ ███░░░░░░░░░░░
+    LightGBM      │ +0.1125 │ █░░░░░░░░░░░░░
+    Hệ số chặn b  │ -1.0832 │               
+
+  Mức đóng góp trung bình |φ| theo nhóm đặc trưng và họ tấn công (★ = nhóm lớn nhất của họ):
+    Nhóm           │ Benign │    DoS │  Other
+    ─────────────────────────────────────────
+    volume         │ 0.62   │ 0.92   │ 1.33  
+    timing_rate    │ 0.56   │ 0.92   │ 0.87  
+    packet_size    │ 1.88 ★ │ 2.35 ★ │ 2.02 ★
+    tcp_behavior   │ 1.03   │ 1.20   │ 1.07  
+    retransmission │ 0.06   │ 0.06   │ 0.05  
+    protocol       │ 0.09   │ 0.09   │ 0.14  
+
+  Đồng thuận A(x) giữa 4 mô hình thành phần: TB 0.679 (p10 0.497 · p50 0.695 · p90 0.819)
+
+SHAP GỘP — CSE
+────────────────────
+  Giải thích 1002 trong 29261 luồng bị gắn cờ (ngưỡng 0.8222)
+  Kiểm tra tính cộng: ĐẠT (sai số tối đa 1.0e-05)
+
+  Trọng số meta-learner (z = b + Σ wₖ·fₖ):
+    Mô hình       │      wₖ │ |wₖ| tương đối
+    ────────────────────────────────────────
+    Random Forest │ +2.3651 │ ██████████████
+    Extra Trees   │ +1.8967 │ ███████████░░░
+    XGBoost       │ +0.2993 │ ██░░░░░░░░░░░░
+    LightGBM      │ +0.2500 │ █░░░░░░░░░░░░░
+    Hệ số chặn b  │ -1.5247 │               
+
+  Mức đóng góp trung bình |φ| theo nhóm đặc trưng và họ tấn công (★ = nhóm lớn nhất của họ):
+    Nhóm           │ Benign │    DoS │  Other
+    ─────────────────────────────────────────
+    volume         │ 0.94   │ 0.57   │ 0.88  
+    timing_rate    │ 2.01 ★ │ 3.98 ★ │ 2.83 ★
+    packet_size    │ 1.74   │ 1.65   │ 1.23  
+    tcp_behavior   │ 1.13   │ 2.22   │ 1.92  
+    retransmission │ 0.07   │ 0.02   │ 0.04  
+    protocol       │ 0.14   │ 0.14   │ 0.18  
+
+  Đồng thuận A(x) giữa 4 mô hình thành phần: TB 0.638 (p10 0.476 · p50 0.657 · p90 0.790)
+
+ĐỘ ỔN ĐỊNH VÀ ĐỒNG THUẬN CỦA SHAP GỘP — UNSW (1203 luồng)
+─────────────────────────────────────────────────────────
+  Chỉ số                                     │ Giá trị            │ (thang 0–1) 
+  ──────────────────────────────────────────────────────────────────────────────
+  Kendall τ (20 bootstrap)                   │ 0.662 ± 0.007      │ ████████░░░░
+  A(x): đồng thuận 4 mô hình thành phần      │ 0.679              │ ████████░░░░
+  Đồng thuận với stacking: E1 (LightGBM đơn) │ 0.759  (p50 0.771) │ █████████░░░
+  Đồng thuận với stacking: E2 (gộp đều)      │ 0.861  (p50 0.886) │ ██████████░░
+  R² độ trung thực (nhóm → logit) = 1.000000: gần như tất yếu nhờ tính cộng, không phải bằng chứng độc lập
+
+ĐỘ ỔN ĐỊNH VÀ ĐỒNG THUẬN CỦA SHAP GỘP — CSE (1002 luồng)
+────────────────────────────────────────────────────────
+  Chỉ số                                     │ Giá trị            │ (thang 0–1) 
+  ──────────────────────────────────────────────────────────────────────────────
+  Kendall τ (20 bootstrap)                   │ 0.702 ± 0.005      │ ████████░░░░
+  A(x): đồng thuận 4 mô hình thành phần      │ 0.638              │ ████████░░░░
+  Đồng thuận với stacking: E1 (LightGBM đơn) │ 0.817  (p50 0.886) │ ██████████░░
+  Đồng thuận với stacking: E2 (gộp đều)      │ 0.918  (p50 0.943) │ ███████████░
+  R² độ trung thực (nhóm → logit) = 1.000000: gần như tất yếu nhờ tính cộng, không phải bằng chứng độc lập
+
+ABLATION THEO NHÓM ĐẶC TRƯNG — UNSW
+───────────────────────────────────
+  Gốc: DR 0.9834 · FAR 0.00269 · macro-F1 0.9785 · A(x) 0.6788
+  # │ Nhóm bị cắt    │ Số đ.trưng │     ΔDR │     ΔFAR │ ΔmacroF1 │ Mức hại    │   ΔA(x)
+  ──────────────────────────────────────────────────────────────────────────────────────
+  1 │ packet_size    │          7 │ +0.0088 │ +0.19344 │  -0.3903 │ ██████████ │ -0.0423
+  2 │ volume         │          6 │ -0.0031 │ +0.11691 │  -0.3147 │ ████████░░ │ +0.0291
+  3 │ timing_rate    │          5 │ -0.0060 │ +0.00191 │  -0.0131 │ ░░░░░░░░░░ │ +0.0682
+  4 │ tcp_behavior   │          5 │ +0.0118 │ +0.00147 │  -0.0058 │ ░░░░░░░░░░ │ +0.0110
+  5 │ retransmission │          1 │ -0.0141 │ -0.00027 │  -0.0021 │ ░░░░░░░░░░ │ -0.0969
+  6 │ protocol       │          1 │ +0.0029 │ +0.00020 │  -0.0005 │ ░░░░░░░░░░ │ -0.0646
+  Δ = sau khi cắt − gốc. ΔDR, ΔmacroF1 âm = tệ đi; ΔFAR dương = tệ đi. Cắt = thay cột bằng 0 (không huấn luyện lại, ngưỡng chọn lại trên val),
+  nên ΔFAR lớn một phần do giá trị 0 lệch khỏi phân phối thật.
+
+ABLATION THEO NHÓM ĐẶC TRƯNG — CSE
+──────────────────────────────────
+  Gốc: DR 0.9337 · FAR 0.00006 · macro-F1 0.9807 · A(x) 0.6383
+  # │ Nhóm bị cắt    │ Số đ.trưng │     ΔDR │     ΔFAR │ ΔmacroF1 │ Mức hại    │   ΔA(x)
+  ──────────────────────────────────────────────────────────────────────────────────────
+  1 │ packet_size    │          7 │ -0.0923 │ +0.01942 │  -0.0689 │ ██████████ │ -0.0788
+  2 │ volume         │          6 │ -0.0288 │ +0.02582 │  -0.0612 │ █████████░ │ +0.0151
+  3 │ tcp_behavior   │          5 │ -0.0888 │ +0.00229 │  -0.0327 │ █████░░░░░ │ -0.0139
+  4 │ timing_rate    │          5 │ -0.0101 │ +0.00002 │  -0.0031 │ ░░░░░░░░░░ │ +0.0120
+  5 │ retransmission │          1 │ -0.0006 │ -0.00002 │  -0.0001 │ ░░░░░░░░░░ │ -0.0676
+  6 │ protocol       │          1 │ +0.0002 │ +0.00001 │  +0.0000 │ ░░░░░░░░░░ │ +0.0600
+  Δ = sau khi cắt − gốc. ΔDR, ΔmacroF1 âm = tệ đi; ΔFAR dương = tệ đi. Cắt = thay cột bằng 0 (không huấn luyện lại, ngưỡng chọn lại trên val),
+  nên ΔFAR lớn một phần do giá trị 0 lệch khỏi phân phối thật.
+
+ĐÁNH GIÁ CHÉO BỘ DỮ LIỆU (huấn luyện → kiểm tra)
+────────────────────────────────────────────────
+  Huấn luyện → Kiểm tra │ Loại         │     DR │     FAR │ macro-F1 │ PR-AUC │ DR so với trong miền │         DR
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  UNSW → UNSW           │ trong miền ★ │ 0.9834 │ 0.00269 │   0.9785 │ 0.9785 │                    - │ ██████████
+  UNSW → CSE            │ chéo         │ 0.0238 │ 0.23397 │   0.4137 │ 0.0632 │                 2.5% │ ░░░░░░░░░░
+  CSE → UNSW            │ chéo         │ 0.0005 │ 0.00001 │   0.4909 │ 0.0263 │                 0.1% │ ░░░░░░░░░░
+  CSE → CSE             │ trong miền ★ │ 0.9339 │ 0.00006 │   0.9807 │ 0.9578 │                    - │ █████████░
+  DR chéo gần 0 nghĩa là mô hình huấn luyện ở một bộ gần như không phát hiện được tấn công ở bộ kia.
+
+LOFO — 10 đặc trưng làm macro-F1 giảm nhiều nhất khi bị loại
+────────────────────────────────────────────────────────────
+  UNSW macro-F1 gốc 0.9774  ·  CSE macro-F1 gốc 0.9805
+   # │ UNSW: đặc trưng (nhóm)               │    ΔF1 │ CSE: đặc trưng (nhóm)               │    ΔF1
+  ─────────────────────────────────────────────────────────────────────────────────────────────────
+   1 │ src_to_dst_bytes_per_s (timing_rate) │ 0.3333 │ longest_pkt (packet_size)           │ 0.0317
+   2 │ bytes_per_pkt_out (volume)           │ 0.2933 │ bytes_per_pkt_in (volume)           │ 0.0108
+   3 │ shortest_pkt (packet_size)           │ 0.0800 │ tcp_win_in (tcp_behavior)           │ 0.0098
+   4 │ in_pkt_frac (volume)                 │ 0.0496 │ frac_pkts_512_1024 (packet_size)    │ 0.0024
+   5 │ longest_pkt (packet_size)            │ 0.0123 │ server_fin (tcp_behavior)           │ 0.0023
+   6 │ in_byte_frac (volume)                │ 0.0054 │ duration_in_ms (timing_rate)        │ 0.0021
+   7 │ bytes_per_pkt_in (volume)            │ 0.0052 │ dst_to_src_throughput (timing_rate) │ 0.0013
+   8 │ src_to_dst_throughput (timing_rate)  │ 0.0044 │ frac_pkts_256_512 (packet_size)     │ 0.0009
+   9 │ dst_to_src_bytes_per_s (timing_rate) │ 0.0041 │ shortest_pkt (packet_size)          │ 0.0009
+  10 │ dst_to_src_throughput (timing_rate)  │ 0.0033 │ frac_pkts_128_256 (packet_size)     │ 0.0008
+  Loại = thay cột bằng 0, không huấn luyện lại, chọn lại ngưỡng trên val. Mức giảm rất lớn ở một đặc trưng đơn lẻ nên được kiểm tra lại.
+
+══════════════════════════════════════════════════════════════════════════════
+ LIME so với SHAP gộp — UNSW  (271 luồng bị gắn cờ · target=proba · 5000 điểm nhiễu · rời rạc hóa quartile)
+══════════════════════════════════════════════════════════════════════════════
+
+1) TRUNG THỰC CỤC BỘ — xóa k đặc trưng mạnh nhất, xác suất tấn công giảm bao nhiêu (cao hơn = giải thích đúng hơn)
+  k │           SHAP │           LIME │     Ngẫu nhiên │ Luồng đổi nhãn S/L/N │ LIME so với SHAP
+  ──────────────────────────────────────────────────────────────────────────────────────────────
+  1 │ 0.604 █████░░░ │ 0.587 █████░░░ │ 0.059 ░░░░░░░░ │       80% / 76% / 7% │              97%
+  3 │ 0.713 ██████░░ │ 0.656 █████░░░ │ 0.173 █░░░░░░░ │      90% / 80% / 20% │              89%
+  5 │ 0.782 ██████░░ │ 0.727 ██████░░ │ 0.323 ███░░░░░ │     100% / 93% / 38% │              88%
+   LIME so với SHAP = (LIME − ngẫu nhiên)/(SHAP − ngẫu nhiên) (≥80%: gần tương đương SHAP · 50–80%: kém hơn · <50%: yếu, gần mức ngẫu nhiên)
+   Chỉ xét đặc trưng khác giá trị nền: TB 18.1/25 đặc trưng mỗi luồng
+
+2) ĐỒNG THUẬN SHAP–LIME (1,0 = giống hệt)
+  Chỉ số                      │ Giá trị │    (thang 0–1)
+  ──────────────────────────────────────────────────────
+  Spearman toàn cục SHAP–LIME │   0.749 │ ██████████░░░░
+  Trùng top-5 toàn cục        │     4/5 │ ███████████░░░
+  Spearman từng luồng         │   0.379 │ █████░░░░░░░░░
+  Jaccard top-5               │   0.356 │ █████░░░░░░░░░
+  Khớp dấu trong top-5        │   0.708 │ ██████████░░░░
+  Đồng thuận mức nhóm         │   0.506 │ ███████░░░░░░░
+  Cùng đặc trưng hạng 1       │   0.000 │ ░░░░░░░░░░░░░░
+   Hạng 1 của LIME: server_psh 271/271
+   Hạng 1 của SHAP: shortest_pkt 230/271, bytes_per_pkt_in 27/271, bytes_per_pkt_out 9/271
+
+3) ỔN ĐỊNH CỦA LIME (50 luồng × 5 lần chạy, seed khác nhau; SHAP luôn = 1,000)
+  Chỉ số                     │ Giá trị │    (thang 0–1)
+  ─────────────────────────────────────────────────────
+  Spearman giữa các lần      │   0.747 │ ██████████░░░░
+  Jaccard top-5 giữa các lần │   0.783 │ ███████████░░░
+  Cùng hạng 1 giữa các lần   │   1.000 │ ██████████████
+
+4) ĐỘ KHỚP CỦA MÔ HÌNH THAY THẾ TUYẾN TÍNH
+  Chỉ số                                    │                Giá trị
+  ──────────────────────────────────────────────────────────────────
+  R² trung bình (p10 – p90)                 │ 0.241  (0.217 – 0.292)
+  Tỷ lệ luồng có R² < 0,5                   │                   100%
+  Sai số |dự đoán cục bộ − thật| trung bình │                  0.543
+   R² thấp nghĩa là trọng số LIME phản ánh chưa chính xác hành vi cục bộ của mô hình.
+
+5) ĐẶC TRƯNG QUAN TRỌNG THEO HỌ TẤN CÔNG (top-3 theo mean |đóng góp|; trùng = số đặc trưng chung trong top-5)
+  Họ     │ Số luồng │ SHAP                                        │ LIME                                       │ Trùng
+  ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Benign │       30 │ shortest_pkt, server_psh, bytes_per_pkt_out │ server_psh, shortest_pkt, bytes_per_pkt_in │   4/5
+  DoS    │       30 │ shortest_pkt, server_psh, bytes_per_pkt_out │ server_psh, shortest_pkt, bytes_per_pkt_in │   3/5
+  Other  │      211 │ shortest_pkt, bytes_per_pkt_out, server_psh │ server_psh, shortest_pkt, bytes_per_pkt_in │   4/5
+
+
+══════════════════════════════════════════════════════════════════════════════
+ LIME so với SHAP gộp — CSE  (233 luồng bị gắn cờ · target=proba · 5000 điểm nhiễu · rời rạc hóa quartile)
+══════════════════════════════════════════════════════════════════════════════
+
+1) TRUNG THỰC CỤC BỘ — xóa k đặc trưng mạnh nhất, xác suất tấn công giảm bao nhiêu (cao hơn = giải thích đúng hơn)
+  k │           SHAP │           LIME │     Ngẫu nhiên │ Luồng đổi nhãn S/L/N │ LIME so với SHAP
+  ──────────────────────────────────────────────────────────────────────────────────────────────
+  1 │ 0.220 ██░░░░░░ │ 0.142 █░░░░░░░ │ 0.034 ░░░░░░░░ │       42% / 27% / 9% │              58%
+  3 │ 0.715 ██████░░ │ 0.225 ██░░░░░░ │ 0.137 █░░░░░░░ │     100% / 44% / 26% │              15%
+  5 │ 0.825 ███████░ │ 0.386 ███░░░░░ │ 0.260 ██░░░░░░ │     100% / 66% / 45% │              22%
+   LIME so với SHAP = (LIME − ngẫu nhiên)/(SHAP − ngẫu nhiên) (≥80%: gần tương đương SHAP · 50–80%: kém hơn · <50%: yếu, gần mức ngẫu nhiên)
+   Chỉ xét đặc trưng khác giá trị nền: TB 20.0/25 đặc trưng mỗi luồng
+
+2) ĐỒNG THUẬN SHAP–LIME (1,0 = giống hệt)
+  Chỉ số                      │ Giá trị │    (thang 0–1)
+  ──────────────────────────────────────────────────────
+  Spearman toàn cục SHAP–LIME │   0.564 │ ████████░░░░░░
+  Trùng top-5 toàn cục        │     2/5 │ ██████░░░░░░░░
+  Spearman từng luồng         │   0.379 │ █████░░░░░░░░░
+  Jaccard top-5               │   0.242 │ ███░░░░░░░░░░░
+  Khớp dấu trong top-5        │   0.690 │ ██████████░░░░
+  Đồng thuận mức nhóm         │   0.566 │ ████████░░░░░░
+  Cùng đặc trưng hạng 1       │   0.614 │ █████████░░░░░
+   Hạng 1 của LIME: duration_in_ms 233/233
+   Hạng 1 của SHAP: duration_in_ms 143/233, tcp_win_in 55/233, longest_pkt 12/233
+
+3) ỔN ĐỊNH CỦA LIME (42 luồng × 5 lần chạy, seed khác nhau; SHAP luôn = 1,000)
+  Chỉ số                     │ Giá trị │    (thang 0–1)
+  ─────────────────────────────────────────────────────
+  Spearman giữa các lần      │   0.945 │ █████████████░
+  Jaccard top-5 giữa các lần │   0.829 │ ████████████░░
+  Cùng hạng 1 giữa các lần   │   1.000 │ ██████████████
+
+4) ĐỘ KHỚP CỦA MÔ HÌNH THAY THẾ TUYẾN TÍNH
+  Chỉ số                                    │                Giá trị
+  ──────────────────────────────────────────────────────────────────
+  R² trung bình (p10 – p90)                 │ 0.494  (0.464 – 0.529)
+  Tỷ lệ luồng có R² < 0,5                   │                    66%
+  Sai số |dự đoán cục bộ − thật| trung bình │                  0.531
+   R² thấp nghĩa là trọng số LIME phản ánh chưa chính xác hành vi cục bộ của mô hình.
+
+5) ĐẶC TRƯNG QUAN TRỌNG THEO HỌ TẤN CÔNG (top-3 theo mean |đóng góp|; trùng = số đặc trưng chung trong top-5)
+  Họ     │ Số luồng │ SHAP                                           │ LIME                               │ Trùng
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Benign │       20 │ duration_in_ms, tcp_win_in, longest_pkt        │ duration_in_ms, server_fin, is_tcp │   2/5
+  DoS    │      121 │ duration_in_ms, tcp_win_in, frac_pkts_512_1024 │ duration_in_ms, server_fin, is_tcp │   2/5
+  Other  │       92 │ duration_in_ms, tcp_win_in, longest_pkt        │ duration_in_ms, server_fin, is_tcp │   2/5
+
+
+SO SÁNH GIỮA CÁC BỘ DỮ LIỆU — các chỉ số chính
+──────────────────────────────────────────────
+  Chỉ số                       │    UNSW │     CSE
+  ────────────────────────────────────────────────
+  ▸ MÔ HÌNH STACKING
+  DR                           │  0.9834 │  0.9337
+  FAR                          │ 0.00269 │ 0.00006
+  macro-F1                     │  0.9785 │  0.9807
+  ▸ SHAP GỘP
+  Kendall τ (bootstrap)        │   0.662 │   0.702
+  A(x) đồng thuận 4 mô hình    │   0.679 │   0.638
+  ▸ TRUNG THỰC: XÓA k ĐẶC TRƯNG (k lớn nhất)
+  Xác suất giảm — SHAP         │   0.782 │   0.825
+  Xác suất giảm — LIME         │   0.727 │   0.386
+  Xác suất giảm — ngẫu nhiên   │   0.323 │   0.260
+  LIME so với SHAP             │   88.0% │   22.3%
+  ▸ ĐỒNG THUẬN SHAP–LIME
+  Spearman toàn cục SHAP–LIME  │   0.749 │   0.564
+  Spearman từng luồng          │   0.379 │   0.379
+  Jaccard top-5                │   0.356 │   0.242
+  Khớp dấu trong top-5         │   0.708 │   0.690
+  Đồng thuận mức nhóm          │   0.506 │   0.566
+  Cùng đặc trưng hạng 1        │   0.000 │   0.614
+  ▸ ĐỘ ỔN ĐỊNH VÀ ĐỘ KHỚP CỦA LIME
+  Ổn định LIME (Spearman)      │   0.747 │   0.945
+  Ổn định LIME (Jaccard top-5) │   0.783 │   0.829
+  R² mô hình thay thế          │   0.241 │   0.494
+  Luồng có R² < 0,5            │  100.0% │   66.1%

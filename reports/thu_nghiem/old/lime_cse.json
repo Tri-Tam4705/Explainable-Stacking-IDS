@@ -1,0 +1,334 @@
+{
+  "dataset": "cse",
+  "target": "proba",
+  "n_lime": 233,
+  "num_perturbations": 5000,
+  "background_size": 20000,
+  "discretizer": "quartile",
+  "kernel_width": null,
+  "top_k": 5,
+  "sample_matches_explain_sample": false,
+  "local_fidelity": {
+    "lime_r2": {
+      "mean": 0.49359547260099096,
+      "p10": 0.4644775176625438,
+      "p50": 0.4889019744266696,
+      "p90": 0.5294954931423378,
+      "n": 233
+    },
+    "frac_r2_below_0.5": 0.6609442060085837,
+    "local_pred_abs_error": {
+      "mean": 0.5310035069847782,
+      "p10": 0.4422821291699823,
+      "p50": 0.5143665620023393,
+      "p90": 0.6611425310520497,
+      "n": 233
+    }
+  },
+  "lime_top1_feature_counts": {
+    "duration_in_ms": 233
+  },
+  "shap_top1_feature_counts": {
+    "in_pkt_frac": 5,
+    "duration_in_ms": 143,
+    "dst_to_src_throughput": 1,
+    "src_to_dst_bytes_per_s": 2,
+    "longest_pkt": 12,
+    "frac_pkts_1024_1514": 3,
+    "frac_pkts_256_512": 4,
+    "frac_pkts_512_1024": 3,
+    "shortest_pkt": 1,
+    "frac_pkts_128_256": 4,
+    "tcp_win_in": 55
+  },
+  "agreement_shap_lime": {
+    "feature_spearman_abs": {
+      "mean": 0.378946847144272,
+      "p10": 0.17153846153846153,
+      "p50": 0.36846153846153845,
+      "p90": 0.6236923076923077,
+      "n": 233
+    },
+    "topk_jaccard": {
+      "mean": 0.24202942979767011,
+      "p10": 0.1111111111111111,
+      "p50": 0.25,
+      "p90": 0.42857142857142855,
+      "n": 233
+    },
+    "topk_sign_agreement": {
+      "mean": 0.6901287553648069,
+      "p10": 0.6,
+      "p50": 0.6,
+      "p90": 0.8,
+      "n": 233
+    },
+    "group_spearman": {
+      "mean": 0.5661557326793378,
+      "p10": 0.02857142857142857,
+      "p50": 0.7142857142857143,
+      "p90": 0.9428571428571428,
+      "n": 233
+    },
+    "top1_same_rate": 0.6137339055793991
+  },
+  "global_importance": {
+    "features": [
+      "out_pkts",
+      "out_bytes",
+      "in_byte_frac",
+      "bytes_per_pkt_out",
+      "in_pkt_frac",
+      "bytes_per_pkt_in",
+      "duration_in_ms",
+      "dst_to_src_bytes_per_s",
+      "dst_to_src_throughput",
+      "src_to_dst_bytes_per_s",
+      "src_to_dst_throughput",
+      "longest_pkt",
+      "frac_pkts_le128",
+      "frac_pkts_1024_1514",
+      "frac_pkts_256_512",
+      "frac_pkts_512_1024",
+      "shortest_pkt",
+      "frac_pkts_128_256",
+      "client_psh",
+      "server_psh",
+      "server_fin",
+      "server_syn",
+      "tcp_win_in",
+      "retrans_in_pkts",
+      "is_tcp"
+    ],
+    "shap": [
+      0.011712841244725686,
+      0.010590398715898319,
+      0.016713699390895773,
+      0.02670976363133312,
+      0.019603081598304675,
+      0.023817414081493262,
+      0.2695741580473253,
+      0.01211735369171467,
+      0.02906206740685594,
+      0.036881796351652014,
+      0.040534740849505,
+      0.06207072355445333,
+      0.01608831485282562,
+      0.023185801086072697,
+      0.02907490487689979,
+      0.05365733173901191,
+      0.03549576421780204,
+      0.014822347317871932,
+      0.021304727769532416,
+      0.007980205521264024,
+      0.030383274342948248,
+      0.011337754786686917,
+      0.1766524075061708,
+      0.003809341869133554,
+      0.01681978554962306
+    ],
+    "lime": [
+      0.0039413907487273235,
+      0.007186705682489987,
+      0.014222848691957531,
+      0.03529552655706438,
+      0.029847314994102963,
+      0.005087485615645481,
+      0.3101082653750595,
+      0.02051908274413695,
+      0.01868090865651061,
+      0.03158788506255758,
+      0.05131117681357113,
+      0.018705226117677862,
+      0.01028492615781963,
+      0.05385653880603036,
+      0.013819312710422506,
+      0.04264173246342835,
+      0.011661839910709881,
+      0.004222816051281455,
+      0.03414418824451083,
+      0.008393833040965819,
+      0.11499326786360006,
+      0.039201938891256484,
+      0.049908847217224946,
+      0.006819629404017963,
+      0.06355731217923041
+    ],
+    "spearman": 0.5638461538461539,
+    "topk_overlap": 2
+  },
+  "importance_by_family": {
+    "Benign": {
+      "n": 20,
+      "shap_top": [
+        "duration_in_ms",
+        "tcp_win_in",
+        "longest_pkt",
+        "frac_pkts_1024_1514",
+        "bytes_per_pkt_in"
+      ],
+      "lime_top": [
+        "duration_in_ms",
+        "server_fin",
+        "is_tcp",
+        "src_to_dst_throughput",
+        "frac_pkts_1024_1514"
+      ],
+      "overlap": 2,
+      "k": 5
+    },
+    "DoS": {
+      "n": 121,
+      "shap_top": [
+        "duration_in_ms",
+        "tcp_win_in",
+        "frac_pkts_512_1024",
+        "longest_pkt",
+        "src_to_dst_throughput"
+      ],
+      "lime_top": [
+        "duration_in_ms",
+        "server_fin",
+        "is_tcp",
+        "frac_pkts_1024_1514",
+        "tcp_win_in"
+      ],
+      "overlap": 2,
+      "k": 5
+    },
+    "Other": {
+      "n": 92,
+      "shap_top": [
+        "duration_in_ms",
+        "tcp_win_in",
+        "longest_pkt",
+        "frac_pkts_512_1024",
+        "src_to_dst_throughput"
+      ],
+      "lime_top": [
+        "duration_in_ms",
+        "server_fin",
+        "is_tcp",
+        "src_to_dst_throughput",
+        "frac_pkts_1024_1514"
+      ],
+      "overlap": 2,
+      "k": 5
+    }
+  },
+  "deletion_test": {
+    "1": {
+      "shap": {
+        "mean_drop": 0.2201035837634061,
+        "flip_rate": 0.41630901287553645
+      },
+      "lime": {
+        "mean_drop": 0.1424020652581077,
+        "flip_rate": 0.27467811158798283
+      },
+      "random": {
+        "mean_drop": 0.034153386619837356,
+        "flip_rate": 0.08755364806866954
+      }
+    },
+    "3": {
+      "shap": {
+        "mean_drop": 0.7151900391095997,
+        "flip_rate": 0.9957081545064378
+      },
+      "lime": {
+        "mean_drop": 0.22482762723520694,
+        "flip_rate": 0.44206008583690987
+      },
+      "random": {
+        "mean_drop": 0.13745934273438337,
+        "flip_rate": 0.263519313304721
+      }
+    },
+    "5": {
+      "shap": {
+        "mean_drop": 0.8249008768563688,
+        "flip_rate": 1.0
+      },
+      "lime": {
+        "mean_drop": 0.3861850216570748,
+        "flip_rate": 0.6566523605150214
+      },
+      "random": {
+        "mean_drop": 0.26041673718239255,
+        "flip_rate": 0.45236051502145924
+      }
+    },
+    "n_eligible_mean": 19.965665236051503
+  },
+  "deletion_test_unfiltered": {
+    "1": {
+      "shap": {
+        "mean_drop": 0.2201035837634061,
+        "flip_rate": 0.41630901287553645
+      },
+      "lime": {
+        "mean_drop": 0.14212897054348705,
+        "flip_rate": 0.27467811158798283
+      },
+      "random": {
+        "mean_drop": 0.02548540082459171,
+        "flip_rate": 0.06952789699570816
+      }
+    },
+    "3": {
+      "shap": {
+        "mean_drop": 0.7149977274315715,
+        "flip_rate": 0.9957081545064378
+      },
+      "lime": {
+        "mean_drop": 0.21255216127174553,
+        "flip_rate": 0.4334763948497854
+      },
+      "random": {
+        "mean_drop": 0.10100647174064714,
+        "flip_rate": 0.20085836909871246
+      }
+    },
+    "5": {
+      "shap": {
+        "mean_drop": 0.8248737056813228,
+        "flip_rate": 1.0
+      },
+      "lime": {
+        "mean_drop": 0.3150323835197303,
+        "flip_rate": 0.5879828326180258
+      },
+      "random": {
+        "mean_drop": 0.18679229465234887,
+        "flip_rate": 0.344206008583691
+      }
+    },
+    "n_eligible_mean": 25.0
+  },
+  "stability_lime": {
+    "repeats": 5,
+    "n_flows": 42,
+    "spearman": {
+      "mean": 0.9454853479853482,
+      "p10": 0.9328461538461539,
+      "p50": 0.9433076923076922,
+      "p90": 0.9605846153846154,
+      "n": 42
+    },
+    "topk_jaccard": {
+      "mean": 0.8294784580498865,
+      "p10": 0.7333333333333334,
+      "p50": 0.8,
+      "p90": 0.9866666666666665,
+      "n": 42
+    },
+    "top1_same_rate": 1.0,
+    "shap": "xác định (không ngẫu nhiên): spearman = jaccard = 1.0 theo cấu trúc"
+  },
+  "agreement_vs_base_models": {
+    "spearman(shap-lime group agreement, A(x))": 0.21308969611751297
+  },
+  "additivity_ok_shap": true,
+  "seconds": 195.3
+}

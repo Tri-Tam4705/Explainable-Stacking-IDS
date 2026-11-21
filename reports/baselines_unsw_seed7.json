@@ -1,0 +1,473 @@
+{
+  "fast": false,
+  "train_vectors": 165755,
+  "features": [
+    "out_pkts",
+    "out_bytes",
+    "in_byte_frac",
+    "bytes_per_pkt_out",
+    "in_pkt_frac",
+    "bytes_per_pkt_in",
+    "duration_in_ms",
+    "dst_to_src_bytes_per_s",
+    "dst_to_src_throughput",
+    "src_to_dst_bytes_per_s",
+    "src_to_dst_throughput",
+    "longest_pkt",
+    "frac_pkts_le128",
+    "frac_pkts_1024_1514",
+    "frac_pkts_256_512",
+    "frac_pkts_512_1024",
+    "shortest_pkt",
+    "frac_pkts_128_256",
+    "client_psh",
+    "server_psh",
+    "server_fin",
+    "server_syn",
+    "tcp_win_in",
+    "retrans_in_pkts",
+    "is_tcp"
+  ],
+  "results": {
+    "rf": {
+      "threshold": 0.36479556781792327,
+      "weighted": {
+        "dr": 0.9864309655097848,
+        "far": 0.00296035558441392,
+        "precision": 0.9294045739316457,
+        "f1_attack": 0.9570690514279718,
+        "macro_f1": 0.977659348352905,
+        "tp": 18247.0,
+        "fp": 1386.0,
+        "fn": 251.0,
+        "tn": 466801.0,
+        "pr_auc": 0.9777997660019715,
+        "roc_auc": 0.9993737686602651,
+        "precision_at_natural_prevalence": 0.9324385460928644
+      },
+      "unweighted": {
+        "dr": 0.9698633806589874,
+        "far": 0.02600165169298531,
+        "precision": 0.8745169082125603,
+        "f1_attack": 0.9197256446081544,
+        "macro_f1": 0.9518733401034299,
+        "tp": 7241.0,
+        "fp": 1039.0,
+        "fn": 225.0,
+        "tn": 38920.0,
+        "pr_auc": 0.9599891320645755,
+        "roc_auc": 0.9946627988571757,
+        "precision_at_natural_prevalence": 0.6070614627175512
+      },
+      "per_attack_recall": {
+        "Analysis": {
+          "n_vectors": 69,
+          "n_weighted": 69,
+          "recall_weighted": 0.34782608695652173,
+          "recall_unweighted": 0.34782608695652173
+        },
+        "Backdoor": {
+          "n_vectors": 48,
+          "n_weighted": 66,
+          "recall_weighted": 1.0,
+          "recall_unweighted": 1.0
+        },
+        "DoS": {
+          "n_vectors": 592,
+          "n_weighted": 645,
+          "recall_weighted": 0.9689922480620154,
+          "recall_unweighted": 0.9679054054054054
+        },
+        "Exploits": {
+          "n_vectors": 4529,
+          "n_weighted": 8761,
+          "recall_weighted": 0.9921241867366739,
+          "recall_unweighted": 0.985648045926253
+        },
+        "Fuzzers": {
+          "n_vectors": 1349,
+          "n_weighted": 4021,
+          "recall_weighted": 0.9728923153444416,
+          "recall_unweighted": 0.9347664936990363
+        },
+        "Generic": {
+          "n_vectors": 734,
+          "n_weighted": 2989,
+          "recall_weighted": 0.998327199732352,
+          "recall_unweighted": 0.9931880108991825
+        },
+        "Reconnaissance": {
+          "n_vectors": 69,
+          "n_weighted": 1638,
+          "recall_weighted": 1.0,
+          "recall_unweighted": 1.0
+        },
+        "Shellcode": {
+          "n_vectors": 61,
+          "n_weighted": 278,
+          "recall_weighted": 0.9892086330935251,
+          "recall_unweighted": 0.9508196721311475
+        },
+        "Worms": {
+          "n_vectors": 15,
+          "n_weighted": 31,
+          "recall_weighted": 1.0,
+          "recall_unweighted": 1.0
+        }
+      },
+      "natural_prevalence_used": 0.03977159103935365
+    },
+    "et": {
+      "threshold": 0.4416010575404681,
+      "weighted": {
+        "dr": 0.9849713482538652,
+        "far": 0.0029389965975133866,
+        "precision": 0.9297815880791999,
+        "f1_attack": 0.9565810888853887,
+        "macro_f1": 0.9774063134777171,
+        "tp": 18220.0,
+        "fp": 1376.0,
+        "fn": 278.0,
+        "tn": 466811.0,
+        "pr_auc": 0.9648176384034036,
+        "roc_auc": 0.9991667219872279,
+        "precision_at_natural_prevalence": 0.9328005288741035
+      },
+      "unweighted": {
+        "dr": 0.9675863916421109,
+        "far": 0.025926574739107585,
+        "precision": 0.8745762711864407,
+        "f1_attack": 0.9187333078977489,
+        "macro_f1": 0.9512907224995039,
+        "tp": 7224.0,
+        "fp": 1036.0,
+        "fn": 242.0,
+        "tn": 38923.0,
+        "pr_auc": 0.9493100509170709,
+        "roc_auc": 0.9939102863049144,
+        "precision_at_natural_prevalence": 0.6071905199522226
+      },
+      "per_attack_recall": {
+        "Analysis": {
+          "n_vectors": 69,
+          "n_weighted": 69,
+          "recall_weighted": 0.2028985507246377,
+          "recall_unweighted": 0.2028985507246377
+        },
+        "Backdoor": {
+          "n_vectors": 48,
+          "n_weighted": 66,
+          "recall_weighted": 1.0,
+          "recall_unweighted": 1.0
+        },
+        "DoS": {
+          "n_vectors": 592,
+          "n_weighted": 645,
+          "recall_weighted": 0.9596899224806201,
+          "recall_unweighted": 0.9577702702702703
+        },
+        "Exploits": {
+          "n_vectors": 4529,
+          "n_weighted": 8761,
+          "recall_weighted": 0.9905261956397672,
+          "recall_unweighted": 0.9827776551115036
+        },
+        "Fuzzers": {
+          "n_vectors": 1349,
+          "n_weighted": 4021,
+          "recall_weighted": 0.9753792588908232,
+          "recall_unweighted": 0.9421793921423276
+        },
+        "Generic": {
+          "n_vectors": 734,
+          "n_weighted": 2989,
+          "recall_weighted": 0.998327199732352,
+          "recall_unweighted": 0.9945504087193461
+        },
+        "Reconnaissance": {
+          "n_vectors": 69,
+          "n_weighted": 1638,
+          "recall_weighted": 0.9993894993894994,
+          "recall_unweighted": 0.9855072463768116
+        },
+        "Shellcode": {
+          "n_vectors": 61,
+          "n_weighted": 278,
+          "recall_weighted": 0.9676258992805755,
+          "recall_unweighted": 0.9836065573770492
+        },
+        "Worms": {
+          "n_vectors": 15,
+          "n_weighted": 31,
+          "recall_weighted": 1.0,
+          "recall_unweighted": 1.0
+        }
+      },
+      "natural_prevalence_used": 0.03977159103935365
+    },
+    "xgb": {
+      "threshold": 0.3595141259600353,
+      "weighted": {
+        "dr": 0.9850794680506001,
+        "far": 0.0028556965486013068,
+        "precision": 0.9316427220205532,
+        "f1_attack": 0.9576162072680453,
+        "macro_f1": 0.9779458254447961,
+        "tp": 18222.0,
+        "fp": 1337.0,
+        "fn": 276.0,
+        "tn": 466850.0,
+        "pr_auc": 0.9808222006866376,
+        "roc_auc": 0.9994282164682253,
+        "precision_at_natural_prevalence": 0.9345872754128413
+      },
+      "unweighted": {
+        "dr": 0.9675863916421109,
+        "far": 0.02492554868740459,
+        "precision": 0.8788321167883212,
+        "f1_attack": 0.9210761188320795,
+        "macro_f1": 0.9527188486636775,
+        "tp": 7224.0,
+        "fp": 996.0,
+        "fn": 242.0,
+        "tn": 38963.0,
+        "pr_auc": 0.9596125271479944,
+        "roc_auc": 0.9946129520234801,
+        "precision_at_natural_prevalence": 0.6165412241093818
+      },
+      "per_attack_recall": {
+        "Analysis": {
+          "n_vectors": 69,
+          "n_weighted": 69,
+          "recall_weighted": 0.30434782608695654,
+          "recall_unweighted": 0.30434782608695654
+        },
+        "Backdoor": {
+          "n_vectors": 48,
+          "n_weighted": 66,
+          "recall_weighted": 0.9848484848484849,
+          "recall_unweighted": 0.9791666666666666
+        },
+        "DoS": {
+          "n_vectors": 592,
+          "n_weighted": 645,
+          "recall_weighted": 0.9674418604651163,
+          "recall_unweighted": 0.9662162162162162
+        },
+        "Exploits": {
+          "n_vectors": 4529,
+          "n_weighted": 8761,
+          "recall_weighted": 0.9925807556215044,
+          "recall_unweighted": 0.9863104438065798
+        },
+        "Fuzzers": {
+          "n_vectors": 1349,
+          "n_weighted": 4021,
+          "recall_weighted": 0.9748818701815469,
+          "recall_unweighted": 0.927353595255745
+        },
+        "Generic": {
+          "n_vectors": 734,
+          "n_weighted": 2989,
+          "recall_weighted": 0.9973235195717631,
+          "recall_unweighted": 0.9904632152588556
+        },
+        "Reconnaissance": {
+          "n_vectors": 69,
+          "n_weighted": 1638,
+          "recall_weighted": 0.9884004884004884,
+          "recall_unweighted": 0.9710144927536232
+        },
+        "Shellcode": {
+          "n_vectors": 61,
+          "n_weighted": 278,
+          "recall_weighted": 0.9532374100719424,
+          "recall_unweighted": 0.9344262295081968
+        },
+        "Worms": {
+          "n_vectors": 15,
+          "n_weighted": 31,
+          "recall_weighted": 1.0,
+          "recall_unweighted": 1.0
+        }
+      },
+      "natural_prevalence_used": 0.03977159103935365
+    },
+    "lgbm": {
+      "threshold": 0.35838778660608533,
+      "weighted": {
+        "dr": 0.9839442101848849,
+        "far": 0.00285783244729136,
+        "precision": 0.9315215722401351,
+        "f1_attack": 0.9570155375029575,
+        "macro_f1": 0.9776337484827616,
+        "tp": 18201.0,
+        "fp": 1338.0,
+        "fn": 297.0,
+        "tn": 466849.0,
+        "pr_auc": 0.979415987685019,
+        "roc_auc": 0.999393111718134,
+        "precision_at_natural_prevalence": 0.9344709772081727
+      },
+      "unweighted": {
+        "dr": 0.965711224216448,
+        "far": 0.02502565129257489,
+        "precision": 0.8781973203410475,
+        "f1_attack": 0.919877519775453,
+        "macro_f1": 0.952006863052907,
+        "tp": 7210.0,
+        "fp": 1000.0,
+        "fn": 256.0,
+        "tn": 38959.0,
+        "pr_auc": 0.9591347691127126,
+        "roc_auc": 0.9944695087176384,
+        "precision_at_natural_prevalence": 0.6151340646372616
+      },
+      "per_attack_recall": {
+        "Analysis": {
+          "n_vectors": 69,
+          "n_weighted": 69,
+          "recall_weighted": 0.37681159420289856,
+          "recall_unweighted": 0.37681159420289856
+        },
+        "Backdoor": {
+          "n_vectors": 48,
+          "n_weighted": 66,
+          "recall_weighted": 0.9696969696969697,
+          "recall_unweighted": 0.9583333333333334
+        },
+        "DoS": {
+          "n_vectors": 592,
+          "n_weighted": 645,
+          "recall_weighted": 0.9643410852713178,
+          "recall_unweighted": 0.9628378378378378
+        },
+        "Exploits": {
+          "n_vectors": 4529,
+          "n_weighted": 8761,
+          "recall_weighted": 0.9913251911882205,
+          "recall_unweighted": 0.9843232501655995
+        },
+        "Fuzzers": {
+          "n_vectors": 1349,
+          "n_weighted": 4021,
+          "recall_weighted": 0.9706540661526983,
+          "recall_unweighted": 0.9236471460340994
+        },
+        "Generic": {
+          "n_vectors": 734,
+          "n_weighted": 2989,
+          "recall_weighted": 0.9959852793576447,
+          "recall_unweighted": 0.9877384196185286
+        },
+        "Reconnaissance": {
+          "n_vectors": 69,
+          "n_weighted": 1638,
+          "recall_weighted": 0.9877899877899878,
+          "recall_unweighted": 0.9565217391304348
+        },
+        "Shellcode": {
+          "n_vectors": 61,
+          "n_weighted": 278,
+          "recall_weighted": 0.9892086330935251,
+          "recall_unweighted": 0.9508196721311475
+        },
+        "Worms": {
+          "n_vectors": 15,
+          "n_weighted": 31,
+          "recall_weighted": 1.0,
+          "recall_unweighted": 1.0
+        }
+      },
+      "natural_prevalence_used": 0.03977159103935365
+    },
+    "voting": {
+      "threshold": 0.3986633209945863,
+      "weighted": {
+        "dr": 0.9854038274408045,
+        "far": 0.00276812470230912,
+        "precision": 0.933620159803319,
+        "f1_attack": 0.9588133186050182,
+        "macro_f1": 0.9785695377178154,
+        "tp": 18228.0,
+        "fp": 1296.0,
+        "fn": 270.0,
+        "tn": 466891.0,
+        "pr_auc": 0.9734058464719036,
+        "roc_auc": 0.9993477021632746,
+        "precision_at_natural_prevalence": 0.936485340359157
+      },
+      "unweighted": {
+        "dr": 0.9661130458076614,
+        "far": 0.024500112615430815,
+        "precision": 0.8804931640625,
+        "f1_attack": 0.9213181760122622,
+        "macro_f1": 0.9528805245148694,
+        "tp": 7213.0,
+        "fp": 979.0,
+        "fn": 253.0,
+        "tn": 38980.0,
+        "pr_auc": 0.9543740025308259,
+        "roc_auc": 0.9945475203028724,
+        "precision_at_natural_prevalence": 0.6202441913564278
+      },
+      "per_attack_recall": {
+        "Analysis": {
+          "n_vectors": 69,
+          "n_weighted": 69,
+          "recall_weighted": 0.2753623188405797,
+          "recall_unweighted": 0.2753623188405797
+        },
+        "Backdoor": {
+          "n_vectors": 48,
+          "n_weighted": 66,
+          "recall_weighted": 0.9848484848484849,
+          "recall_unweighted": 0.9791666666666666
+        },
+        "DoS": {
+          "n_vectors": 592,
+          "n_weighted": 645,
+          "recall_weighted": 0.9658914728682171,
+          "recall_unweighted": 0.964527027027027
+        },
+        "Exploits": {
+          "n_vectors": 4529,
+          "n_weighted": 8761,
+          "recall_weighted": 0.99086862230339,
+          "recall_unweighted": 0.9832192536983881
+        },
+        "Fuzzers": {
+          "n_vectors": 1349,
+          "n_weighted": 4021,
+          "recall_weighted": 0.9731410096990798,
+          "recall_unweighted": 0.9288361749444033
+        },
+        "Generic": {
+          "n_vectors": 734,
+          "n_weighted": 2989,
+          "recall_weighted": 0.998327199732352,
+          "recall_unweighted": 0.9931880108991825
+        },
+        "Reconnaissance": {
+          "n_vectors": 69,
+          "n_weighted": 1638,
+          "recall_weighted": 0.9993894993894994,
+          "recall_unweighted": 0.9855072463768116
+        },
+        "Shellcode": {
+          "n_vectors": 61,
+          "n_weighted": 278,
+          "recall_weighted": 0.9892086330935251,
+          "recall_unweighted": 0.9508196721311475
+        },
+        "Worms": {
+          "n_vectors": 15,
+          "n_weighted": 31,
+          "recall_weighted": 1.0,
+          "recall_unweighted": 1.0
+        }
+      },
+      "natural_prevalence_used": 0.03977159103935365
+    }
+  }
+}

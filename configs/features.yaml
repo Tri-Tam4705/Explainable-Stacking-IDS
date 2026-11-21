@@ -1,0 +1,17 @@
+# Quy tắc Bước 2 (đặc trưng). Mọi quy tắc "học từ dữ liệu" chỉ dùng tập TRAIN của từng dataset.
+fixed_drop:   # loại theo quy tắc cứng; lý do được ghi vào báo cáo
+  ICMP_TYPE: "Trường ICMP mang giá trị lạ trên luồng không phải ICMP (kiểm toán: 70,8% luồng UNSW)"
+  ICMP_IPV4_TYPE: "Như ICMP_TYPE; PROTOCOL đã cho biết luồng ICMP"
+  FTP_COMMAND_RET_CODE: "Cột hằng ở CSE, chỉ có giá trị ở vài luồng FTP"
+  DNS_QUERY_ID: "Mã giao dịch DNS gần như ngẫu nhiên"
+  DNS_QUERY_TYPE: "Giá trị lạ (max 55937) và chỉ có ở luồng DNS"
+  DNS_TTL_ANSWER: "Giá trị tràn số (max 4,28e9 ở UNSW) và chỉ có ở luồng DNS"
+  L7_PROTO: "Mã danh mục phụ thuộc testbed; để dành cho thí nghiệm cắt bỏ"
+  TCP_FLAGS: "Là OR của CLIENT_TCP_FLAGS và SERVER_TCP_FLAGS (đã giải mã riêng)"
+  RETRANSMITTED_IN_BYTES: "Tương quan 0,999 với bản PKTS"
+  RETRANSMITTED_OUT_BYTES: "Tương quan 0,9997 với bản PKTS"
+screening:
+  sparse_zero_threshold: 0.95    # tỷ lệ (có trọng số) giá trị 0 từ mức này trở lên: bỏ
+  shortcut_auc_threshold: 0.90   # AUC có trọng số của một đặc trưng đơn lẻ từ mức này trở lên: bỏ
+  corr_threshold: 0.90           # |Spearman| từ mức này trở lên trong cùng nhóm: gộp, giữ một đại diện
+  sample_rows: 300000            # số vector lấy mẫu để tính tương quan

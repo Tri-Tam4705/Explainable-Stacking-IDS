@@ -1,0 +1,50 @@
+# Cấu hình toàn dự án. Đường dẫn dùng dấu / (không dùng \ trên Windows).
+seed: 42
+
+paths:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  reports_dir: reports
+
+# Tên cột nhãn trong file CSV gốc (loader sẽ đổi sang label / attack)
+columns:
+  label_source: Label
+  attack_source: Attack
+
+datasets:
+  unsw:
+    name: NF-UNSW-NB15-v2
+    file: NF-UNSW-NB15-v2.csv            # đặt trong data/raw/
+    # path: "D:/du_lieu/NF-UNSW-NB15-v2.csv"   # bỏ dấu # nếu file nằm ở chỗ khác (đường dẫn đầy đủ, dùng dấu /)
+    sample_frac: 1.0
+
+  cse:
+    name: NF-CSE-CIC-IDS2018-v2
+    file: NF-CSE-CIC-IDS2018-v2.csv      # đặt trong data/raw/
+    # path: "D:/du_lieu/NF-CSE-CIC-IDS2018-v2.csv"   # bỏ dấu # nếu file nằm ở chỗ khác
+    sample_frac: 0.25
+
+# Gom tên tấn công thô thành "họ" (regex, không phân biệt hoa thường).
+# Tên không khớp mẫu nào sẽ vào "Other" và được liệt kê trong báo cáo kiểm toán.
+families:
+  Benign: "^benign$"
+  DoS: "^(dos|ddos)"
+
+cleaning:
+  nonfinite: drop              # drop | keep: dòng có inf/NaN
+  max_abs_value: 1.0e+15       # |x| lớn hơn mức này là giá trị đệm/rác (vd. 1.8e308)
+  out_of_range: drop           # drop | report
+  drop_duplicates: true        # gộp các dòng có vector đặc trưng giống hệt, giữ trọng số n_orig
+  conflict_policy: majority    # majority: giữ nhãn đa số, ghi n_minority | drop: bỏ nhóm xung đột
+
+split:
+  test_size: 0.20
+  val_size: 0.10               # tỷ lệ so với toàn bộ dữ liệu
+  min_stratum_size: 10         # lớp nhỏ hơn mức này được gộp khi phân tầng
+
+audit:
+  sparse_zero_threshold: 0.95
+  high_corr_threshold: 0.90
+  shortcut_auc_threshold: 0.90   # đặc trưng đơn lẻ có AUC >= mức này bị gắn cờ nghi lối tắt
+  implausible_abs_value: 1.0e+15 # |x| lớn hơn mức này bị báo là giá trị đệm
+  sample_rows: 200000          # số dòng lấy mẫu cho AUC từng đặc trưng và tương quan

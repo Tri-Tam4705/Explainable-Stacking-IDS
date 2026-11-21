@@ -1,0 +1,54 @@
+{
+  "dataset": "cse",
+  "fast": false,
+  "n_flows": 233,
+  "roc_auc_random_labels": 0.489128742087355,
+  "roc_auc_random_labels_unweighted": 0.41349693350256916,
+  "meta_weights_random": {
+    "rf": -0.2594021153233353,
+    "et": -0.23760501060393246,
+    "xgb": -0.012825194251012292,
+    "lgbm": 0.024256544346682816
+  },
+  "feature": {
+    "spearman_flow_mean": 0.15512710465500165,
+    "spearman_flow_median": 0.15923076923076923,
+    "topk_jaccard_mean": 0.1749437972613938,
+    "top1_same": 0.1459227467811159,
+    "global_kendall": 0.25333333333333324,
+    "global_topk_overlap": 2,
+    "k": 5
+  },
+  "group": {
+    "spearman_flow_mean": 0.5440833844267321,
+    "spearman_flow_median": 0.6,
+    "topk_jaccard_mean": 0.4248927038626609,
+    "top1_same": 0.4248927038626609,
+    "global_kendall": 0.6,
+    "global_topk_overlap": 1,
+    "k": 1
+  },
+  "global_group_importance": {
+    "real": [
+      0.80241709365743,
+      3.112687263801752,
+      1.5060741800135187,
+      1.9293248553024147,
+      0.040914339603205556,
+      0.15309815019028156
+    ],
+    "random": [
+      0.006466214580111683,
+      0.006560248553476373,
+      0.005179436069142892,
+      0.002352850241311298,
+      0.00079690016255904,
+      0.0014294107165266172
+    ]
+  },
+  "mean_abs_phi_sum": {
+    "real": 8.698339073950436,
+    "random": 0.03632756289372537
+  },
+  "seconds": 443.4
+}

@@ -1,0 +1,22 @@
+# dữ liệu lớn không đưa lên Git
+data/raw/*
+data/interim/*
+data/processed/*
+!data/raw/.gitkeep
+!data/interim/.gitkeep
+!data/processed/.gitkeep
+data/synthetic/
+# môi trường và cache
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+# mô hình lưu bằng joblib (có thể rất nặng)
+models/**/*.joblib
+logs/
+# file đóng gói nộp bài, file khóa của Office, cấu hình cục bộ
+*.zip
+~$*
+.claude/
+*.egg-info/

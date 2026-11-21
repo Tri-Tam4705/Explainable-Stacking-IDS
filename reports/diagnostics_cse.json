@@ -1,0 +1,679 @@
+{
+  "dataset": "cse",
+  "meta": {
+    "n_train": 400000,
+    "names": [
+      "rf",
+      "et",
+      "xgb",
+      "lgbm"
+    ],
+    "saved_weights": {
+      "rf": 2.3650971810976342,
+      "et": 1.8966686623369011,
+      "xgb": 0.29927515173704616,
+      "lgbm": 0.2500313386229443
+    },
+    "output_scale": {
+      "rf": {
+        "std": 0.4165465641713925,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "et": {
+        "std": 0.4117027056744781,
+        "min": 0.00029364399817501243,
+        "max": 1.0
+      },
+      "xgb": {
+        "std": 6.584696759200617,
+        "min": -10.012077331542969,
+        "max": 13.876266479492188
+      },
+      "lgbm": {
+        "std": 6.787065271084365,
+        "min": -11.61833913543677,
+        "max": 14.740231054910403
+      }
+    },
+    "standardized_weights": {
+      "rf": 0.9851731047176223,
+      "et": 0.7808636200521125,
+      "xgb": 1.9706361217513955,
+      "lgbm": 1.6969790150512238
+    },
+    "pearson": [
+      [
+        0.9999999999999999,
+        0.9952853065388311,
+        0.9862420546429871,
+        0.9834460850713275
+      ],
+      [
+        0.9952853065388311,
+        0.9999999999999999,
+        0.9822337559221287,
+        0.9793501971543589
+      ],
+      [
+        0.986242054642987,
+        0.9822337559221288,
+        1.0,
+        0.9976180788456814
+      ],
+      [
+        0.9834460850713275,
+        0.9793501971543588,
+        0.9976180788456814,
+        1.0
+      ]
+    ],
+    "spearman": [
+      [
+        1.0,
+        0.9271134595756795,
+        0.939756702633792,
+        0.9361607079032288
+      ],
+      [
+        0.9271134595756795,
+        1.0,
+        0.9021960849219136,
+        0.9010366209899942
+      ],
+      [
+        0.9397567026337921,
+        0.9021960849219136,
+        0.9999999999999999,
+        0.9779904855731866
+      ],
+      [
+        0.9361607079032289,
+        0.901036620989994,
+        0.9779904855731866,
+        1.0
+      ]
+    ],
+    "vif": {
+      "rf": 137.2204523883178,
+      "et": 106.50115105196889,
+      "xgb": 253.14204708386112,
+      "lgbm": 210.54475042017518
+    },
+    "variants": {
+      "full": {
+        "weights": {
+          "rf": 2.365097181097531,
+          "et": 1.896668662336943,
+          "xgb": 0.2992751517369239,
+          "lgbm": 0.250031338623048
+        },
+        "bias": -1.5247111087395737,
+        "oof_logloss": 0.13164551850876616,
+        "test": {
+          "dr": 0.9338777809067869,
+          "far": 5.813615487471659e-05,
+          "macro_f1": 0.9806942290520964,
+          "pr_auc": 0.957797006781397
+        }
+      },
+      "nonneg": {
+        "weights": {
+          "rf": 3.3441073627111026,
+          "et": 0.8746042927064086,
+          "xgb": 0.28209598401222513,
+          "lgbm": 0.2526014654589425
+        },
+        "bias": -1.5674014533814087,
+        "oof_logloss": 0.13162769143655864,
+        "test": {
+          "dr": 0.934009199286586,
+          "far": 7.949229340012268e-05,
+          "macro_f1": 0.9806859759337032,
+          "pr_auc": 0.957807854861264
+        }
+      },
+      "only_rf": {
+        "weights": {
+          "rf": 11.082018495669743
+        },
+        "bias": -3.6108208439133938,
+        "oof_logloss": 0.13396085836181235,
+        "test": {
+          "dr": 0.9336994273913451,
+          "far": 0.00013169618757333758,
+          "macro_f1": 0.9804773405439939,
+          "pr_auc": 0.9565226278980403
+        }
+      },
+      "drop_rf": {
+        "weights": {
+          "et": 3.165301385618727,
+          "xgb": 0.40826751475716355,
+          "lgbm": 0.2321888381628198
+        },
+        "bias": -1.191350647713696,
+        "oof_logloss": 0.131799856408718,
+        "test": {
+          "dr": 0.9326480803529522,
+          "far": 3.678001634931049e-05,
+          "macro_f1": 0.9803742003960765,
+          "pr_auc": 0.9577010819585287
+        }
+      },
+      "only_et": {
+        "weights": {
+          "et": 9.902556557070062
+        },
+        "bias": -3.5836703096181615,
+        "oof_logloss": 0.13841043191729593,
+        "test": {
+          "dr": 0.9326480803529522,
+          "far": 6.288196343591794e-05,
+          "macro_f1": 0.9803161297881162,
+          "pr_auc": 0.95666557264774
+        }
+      },
+      "drop_et": {
+        "weights": {
+          "rf": 3.9613842493045706,
+          "xgb": 0.28229078183532164,
+          "lgbm": 0.2546199566180171
+        },
+        "bias": -1.5475221530235805,
+        "oof_logloss": 0.13163790723452626,
+        "test": {
+          "dr": 0.9339247160424293,
+          "far": 6.644131985681895e-05,
+          "macro_f1": 0.9806897730487176,
+          "pr_auc": 0.9577993529852495
+        }
+      },
+      "only_xgb": {
+        "weights": {
+          "xgb": 0.8205930024816092
+        },
+        "bias": -0.4963076157681396,
+        "oof_logloss": 0.13218665814228897,
+        "test": {
+          "dr": 0.9326011452173096,
+          "far": 4.033937277021151e-05,
+          "macro_f1": 0.9803522444887751,
+          "pr_auc": 0.9579182668243176
+        }
+      },
+      "drop_xgb": {
+        "weights": {
+          "rf": 2.8064060114410916,
+          "et": 2.328035600536459,
+          "lgbm": 0.4717099422033165
+        },
+        "bias": -1.7956848239045984,
+        "oof_logloss": 0.1317455562214097,
+        "test": {
+          "dr": 0.9340185863137145,
+          "far": 8.542455410162437e-05,
+          "macro_f1": 0.9806755842743997,
+          "pr_auc": 0.9579749079281246
+        }
+      },
+      "only_lgbm": {
+        "weights": {
+          "lgbm": 0.7437583934070436
+        },
+        "bias": -0.6937543257149091,
+        "oof_logloss": 0.13252870165361597,
+        "test": {
+          "dr": 0.933455364686004,
+          "far": 0.0001079671447673308,
+          "macro_f1": 0.9804571820392796,
+          "pr_auc": 0.9582600328013329
+        }
+      },
+      "drop_lgbm": {
+        "weights": {
+          "rf": 2.308289138833003,
+          "et": 1.854128343623208,
+          "xgb": 0.5778097336040491
+        },
+        "bias": -1.4489535880010977,
+        "oof_logloss": 0.13175544643421813,
+        "test": {
+          "dr": 0.9336618792828312,
+          "far": 5.457679845381557e-05,
+          "macro_f1": 0.9806376472789771,
+          "pr_auc": 0.9574715805678488
+        }
+      }
+    },
+    "bootstrap": {
+      "n": 200,
+      "weights": {
+        "rf": {
+          "mean": 2.373801684630189,
+          "p2.5": 2.0596190280074564,
+          "p97.5": 2.6543986737722736,
+          "frac_negative": 0.0
+        },
+        "et": {
+          "mean": 1.8938567412976597,
+          "p2.5": 1.6362090140881358,
+          "p97.5": 2.116047246213512,
+          "frac_negative": 0.0
+        },
+        "xgb": {
+          "mean": 0.29786302381431484,
+          "p2.5": 0.24742849696340224,
+          "p97.5": 0.35881962758987485,
+          "frac_negative": 0.0
+        },
+        "lgbm": {
+          "mean": 0.2518234135602493,
+          "p2.5": 0.20670593434162043,
+          "p97.5": 0.2994658282261047,
+          "frac_negative": 0.0
+        }
+      }
+    },
+    "seconds": 465.6,
+    "fast": false
+  },
+  "lime_top1": {
+    "n_flows": 233,
+    "n_draws": 100,
+    "lime_top1_feature": "duration_in_ms",
+    "is_binary": false,
+    "binary_features": [
+      "client_psh",
+      "server_psh",
+      "server_fin",
+      "server_syn",
+      "is_tcp"
+    ],
+    "value_in_explained_flows": {
+      "n_distinct": 107,
+      "median": 219.0
+    },
+    "train_mean_benign": 1.615186477059297,
+    "train_mean_attack": 391.4769230769231,
+    "top1_counts": {
+      "lime": {
+        "duration_in_ms": 226,
+        "server_fin": 7
+      },
+      "shap": {
+        "duration_in_ms": 141,
+        "tcp_win_in": 54,
+        "longest_pkt": 13,
+        "in_pkt_frac": 5,
+        "frac_pkts_1024_1514": 4,
+        "frac_pkts_256_512": 4,
+        "frac_pkts_128_256": 4,
+        "frac_pkts_512_1024": 3,
+        "src_to_dst_bytes_per_s": 2,
+        "dst_to_src_throughput": 1,
+        "shortest_pkt": 1,
+        "client_psh": 1
+      },
+      "sensitivity": {
+        "tcp_win_in": 127,
+        "duration_in_ms": 57,
+        "longest_pkt": 13,
+        "frac_pkts_512_1024": 10,
+        "bytes_per_pkt_out": 9,
+        "frac_pkts_256_512": 6,
+        "frac_pkts_128_256": 4,
+        "in_pkt_frac": 3,
+        "bytes_per_pkt_in": 2,
+        "shortest_pkt": 1,
+        "client_psh": 1
+      },
+      "sensitivity_when_changed": {
+        "tcp_win_in": 127,
+        "duration_in_ms": 58,
+        "longest_pkt": 12,
+        "frac_pkts_512_1024": 10,
+        "frac_pkts_256_512": 6,
+        "server_fin": 5,
+        "frac_pkts_128_256": 4,
+        "in_pkt_frac": 3,
+        "bytes_per_pkt_out": 2,
+        "bytes_per_pkt_in": 2,
+        "shortest_pkt": 2,
+        "client_psh": 1,
+        "server_psh": 1
+      }
+    },
+    "median_rank_of_lime_top1": {
+      "lime": 1.0,
+      "shap": 1.0,
+      "sensitivity": 4.0,
+      "sensitivity_when_changed": 4.0
+    },
+    "mean_abs": {
+      "out_pkts": {
+        "lime": 0.0544191410175064,
+        "shap": 0.10398877842415556,
+        "sensitivity": 0.3212376772416063,
+        "sensitivity_when_changed": 0.32503984777298167
+      },
+      "out_bytes": {
+        "lime": 0.08249519302510579,
+        "shap": 0.09544905184063117,
+        "sensitivity": 0.4559726045146379,
+        "sensitivity_when_changed": 0.4585432034603407
+      },
+      "in_byte_frac": {
+        "lime": 0.07006162176269438,
+        "shap": 0.14823934631532526,
+        "sensitivity": 0.653128202445503,
+        "sensitivity_when_changed": 0.6548390898219547
+      },
+      "bytes_per_pkt_out": {
+        "lime": 0.3181667514055062,
+        "shap": 0.23747775937726812,
+        "sensitivity": 1.6601551471118037,
+        "sensitivity_when_changed": 1.6778214174333062
+      },
+      "in_pkt_frac": {
+        "lime": 0.11475349891534646,
+        "shap": 0.1695537593738709,
+        "sensitivity": 0.5189129533173672,
+        "sensitivity_when_changed": 0.6820595439964858
+      },
+      "bytes_per_pkt_in": {
+        "lime": 0.0553027133526207,
+        "shap": 0.2047927100108093,
+        "sensitivity": 1.2538230384209335,
+        "sensitivity_when_changed": 1.271242432225896
+      },
+      "duration_in_ms": {
+        "lime": 1.5185265053162955,
+        "shap": 2.3323137865687014,
+        "sensitivity": 2.3523446398149623,
+        "sensitivity_when_changed": 2.558889845400424
+      },
+      "dst_to_src_bytes_per_s": {
+        "lime": 0.11440781989219409,
+        "shap": 0.10494077759567065,
+        "sensitivity": 0.46470140926404935,
+        "sensitivity_when_changed": 0.46546538622038724
+      },
+      "dst_to_src_throughput": {
+        "lime": 0.27800925527884235,
+        "shap": 0.2550802844426319,
+        "sensitivity": 0.5670284241471466,
+        "sensitivity_when_changed": 0.5690725761372565
+      },
+      "src_to_dst_bytes_per_s": {
+        "lime": 0.055425227286243356,
+        "shap": 0.3227165147375031,
+        "sensitivity": 0.7654387022598534,
+        "sensitivity_when_changed": 0.7657892712798752
+      },
+      "src_to_dst_throughput": {
+        "lime": 0.19492248209516827,
+        "shap": 0.3562760697041726,
+        "sensitivity": 0.8673483824647075,
+        "sensitivity_when_changed": 0.8683971332101192
+      },
+      "longest_pkt": {
+        "lime": 0.08607840530302265,
+        "shap": 0.529770463583719,
+        "sensitivity": 2.11106161337521,
+        "sensitivity_when_changed": 2.1378725597414054
+      },
+      "frac_pkts_le128": {
+        "lime": 0.09068477456438084,
+        "shap": 0.1389534569007162,
+        "sensitivity": 0.8435034168007411,
+        "sensitivity_when_changed": 0.9033564419143421
+      },
+      "frac_pkts_1024_1514": {
+        "lime": 0.3793062394738901,
+        "shap": 0.18890777730618102,
+        "sensitivity": 0.33835457520855583,
+        "sensitivity_when_changed": 2.3340170551808987
+      },
+      "frac_pkts_256_512": {
+        "lime": 0.04745537171731998,
+        "shap": 0.2504207811949896,
+        "sensitivity": 0.879759155797867,
+        "sensitivity_when_changed": 0.991919640013817
+      },
+      "frac_pkts_512_1024": {
+        "lime": 0.3503504163087114,
+        "shap": 0.46822682712610714,
+        "sensitivity": 1.453640003795534,
+        "sensitivity_when_changed": 1.6792662388532107
+      },
+      "shortest_pkt": {
+        "lime": 0.17000374121960773,
+        "shap": 0.3056426692838167,
+        "sensitivity": 1.4095382225812836,
+        "sensitivity_when_changed": 1.529811086626483
+      },
+      "frac_pkts_128_256": {
+        "lime": 0.035837261665070154,
+        "shap": 0.1287112849492936,
+        "sensitivity": 0.7470733220452382,
+        "sensitivity_when_changed": 1.26510031856999
+      },
+      "client_psh": {
+        "lime": 0.2584327565483997,
+        "shap": 0.19049872876576088,
+        "sensitivity": 0.4516327713148841,
+        "sensitivity_when_changed": 0.6355533840563412
+      },
+      "server_psh": {
+        "lime": 0.06133006369517161,
+        "shap": 0.07266434425200143,
+        "sensitivity": 0.3282481706649066,
+        "sensitivity_when_changed": 0.5293533124066243
+      },
+      "server_fin": {
+        "lime": 0.7646094591002953,
+        "shap": 0.26549265209659423,
+        "sensitivity": 0.8004826296308554,
+        "sensitivity_when_changed": 1.2035320735039838
+      },
+      "server_syn": {
+        "lime": 0.2943288035007977,
+        "shap": 0.10036078666680387,
+        "sensitivity": 0.33753447344693593,
+        "sensitivity_when_changed": 0.46180753287695686
+      },
+      "tcp_win_in": {
+        "lime": 0.26501567463824643,
+        "shap": 1.5185151912969914,
+        "sensitivity": 3.1697194583183714,
+        "sensitivity_when_changed": 3.675704854404009
+      },
+      "retrans_in_pkts": {
+        "lime": 0.06749138477740559,
+        "shap": 0.03777230980383489,
+        "sensitivity": 0.11118903433306676,
+        "sensitivity_when_changed": 0.5917966823257829
+      },
+      "is_tcp": {
+        "lime": 0.429228357192475,
+        "shap": 0.1485243218620406,
+        "sensitivity": 0.2179663452722327,
+        "sensitivity_when_changed": 0.4448427019085832
+      }
+    },
+    "per_flow_spearman": {
+      "lime_vs_sensitivity": 0.06508748761967645,
+      "shap_vs_sensitivity": 0.5937702211951139,
+      "lime_vs_sensitivity_when_changed": 0.18667216903268402,
+      "shap_vs_sensitivity_when_changed": 0.5232981181908221
+    },
+    "seconds": 12.1
+  },
+  "missed": {
+    "threshold": 0.8205315402883644,
+    "attack_mass": 106530.0,
+    "missed_mass": 7044.0,
+    "dr": 0.9338777809067869,
+    "dr_without_top_attack": {
+      "attack": "Infilteration",
+      "dr": 0.979186460807601
+    },
+    "by_attack": [
+      {
+        "attack": "Infilteration",
+        "n_vectors": 3907,
+        "n_weighted": 5490.0,
+        "recall": 0.1,
+        "missed_weighted": 4941.0,
+        "missed_share_of_attack_mass": 0.04638130104196001,
+        "missed_also_by_all_base_models": 0.9914996964177292,
+        "missed_in_label_conflict_groups": 0.13175470552519733,
+        "median_p_of_missed": 0.05161721874924163
+      },
+      {
+        "attack": "DDoS attacks-LOIC-HTTP",
+        "n_vectors": 928,
+        "n_weighted": 15317.0,
+        "recall": 0.8630932950316642,
+        "missed_weighted": 2097.0,
+        "missed_share_of_attack_mass": 0.019684595888482117,
+        "missed_also_by_all_base_models": 1.0,
+        "missed_in_label_conflict_groups": 0.0,
+        "median_p_of_missed": 0.05897461094634454
+      },
+      {
+        "attack": "Brute Force -Web",
+        "n_vectors": 25,
+        "n_weighted": 25.0,
+        "recall": 0.92,
+        "missed_weighted": 2.0,
+        "missed_share_of_attack_mass": 1.8774054257016804e-05,
+        "missed_also_by_all_base_models": 1.0,
+        "missed_in_label_conflict_groups": 0.0,
+        "median_p_of_missed": 0.7023647822231855
+      },
+      {
+        "attack": "Bot",
+        "n_vectors": 46,
+        "n_weighted": 2641.0,
+        "recall": 0.9996213555471413,
+        "missed_weighted": 1.0,
+        "missed_share_of_attack_mass": 9.387027128508402e-06,
+        "missed_also_by_all_base_models": 1.0,
+        "missed_in_label_conflict_groups": 0.0,
+        "median_p_of_missed": 0.30019226989678305
+      },
+      {
+        "attack": "Brute Force -XSS",
+        "n_vectors": 9,
+        "n_weighted": 9.0,
+        "recall": 0.8888888888888888,
+        "missed_weighted": 1.0,
+        "missed_share_of_attack_mass": 9.387027128508402e-06,
+        "missed_also_by_all_base_models": 0.0,
+        "missed_in_label_conflict_groups": 0.0,
+        "median_p_of_missed": 0.5422627172339467
+      },
+      {
+        "attack": "SQL Injection",
+        "n_vectors": 3,
+        "n_weighted": 3.0,
+        "recall": 0.6666666666666666,
+        "missed_weighted": 1.0,
+        "missed_share_of_attack_mass": 9.387027128508402e-06,
+        "missed_also_by_all_base_models": 1.0,
+        "missed_in_label_conflict_groups": 0.0,
+        "median_p_of_missed": 0.46402288894857785
+      },
+      {
+        "attack": "SSH-Bruteforce",
+        "n_vectors": 785,
+        "n_weighted": 4737.0,
+        "recall": 0.9997888959256913,
+        "missed_weighted": 1.0,
+        "missed_share_of_attack_mass": 9.387027128508402e-06,
+        "missed_also_by_all_base_models": 0.0,
+        "missed_in_label_conflict_groups": 0.0,
+        "median_p_of_missed": 0.7996986548584446
+      },
+      {
+        "attack": "DDOS attack-HOIC",
+        "n_vectors": 7940,
+        "n_weighted": 52432.0,
+        "recall": 1.0,
+        "missed_weighted": 0.0,
+        "missed_share_of_attack_mass": 0.0,
+        "missed_also_by_all_base_models": null,
+        "missed_in_label_conflict_groups": null,
+        "median_p_of_missed": null
+      },
+      {
+        "attack": "DDOS attack-LOIC-UDP",
+        "n_vectors": 103,
+        "n_weighted": 103.0,
+        "recall": 1.0,
+        "missed_weighted": 0.0,
+        "missed_share_of_attack_mass": 0.0,
+        "missed_also_by_all_base_models": null,
+        "missed_in_label_conflict_groups": null,
+        "median_p_of_missed": null
+      },
+      {
+        "attack": "DoS attacks-GoldenEye",
+        "n_vectors": 1381,
+        "n_weighted": 1390.0,
+        "recall": 1.0,
+        "missed_weighted": 0.0,
+        "missed_share_of_attack_mass": 0.0,
+        "missed_also_by_all_base_models": null,
+        "missed_in_label_conflict_groups": null,
+        "median_p_of_missed": null
+      },
+      {
+        "attack": "DoS attacks-Hulk",
+        "n_vectors": 17894,
+        "n_weighted": 21648.0,
+        "recall": 1.0,
+        "missed_weighted": 0.0,
+        "missed_share_of_attack_mass": 0.0,
+        "missed_also_by_all_base_models": null,
+        "missed_in_label_conflict_groups": null,
+        "median_p_of_missed": null
+      },
+      {
+        "attack": "DoS attacks-SlowHTTPTest",
+        "n_vectors": 2,
+        "n_weighted": 789.0,
+        "recall": 1.0,
+        "missed_weighted": 0.0,
+        "missed_share_of_attack_mass": 0.0,
+        "missed_also_by_all_base_models": null,
+        "missed_in_label_conflict_groups": null,
+        "median_p_of_missed": null
+      },
+      {
+        "attack": "DoS attacks-Slowloris",
+        "n_vectors": 19,
+        "n_weighted": 455.0,
+        "recall": 1.0,
+        "missed_weighted": 0.0,
+        "missed_share_of_attack_mass": 0.0,
+        "missed_also_by_all_base_models": null,
+        "missed_in_label_conflict_groups": null,
+        "median_p_of_missed": null
+      },
+      {
+        "attack": "FTP-BruteForce",
+        "n_vectors": 2,
+        "n_weighted": 1491.0,
+        "recall": 1.0,
+        "missed_weighted": 0.0,
+        "missed_share_of_attack_mass": 0.0,
+        "missed_also_by_all_base_models": null,
+        "missed_in_label_conflict_groups": null,
+        "median_p_of_missed": null
+      }
+    ]
+  }
+}

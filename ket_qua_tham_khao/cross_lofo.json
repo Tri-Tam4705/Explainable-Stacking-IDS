@@ -1,0 +1,678 @@
+{
+  "cross_dataset": {
+    "train_unsw_test_unsw": {
+      "threshold": 0.3916215329945015,
+      "weighted": {
+        "dr": 0.9834036112012109,
+        "far": 0.0026933682481572532,
+        "precision": 0.935173761052848,
+        "f1_attack": 0.9586824769433465,
+        "macro_f1": 0.978503112282368,
+        "tp": 18191.0,
+        "fp": 1261.0,
+        "fn": 307.0,
+        "tn": 466926.0,
+        "pr_auc": 0.9785108418880437,
+        "roc_auc": 0.9993852308431559,
+        "precision_at_natural_prevalence": 0.9379763378209827
+      },
+      "unweighted": {
+        "dr": 0.9647736405036164,
+        "far": 0.023624214820190694,
+        "precision": 0.8841291272861176,
+        "f1_attack": 0.9226926279382566,
+        "macro_f1": 0.9537299226367961,
+        "tp": 7203.0,
+        "fp": 944.0,
+        "fn": 263.0,
+        "tn": 39015.0,
+        "pr_auc": 0.9598241580580155,
+        "roc_auc": 0.9946585133903691,
+        "precision_at_natural_prevalence": 0.6284569870585667
+      },
+      "per_attack_recall": {
+        "Analysis": {
+          "n_vectors": 69,
+          "n_weighted": 69,
+          "recall_weighted": 0.2318840579710145,
+          "recall_unweighted": 0.2318840579710145
+        },
+        "Backdoor": {
+          "n_vectors": 48,
+          "n_weighted": 66,
+          "recall_weighted": 1.0,
+          "recall_unweighted": 1.0
+        },
+        "DoS": {
+          "n_vectors": 592,
+          "n_weighted": 645,
+          "recall_weighted": 0.9627906976744186,
+          "recall_unweighted": 0.9611486486486487
+        },
+        "Exploits": {
+          "n_vectors": 4529,
+          "n_weighted": 8761,
+          "recall_weighted": 0.9910969067458053,
+          "recall_unweighted": 0.9836608522852727
+        },
+        "Fuzzers": {
+          "n_vectors": 1349,
+          "n_weighted": 4021,
+          "recall_weighted": 0.966923650833126,
+          "recall_unweighted": 0.9236471460340994
+        },
+        "Generic": {
+          "n_vectors": 734,
+          "n_weighted": 2989,
+          "recall_weighted": 0.998327199732352,
+          "recall_unweighted": 0.9945504087193461
+        },
+        "Reconnaissance": {
+          "n_vectors": 69,
+          "n_weighted": 1638,
+          "recall_weighted": 0.9993894993894994,
+          "recall_unweighted": 0.9855072463768116
+        },
+        "Shellcode": {
+          "n_vectors": 61,
+          "n_weighted": 278,
+          "recall_weighted": 0.9532374100719424,
+          "recall_unweighted": 0.9180327868852459
+        },
+        "Worms": {
+          "n_vectors": 15,
+          "n_weighted": 31,
+          "recall_weighted": 1.0,
+          "recall_unweighted": 1.0
+        }
+      },
+      "natural_prevalence_used": 0.03977159103935365
+    },
+    "train_unsw_test_cse": {
+      "threshold": 0.3916215329945015,
+      "weighted": {
+        "dr": 0.02376795268938327,
+        "far": 0.23396836206722676,
+        "precision": 0.012676987162798149,
+        "f1_attack": 0.016534862307436116,
+        "macro_f1": 0.41369953271001714,
+        "tp": 2532.0,
+        "fp": 197200.0,
+        "fn": 103998.0,
+        "tn": 645649.0,
+        "pr_auc": 0.0632049699259721,
+        "roc_auc": 0.1493451814437633,
+        "precision_at_natural_prevalence": 0.013581531252560545
+      },
+      "unweighted": {
+        "dr": 0.07114756082798693,
+        "far": 0.42313332993128605,
+        "precision": 0.012177498303644962,
+        "f1_attack": 0.020795648039627603,
+        "macro_f1": 0.3610838899949069,
+        "tp": 2351.0,
+        "fp": 190710.0,
+        "fn": 30693.0,
+        "tn": 259999.0,
+        "pr_auc": 0.03605545736352134,
+        "roc_auc": 0.0901647878034031,
+        "precision_at_natural_prevalence": 0.022281755378436196
+      },
+      "per_attack_recall": {
+        "Bot": {
+          "n_vectors": 46,
+          "n_weighted": 2641,
+          "recall_weighted": 0.0,
+          "recall_unweighted": 0.0
+        },
+        "Brute Force -Web": {
+          "n_vectors": 25,
+          "n_weighted": 25,
+          "recall_weighted": 0.2,
+          "recall_unweighted": 0.2
+        },
+        "Brute Force -XSS": {
+          "n_vectors": 9,
+          "n_weighted": 9,
+          "recall_weighted": 0.2222222222222222,
+          "recall_unweighted": 0.2222222222222222
+        },
+        "DDOS attack-HOIC": {
+          "n_vectors": 7940,
+          "n_weighted": 52432,
+          "recall_weighted": 0.0,
+          "recall_unweighted": 0.0
+        },
+        "DDOS attack-LOIC-UDP": {
+          "n_vectors": 103,
+          "n_weighted": 103,
+          "recall_weighted": 0.1650485436893204,
+          "recall_unweighted": 0.1650485436893204
+        },
+        "DDoS attacks-LOIC-HTTP": {
+          "n_vectors": 928,
+          "n_weighted": 15317,
+          "recall_weighted": 0.03421035450806294,
+          "recall_unweighted": 0.5581896551724138
+        },
+        "DoS attacks-GoldenEye": {
+          "n_vectors": 1381,
+          "n_weighted": 1390,
+          "recall_weighted": 0.0,
+          "recall_unweighted": 0.0
+        },
+        "DoS attacks-Hulk": {
+          "n_vectors": 17894,
+          "n_weighted": 21648,
+          "recall_weighted": 0.0,
+          "recall_unweighted": 0.0
+        },
+        "DoS attacks-SlowHTTPTest": {
+          "n_vectors": 2,
+          "n_weighted": 789,
+          "recall_weighted": 0.0,
+          "recall_unweighted": 0.0
+        },
+        "DoS attacks-Slowloris": {
+          "n_vectors": 19,
+          "n_weighted": 455,
+          "recall_weighted": 0.0,
+          "recall_unweighted": 0.0
+        },
+        "FTP-BruteForce": {
+          "n_vectors": 2,
+          "n_weighted": 1491,
+          "recall_weighted": 0.0,
+          "recall_unweighted": 0.0
+        },
+        "Infilteration": {
+          "n_vectors": 3907,
+          "n_weighted": 5490,
+          "recall_weighted": 0.361384335154827,
+          "recall_unweighted": 0.4630151011005887
+        },
+        "SQL Injection": {
+          "n_vectors": 3,
+          "n_weighted": 3,
+          "recall_weighted": 0.0,
+          "recall_unweighted": 0.0
+        },
+        "SSH-Bruteforce": {
+          "n_vectors": 785,
+          "n_weighted": 4737,
+          "recall_weighted": 0.0,
+          "recall_unweighted": 0.0
+        }
+      },
+      "natural_prevalence_used": 0.11935818489405303
+    },
+    "train_cse_test_unsw": {
+      "threshold": 0.8221534283440227,
+      "weighted": {
+        "dr": 0.0005405989836739107,
+        "far": 1.281539214032e-05,
+        "precision": 0.625,
+        "f1_attack": 0.0010802635843145728,
+        "macro_f1": 0.4908559490462772,
+        "tp": 10.0,
+        "fp": 6.0,
+        "fn": 18488.0,
+        "tn": 468181.0,
+        "pr_auc": 0.02631762335360189,
+        "roc_auc": 0.2610751565586201,
+        "precision_at_natural_prevalence": 0.6359925411318486
+      },
+      "unweighted": {
+        "dr": 0.0002678810608090008,
+        "far": 7.507695387772466e-05,
+        "precision": 0.4,
+        "f1_attack": 0.000535403560433677,
+        "macro_f1": 0.4575400441050317,
+        "tp": 2.0,
+        "fp": 3.0,
+        "fn": 7464.0,
+        "tn": 39956.0,
+        "pr_auc": 0.14356029965521394,
+        "roc_auc": 0.3404468484563139,
+        "precision_at_natural_prevalence": 0.12875757690531273
+      },
+      "per_attack_recall": {
+        "Analysis": {
+          "n_vectors": 69,
+          "n_weighted": 69,
+          "recall_weighted": 0.0,
+          "recall_unweighted": 0.0
+        },
+        "Backdoor": {
+          "n_vectors": 48,
+          "n_weighted": 66,
+          "recall_weighted": 0.0,
+          "recall_unweighted": 0.0
+        },
+        "DoS": {
+          "n_vectors": 592,
+          "n_weighted": 645,
+          "recall_weighted": 0.0,
+          "recall_unweighted": 0.0
+        },
+        "Exploits": {
+          "n_vectors": 4529,
+          "n_weighted": 8761,
+          "recall_weighted": 0.0001141422212076247,
+          "recall_unweighted": 0.00022079929344226098
+        },
+        "Fuzzers": {
+          "n_vectors": 1349,
+          "n_weighted": 4021,
+          "recall_weighted": 0.0,
+          "recall_unweighted": 0.0
+        },
+        "Generic": {
+          "n_vectors": 734,
+          "n_weighted": 2989,
+          "recall_weighted": 0.0,
+          "recall_unweighted": 0.0
+        },
+        "Reconnaissance": {
+          "n_vectors": 69,
+          "n_weighted": 1638,
+          "recall_weighted": 0.0,
+          "recall_unweighted": 0.0
+        },
+        "Shellcode": {
+          "n_vectors": 61,
+          "n_weighted": 278,
+          "recall_weighted": 0.03237410071942446,
+          "recall_unweighted": 0.01639344262295082
+        },
+        "Worms": {
+          "n_vectors": 15,
+          "n_weighted": 31,
+          "recall_weighted": 0.0,
+          "recall_unweighted": 0.0
+        }
+      },
+      "natural_prevalence_used": 0.03977159103935365
+    },
+    "train_cse_test_cse": {
+      "threshold": 0.8221534283440227,
+      "weighted": {
+        "dr": 0.9338777809067869,
+        "far": 5.813615487471659e-05,
+        "precision": 0.999507710855478,
+        "f1_attack": 0.965578822216291,
+        "macro_f1": 0.9806942290520964,
+        "tp": 99486.0,
+        "fp": 49.0,
+        "fn": 7044.0,
+        "tn": 842800.0,
+        "pr_auc": 0.957797006781397,
+        "roc_auc": 0.9698703929460449,
+        "precision_at_natural_prevalence": 0.9995409035549317
+      },
+      "unweighted": {
+        "dr": 0.8843662994794819,
+        "far": 8.65303333192814e-05,
+        "precision": 0.9986672134508919,
+        "f1_attack": 0.9380477000609891,
+        "macro_f1": 0.9668917245333668,
+        "tp": 29223.0,
+        "fp": 39.0,
+        "fn": 3821.0,
+        "tn": 450670.0,
+        "pr_auc": 0.9153579299735057,
+        "roc_auc": 0.95755639840597,
+        "precision_at_natural_prevalence": 0.9992786103937485
+      },
+      "per_attack_recall": {
+        "Bot": {
+          "n_vectors": 46,
+          "n_weighted": 2641,
+          "recall_weighted": 0.9996213555471413,
+          "recall_unweighted": 0.9782608695652174
+        },
+        "Brute Force -Web": {
+          "n_vectors": 25,
+          "n_weighted": 25,
+          "recall_weighted": 0.92,
+          "recall_unweighted": 0.92
+        },
+        "Brute Force -XSS": {
+          "n_vectors": 9,
+          "n_weighted": 9,
+          "recall_weighted": 0.8888888888888888,
+          "recall_unweighted": 0.8888888888888888
+        },
+        "DDOS attack-HOIC": {
+          "n_vectors": 7940,
+          "n_weighted": 52432,
+          "recall_weighted": 1.0,
+          "recall_unweighted": 1.0
+        },
+        "DDOS attack-LOIC-UDP": {
+          "n_vectors": 103,
+          "n_weighted": 103,
+          "recall_weighted": 1.0,
+          "recall_unweighted": 1.0
+        },
+        "DDoS attacks-LOIC-HTTP": {
+          "n_vectors": 928,
+          "n_weighted": 15317,
+          "recall_weighted": 0.8630932950316642,
+          "recall_unweighted": 0.9967672413793104
+        },
+        "DoS attacks-GoldenEye": {
+          "n_vectors": 1381,
+          "n_weighted": 1390,
+          "recall_weighted": 1.0,
+          "recall_unweighted": 1.0
+        },
+        "DoS attacks-Hulk": {
+          "n_vectors": 17894,
+          "n_weighted": 21648,
+          "recall_weighted": 1.0,
+          "recall_unweighted": 1.0
+        },
+        "DoS attacks-SlowHTTPTest": {
+          "n_vectors": 2,
+          "n_weighted": 789,
+          "recall_weighted": 1.0,
+          "recall_unweighted": 1.0
+        },
+        "DoS attacks-Slowloris": {
+          "n_vectors": 19,
+          "n_weighted": 455,
+          "recall_weighted": 1.0,
+          "recall_unweighted": 1.0
+        },
+        "FTP-BruteForce": {
+          "n_vectors": 2,
+          "n_weighted": 1491,
+          "recall_weighted": 1.0,
+          "recall_unweighted": 1.0
+        },
+        "Infilteration": {
+          "n_vectors": 3907,
+          "n_weighted": 5490,
+          "recall_weighted": 0.1,
+          "recall_unweighted": 0.02431533145636038
+        },
+        "SQL Injection": {
+          "n_vectors": 3,
+          "n_weighted": 3,
+          "recall_weighted": 0.6666666666666666,
+          "recall_unweighted": 0.6666666666666666
+        },
+        "SSH-Bruteforce": {
+          "n_vectors": 785,
+          "n_weighted": 4737,
+          "recall_weighted": 0.9997888959256913,
+          "recall_unweighted": 0.9987261146496815
+        }
+      },
+      "natural_prevalence_used": 0.11935818489405303
+    }
+  },
+  "lofo": {
+    "unsw": {
+      "baseline_macro_f1": 0.9773795518489136,
+      "features": {
+        "src_to_dst_bytes_per_s": {
+          "macro_f1_without": 0.6440964611614006,
+          "f1_drop": 0.33328309068751294,
+          "group": "timing_rate"
+        },
+        "bytes_per_pkt_out": {
+          "macro_f1_without": 0.6840815072114331,
+          "f1_drop": 0.29329804463748044,
+          "group": "volume"
+        },
+        "shortest_pkt": {
+          "macro_f1_without": 0.8973437274639556,
+          "f1_drop": 0.08003582438495793,
+          "group": "packet_size"
+        },
+        "in_pkt_frac": {
+          "macro_f1_without": 0.9277659785541902,
+          "f1_drop": 0.04961357329472338,
+          "group": "volume"
+        },
+        "longest_pkt": {
+          "macro_f1_without": 0.9650652345040089,
+          "f1_drop": 0.012314317344904624,
+          "group": "packet_size"
+        },
+        "in_byte_frac": {
+          "macro_f1_without": 0.9719870377907522,
+          "f1_drop": 0.005392514058161324,
+          "group": "volume"
+        },
+        "bytes_per_pkt_in": {
+          "macro_f1_without": 0.9722066713161195,
+          "f1_drop": 0.0051728805327940774,
+          "group": "volume"
+        },
+        "src_to_dst_throughput": {
+          "macro_f1_without": 0.9729912206326197,
+          "f1_drop": 0.004388331216293895,
+          "group": "timing_rate"
+        },
+        "dst_to_src_bytes_per_s": {
+          "macro_f1_without": 0.9732549067492242,
+          "f1_drop": 0.00412464509968935,
+          "group": "timing_rate"
+        },
+        "dst_to_src_throughput": {
+          "macro_f1_without": 0.9741115152864276,
+          "f1_drop": 0.0032680365624859764,
+          "group": "timing_rate"
+        },
+        "out_bytes": {
+          "macro_f1_without": 0.9744706576041257,
+          "f1_drop": 0.0029088942447879074,
+          "group": "volume"
+        },
+        "is_tcp": {
+          "macro_f1_without": 0.9756610136256758,
+          "f1_drop": 0.0017185382232377533,
+          "group": "protocol"
+        },
+        "out_pkts": {
+          "macro_f1_without": 0.9756816474158052,
+          "f1_drop": 0.0016979044331083548,
+          "group": "volume"
+        },
+        "client_psh": {
+          "macro_f1_without": 0.9759854562176722,
+          "f1_drop": 0.0013940956312413766,
+          "group": "tcp_behavior"
+        },
+        "tcp_win_in": {
+          "macro_f1_without": 0.9760070911003935,
+          "f1_drop": 0.0013724607485200435,
+          "group": "tcp_behavior"
+        },
+        "frac_pkts_128_256": {
+          "macro_f1_without": 0.9760428674329762,
+          "f1_drop": 0.0013366844159373725,
+          "group": "packet_size"
+        },
+        "frac_pkts_le128": {
+          "macro_f1_without": 0.9763648363948513,
+          "f1_drop": 0.0010147154540622871,
+          "group": "packet_size"
+        },
+        "server_fin": {
+          "macro_f1_without": 0.9769321803721962,
+          "f1_drop": 0.000447371476717362,
+          "group": "tcp_behavior"
+        },
+        "retrans_in_pkts": {
+          "macro_f1_without": 0.9770403835073133,
+          "f1_drop": 0.0003391683416003044,
+          "group": "retransmission"
+        },
+        "frac_pkts_1024_1514": {
+          "macro_f1_without": 0.977202443011994,
+          "f1_drop": 0.00017710883691957058,
+          "group": "packet_size"
+        },
+        "server_syn": {
+          "macro_f1_without": 0.9772300872390844,
+          "f1_drop": 0.0001494646098291197,
+          "group": "tcp_behavior"
+        },
+        "duration_in_ms": {
+          "macro_f1_without": 0.9772486051307705,
+          "f1_drop": 0.0001309467181430657,
+          "group": "timing_rate"
+        },
+        "server_psh": {
+          "macro_f1_without": 0.9773732641858242,
+          "f1_drop": 6.287663089410422e-06,
+          "group": "tcp_behavior"
+        },
+        "frac_pkts_512_1024": {
+          "macro_f1_without": 0.9776379708424583,
+          "f1_drop": -0.00025841899354472897,
+          "group": "packet_size"
+        },
+        "frac_pkts_256_512": {
+          "macro_f1_without": 0.9777139560752792,
+          "f1_drop": -0.0003344042263656588,
+          "group": "packet_size"
+        }
+      }
+    },
+    "cse": {
+      "baseline_macro_f1": 0.9804571820392796,
+      "features": {
+        "longest_pkt": {
+          "macro_f1_without": 0.9487462632009245,
+          "f1_drop": 0.031710918838355084,
+          "group": "packet_size"
+        },
+        "bytes_per_pkt_in": {
+          "macro_f1_without": 0.9696358645782335,
+          "f1_drop": 0.010821317461046087,
+          "group": "volume"
+        },
+        "tcp_win_in": {
+          "macro_f1_without": 0.9706865196319555,
+          "f1_drop": 0.009770662407324049,
+          "group": "tcp_behavior"
+        },
+        "frac_pkts_512_1024": {
+          "macro_f1_without": 0.9780298306752852,
+          "f1_drop": 0.002427351363994412,
+          "group": "packet_size"
+        },
+        "server_fin": {
+          "macro_f1_without": 0.9781967674915246,
+          "f1_drop": 0.002260414547754941,
+          "group": "tcp_behavior"
+        },
+        "duration_in_ms": {
+          "macro_f1_without": 0.9783837420039309,
+          "f1_drop": 0.002073440035348706,
+          "group": "timing_rate"
+        },
+        "dst_to_src_throughput": {
+          "macro_f1_without": 0.979163723552047,
+          "f1_drop": 0.0012934584872326127,
+          "group": "timing_rate"
+        },
+        "frac_pkts_256_512": {
+          "macro_f1_without": 0.9795106053362759,
+          "f1_drop": 0.0009465767030036876,
+          "group": "packet_size"
+        },
+        "shortest_pkt": {
+          "macro_f1_without": 0.979548059752666,
+          "f1_drop": 0.0009091222866135507,
+          "group": "packet_size"
+        },
+        "frac_pkts_128_256": {
+          "macro_f1_without": 0.9796219800516459,
+          "f1_drop": 0.0008352019876336492,
+          "group": "packet_size"
+        },
+        "out_bytes": {
+          "macro_f1_without": 0.9797781277481139,
+          "f1_drop": 0.0006790542911656594,
+          "group": "volume"
+        },
+        "frac_pkts_le128": {
+          "macro_f1_without": 0.9798286871032417,
+          "f1_drop": 0.0006284949360378933,
+          "group": "packet_size"
+        },
+        "src_to_dst_throughput": {
+          "macro_f1_without": 0.9799484014216824,
+          "f1_drop": 0.0005087806175971821,
+          "group": "timing_rate"
+        },
+        "dst_to_src_bytes_per_s": {
+          "macro_f1_without": 0.9800223421206542,
+          "f1_drop": 0.00043483991862536264,
+          "group": "timing_rate"
+        },
+        "in_byte_frac": {
+          "macro_f1_without": 0.9800312163017144,
+          "f1_drop": 0.0004259657375651482,
+          "group": "volume"
+        },
+        "in_pkt_frac": {
+          "macro_f1_without": 0.9800807288606947,
+          "f1_drop": 0.0003764531785848124,
+          "group": "volume"
+        },
+        "frac_pkts_1024_1514": {
+          "macro_f1_without": 0.980090901377541,
+          "f1_drop": 0.00036628066173860496,
+          "group": "packet_size"
+        },
+        "bytes_per_pkt_out": {
+          "macro_f1_without": 0.9801242390303242,
+          "f1_drop": 0.00033294300895536644,
+          "group": "volume"
+        },
+        "out_pkts": {
+          "macro_f1_without": 0.980258743523002,
+          "f1_drop": 0.00019843851627754372,
+          "group": "volume"
+        },
+        "src_to_dst_bytes_per_s": {
+          "macro_f1_without": 0.9803281204032945,
+          "f1_drop": 0.0001290616359850283,
+          "group": "timing_rate"
+        },
+        "client_psh": {
+          "macro_f1_without": 0.9803530405721746,
+          "f1_drop": 0.00010414146710491234,
+          "group": "tcp_behavior"
+        },
+        "retrans_in_pkts": {
+          "macro_f1_without": 0.9804034134032034,
+          "f1_drop": 5.3768636076201304e-05,
+          "group": "retransmission"
+        },
+        "server_syn": {
+          "macro_f1_without": 0.9804396624944336,
+          "f1_drop": 1.7519544845967516e-05,
+          "group": "tcp_behavior"
+        },
+        "server_psh": {
+          "macro_f1_without": 0.9804545435036525,
+          "f1_drop": 2.6385356270974825e-06,
+          "group": "tcp_behavior"
+        },
+        "is_tcp": {
+          "macro_f1_without": 0.9804571820392796,
+          "f1_drop": 0.0,
+          "group": "protocol"
+        }
+      }
+    }
+  }
+}

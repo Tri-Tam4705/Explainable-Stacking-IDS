@@ -1,0 +1,17 @@
+﻿# Phiên bản chính xác của các thư viện chính trong môi trường đã chạy toàn bộ thực nghiệm của báo cáo
+# (Python 3.12.2, Windows 11). Cài bằng: python -m pip install -r requirements-lock.txt
+# requirements.txt chỉ ghi phiên bản tối thiểu.
+cloudpickle==3.1.2
+joblib==1.6.0
+lightgbm==4.7.0
+lime==0.2.0.1
+matplotlib==3.11.2
+numpy==2.5.4
+pandas==3.1.1
+pyarrow==26.0.1
+pytest==9.2.0
+PyYAML==6.0.3
+scikit-learn==1.9.1
+scipy==1.18.1
+shap==0.54.1
+xgboost==3.4.1
