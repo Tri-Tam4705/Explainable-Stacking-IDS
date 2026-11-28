@@ -1,6 +1,6 @@
 """Bước 9: tổng hợp kết quả toàn hệ thống thành bảng dễ so sánh và các biểu đồ.
 
-Chỉ đọc các file trong reports/ (và data/processed/<ds>/lime_sample.parquet cho một hình), không huấn luyện hay tính lại gì,
+Chỉ đọc các file trong reports/ (và data/processed/ cho một số hình), không huấn luyện hay tính lại gì,
 nên chạy trong vài giây sau khi các bước trước đã xong. Thiếu kết quả của bước nào thì phần đó được bỏ qua.
 
 Đầu ra: in ra màn hình, ghi reports/summary.txt và các hình reports/figures/fig_*.png
@@ -28,7 +28,7 @@ rdir = Path(args.reports_dir) if args.reports_dir else resolve_path(cfg, "report
 proc = Path(args.processed_dir) if args.processed_dir else resolve_path(cfg, "processed_dir")
 
 rep = load_reports(rdir, args.datasets)
-missing = [f"{k}_{ds}" for k in ("baselines", "stacking", "explain", "stability", "ablation", "lime")
+missing = [f"{k}_{ds}" for k in ("baselines", "stacking", "explain", "stability", "ablation")
            for ds in args.datasets if not rep[k].get(ds)] + ([] if rep["cross_lofo"] else ["cross_lofo"])
 if missing:
     log.warning("Thiếu kết quả của: %s (các phần tương ứng sẽ bị bỏ qua)", ", ".join(missing))

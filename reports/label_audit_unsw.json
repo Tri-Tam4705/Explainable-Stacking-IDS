@@ -1,0 +1,254 @@
+{
+  "dataset": "unsw",
+  "fast": false,
+  "n_vectors": 236928,
+  "n_weighted": 2390274,
+  "overlap": {
+    "overall": {
+      "attack_recall_ceiling": 0.9982012307368643,
+      "benign_far_floor": 0.0004147770420907203
+    },
+    "by_attack": {
+      "Analysis": {
+        "label": 1,
+        "n_vectors": 337,
+        "n_weighted": 346,
+        "shared_with_other_label": 0.0,
+        "unreachable": 0.0
+      },
+      "Backdoor": {
+        "label": 1,
+        "n_vectors": 151,
+        "n_weighted": 329,
+        "shared_with_other_label": 0.0,
+        "unreachable": 0.0
+      },
+      "Benign": {
+        "label": 0,
+        "n_vectors": 199793,
+        "n_weighted": 2295209,
+        "shared_with_other_label": 0.0007123534283805963,
+        "unreachable": 0.0004147770420907203
+      },
+      "DoS": {
+        "label": 1,
+        "n_vectors": 2961,
+        "n_weighted": 3276,
+        "shared_with_other_label": 0.026862026862026864,
+        "unreachable": 0.00641025641025641
+      },
+      "Exploits": {
+        "label": 1,
+        "n_vectors": 22644,
+        "n_weighted": 43608,
+        "shared_with_other_label": 0.30136672170243994,
+        "unreachable": 0.0011465786094294625
+      },
+      "Fuzzers": {
+        "label": 1,
+        "n_vectors": 6746,
+        "n_weighted": 20348,
+        "shared_with_other_label": 0.12984077059170435,
+        "unreachable": 0.003046982504423039
+      },
+      "Generic": {
+        "label": 1,
+        "n_vectors": 3670,
+        "n_weighted": 14956,
+        "shared_with_other_label": 0.02333511634126772,
+        "unreachable": 0.0006017651778550414
+      },
+      "Reconnaissance": {
+        "label": 1,
+        "n_vectors": 362,
+        "n_weighted": 10655,
+        "shared_with_other_label": 0.47874237447207885,
+        "unreachable": 0.0015954950727358047
+      },
+      "Shellcode": {
+        "label": 1,
+        "n_vectors": 214,
+        "n_weighted": 1391,
+        "shared_with_other_label": 0.14737598849748382,
+        "unreachable": 0.008626887131560028
+      },
+      "Worms": {
+        "label": 1,
+        "n_vectors": 50,
+        "n_weighted": 156,
+        "shared_with_other_label": 0.00641025641025641,
+        "unreachable": 0.0
+      }
+    }
+  },
+  "confident_learning": {
+    "threshold_benign": 0.9796200426145626,
+    "threshold_attack": 0.8964658534378211,
+    "suspect_share_vectors": 0.006014485413290113,
+    "suspect_share_weighted": 0.0007894492430574905,
+    "by_attack": {
+      "Analysis": {
+        "n_vectors": 337,
+        "n_weighted": 346,
+        "suspect_vectors": 0,
+        "suspect_share_weighted": 0.0,
+        "suspect_also_unreachable": 0.0
+      },
+      "Backdoor": {
+        "n_vectors": 151,
+        "n_weighted": 329,
+        "suspect_vectors": 0,
+        "suspect_share_weighted": 0.0,
+        "suspect_also_unreachable": 0.0
+      },
+      "Benign": {
+        "n_vectors": 199793,
+        "n_weighted": 2295209,
+        "suspect_vectors": 1405,
+        "suspect_share_weighted": 0.0008082052658385359,
+        "suspect_also_unreachable": 0.10242587601078167
+      },
+      "DoS": {
+        "n_vectors": 2961,
+        "n_weighted": 3276,
+        "suspect_vectors": 4,
+        "suspect_share_weighted": 0.001221001221001221,
+        "suspect_also_unreachable": 0.25
+      },
+      "Exploits": {
+        "n_vectors": 22644,
+        "n_weighted": 43608,
+        "suspect_vectors": 8,
+        "suspect_share_weighted": 0.000458631443771785,
+        "suspect_also_unreachable": 0.1
+      },
+      "Fuzzers": {
+        "n_vectors": 6746,
+        "n_weighted": 20348,
+        "suspect_vectors": 5,
+        "suspect_share_weighted": 0.000245724395517987,
+        "suspect_also_unreachable": 0.2
+      },
+      "Generic": {
+        "n_vectors": 3670,
+        "n_weighted": 14956,
+        "suspect_vectors": 2,
+        "suspect_share_weighted": 0.0001337255950788981,
+        "suspect_also_unreachable": 0.0
+      },
+      "Reconnaissance": {
+        "n_vectors": 362,
+        "n_weighted": 10655,
+        "suspect_vectors": 1,
+        "suspect_share_weighted": 9.385265133740028e-05,
+        "suspect_also_unreachable": 0.0
+      },
+      "Shellcode": {
+        "n_vectors": 214,
+        "n_weighted": 1391,
+        "suspect_vectors": 0,
+        "suspect_share_weighted": 0.0,
+        "suspect_also_unreachable": 0.0
+      },
+      "Worms": {
+        "n_vectors": 50,
+        "n_weighted": 156,
+        "suspect_vectors": 0,
+        "suspect_share_weighted": 0.0,
+        "suspect_also_unreachable": 0.0
+      }
+    }
+  },
+  "effect": {
+    "main_model": {
+      "test_all": {
+        "weighted": {
+          "dr": 0.9842145096767219,
+          "far": 0.002695504146847307,
+          "macro_f1": 0.9787036630533855,
+          "pr_auc": 0.9785081969982494,
+          "precision_at_natural_prevalence": 0.9379781724957111
+        },
+        "per_attack_recall": {
+          "Analysis": 0.2318840579710145,
+          "Backdoor": 1.0,
+          "DoS": 0.9627906976744186,
+          "Exploits": 0.9909827645245977,
+          "Fuzzers": 0.9709027605073365,
+          "Generic": 0.998327199732352,
+          "Reconnaissance": 0.9993894993894994,
+          "Shellcode": 0.9532374100719424,
+          "Worms": 1.0
+        }
+      },
+      "test_without_suspects": {
+        "weighted": {
+          "dr": 0.9842677190895821,
+          "far": 0.0019195293946642213,
+          "macro_f1": 0.9835534479289897,
+          "pr_auc": 0.9939616311585127,
+          "precision_at_natural_prevalence": 0.9550322509511998
+        },
+        "per_attack_recall": {
+          "Analysis": 0.2318840579710145,
+          "Backdoor": 1.0,
+          "DoS": 0.9627906976744186,
+          "Exploits": 0.9909827645245977,
+          "Fuzzers": 0.9711442786069652,
+          "Generic": 0.998327199732352,
+          "Reconnaissance": 0.9993894993894994,
+          "Shellcode": 0.9532374100719424,
+          "Worms": 1.0
+        }
+      }
+    },
+    "n_test_suspects": 263,
+    "n_test_suspects_weighted": 365,
+    "retrained_without_suspects": {
+      "n_train": 164738,
+      "threshold": 0.3662305098502898,
+      "test_all": {
+        "weighted": {
+          "dr": 0.9868634446967239,
+          "far": 0.0029283171040631203,
+          "macro_f1": 0.9779693570845012,
+          "pr_auc": 0.9778319884736668,
+          "precision_at_natural_prevalence": 0.9331481791574583
+        },
+        "per_attack_recall": {
+          "Analysis": 0.34782608695652173,
+          "Backdoor": 1.0,
+          "DoS": 0.9612403100775194,
+          "Exploits": 0.9921241867366739,
+          "Fuzzers": 0.9761253419547377,
+          "Generic": 0.9979926396788223,
+          "Reconnaissance": 1.0,
+          "Shellcode": 0.9928057553956835,
+          "Worms": 1.0
+        }
+      },
+      "test_without_suspects": {
+        "weighted": {
+          "dr": 0.986916797318484,
+          "far": 0.0021525234971346,
+          "macro_f1": 0.9827928972832347,
+          "pr_auc": 0.9940109230716583,
+          "precision_at_natural_prevalence": 0.9499756538169967
+        },
+        "per_attack_recall": {
+          "Analysis": 0.34782608695652173,
+          "Backdoor": 1.0,
+          "DoS": 0.9612403100775194,
+          "Exploits": 0.9921241867366739,
+          "Fuzzers": 0.9763681592039801,
+          "Generic": 0.9979926396788223,
+          "Reconnaissance": 1.0,
+          "Shellcode": 0.9928057553956835,
+          "Worms": 1.0
+        }
+      },
+      "seconds": 842.8
+    }
+  },
+  "seconds": 1032.7
+}

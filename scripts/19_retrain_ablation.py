@@ -15,7 +15,7 @@ Dùng:
     python scripts/19_retrain_ablation.py --dataset unsw
     python scripts/19_retrain_ablation.py --dataset cse --fast
 Đầu ra: reports/retrain_ablation_<ds>.json. Không ghi đè mô hình hay kết quả chính.
-Thời gian: mỗi cấu hình bằng bước 3 + 4 (khoảng 3 phút với UNSW, 8 phút với CSE), nhân 9 cấu hình.
+Thời gian: mỗi cấu hình bằng bước 3 + 4 (khoảng 3 phút với UNSW, 2 giờ với CSE), nhân 9 cấu hình.
 """
 import argparse
 import time
@@ -23,7 +23,7 @@ import time
 import _bootstrap  # noqa: F401
 from xsids.config import load_config, resolve_path
 from xsids.features.engineer import GROUP_ORDER
-from xsids.models.data import cap_train, load_feature_set, load_split, natural_prevalence, xyw
+from xsids.models.data import load_feature_set, load_split, natural_prevalence, xyw
 from xsids.models.experiment import evaluate_system, fit_system, thresholds
 from xsids.models.zoo import get_params, load_models_cfg
 from xsids.utils import get_logger, write_json
@@ -45,7 +45,7 @@ feats, groups = fs["features"], fs["groups"]
 seed, n_jobs, folds, C = mcfg["seed"], mcfg["n_jobs"], mcfg["cv_folds"], mcfg["meta"]["C"]
 params = get_params(mcfg, args.fast)
 
-tr = cap_train(load_split(proc, ds, "train"), mcfg["train_cap"].get(ds), seed)
+tr = load_split(proc, ds, "train")
 va, te, te_o = load_split(proc, ds, "val"), load_split(proc, ds, "test"), load_split(proc, other, "test")
 pi, pi_o = natural_prevalence(proc, ds), natural_prevalence(proc, other)
 

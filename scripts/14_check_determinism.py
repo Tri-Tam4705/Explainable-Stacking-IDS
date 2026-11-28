@@ -15,7 +15,7 @@ import numpy as np
 
 import _bootstrap  # noqa: F401
 from xsids.config import load_config, resolve_path
-from xsids.models.data import cap_train, load_feature_set, load_split, xyw
+from xsids.models.data import load_feature_set, load_split, xyw
 from xsids.models.determinism import meta_weight_spread, oof_repeat_diff
 from xsids.models.zoo import BASE_NAMES, get_params, load_models_cfg
 from xsids.report.console import heading, num, table
@@ -37,7 +37,7 @@ feats = load_feature_set(proc)["features"]
 seed, n_jobs, folds = mcfg["seed"], mcfg["n_jobs"], mcfg["cv_folds"]
 params = get_params(mcfg, False)
 
-tr = cap_train(load_split(proc, args.dataset, "train"), mcfg["train_cap"].get(args.dataset), seed)
+tr = load_split(proc, args.dataset, "train")
 if args.rows and args.rows < len(tr):
     tr = tr.sample(n=args.rows, random_state=seed).reset_index(drop=True)
 X, y, _, att = xyw(tr, feats)

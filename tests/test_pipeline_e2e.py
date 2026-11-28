@@ -114,3 +114,23 @@ def test_gzip_csv_fallback_reads_same_rows(cfg, tmp_path):
     pd.testing.assert_frame_equal(a.reset_index(drop=True), b.reset_index(drop=True))
     shutil.copy(raw, d / name)  # có cả CSV gốc thì ưu tiên CSV gốc
     assert dataset_csv_path(cfg, "unsw", raw_dir_override=str(d)).name == name
+
+
+def test_compact_loading_gives_same_cleaned_data(tmp_path, cfg):
+    """compact=True chỉ đổi kiểu dữ liệu khi đọc: kết quả làm sạch, gộp trùng và chia tập phải giống hệt."""
+    from xsids.data.cleaning import clean_dataset
+
+    path = _write_csv(tmp_path, n=20000)
+    out = []
+    for compact in (False, True):
+        df, info = read_netflow_csv(path, "Label", "Attack", chunksize=3000, compact=compact)
+        df, _ = add_family(df, cfg["families"])
+        df, rep = clean_dataset(df, cfg["cleaning"])
+        out.append((df, rep, info))
+    (a, ra, ia), (b, rb, ib) = out
+    assert ia["rows_loaded"] == ib["rows_loaded"]
+    assert ra["collapse"]["unique_vectors"] == rb["collapse"]["unique_vectors"]
+    assert ra["collapse"]["conflict_rows"] == rb["collapse"]["conflict_rows"]
+    assert list(a.columns) == list(b.columns)
+    pd.testing.assert_frame_equal(a.astype({"attack": str, "family": str}), b.astype({"attack": str, "family": str}),
+                                  check_dtype=False, check_categorical=False)

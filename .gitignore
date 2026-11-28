@@ -21,3 +21,6 @@ logs/
 ~$*
 .claude/
 *.egg-info/
+
+# dữ liệu toàn bộ CSE cho scripts/25_full_cse.py
+data/processed_full/

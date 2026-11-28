@@ -1,0 +1,96 @@
+{
+  "dataset": "cse",
+  "threshold": 0.24075056655075594,
+  "n_per_role": {
+    "FP": 381,
+    "TP": 400,
+    "FN": 400
+  },
+  "population_per_role": {
+    "FP": 381,
+    "TP": 94143,
+    "FN": 14606,
+    "TN": 1660732
+  },
+  "additivity_error_max": 1.123883652454083e-05,
+  "trust": {
+    "n_fp": 381,
+    "n_tp": 400,
+    "auc_low_agreement_detects_fp": 0.7747781065088759,
+    "auc_low_agreement_ci95": [
+      0.45868062438747337,
+      0.9005722287968527
+    ],
+    "auc_low_z_detects_fp": 1.0,
+    "auc_low_z_ci95": [
+      0.9999999999999999,
+      1.0
+    ],
+    "auc_low_agreement_within_z_quartiles": 0.7047579797061081,
+    "auc_within_z_ci95": [
+      0.34971750079671055,
+      0.9850720744292658
+    ],
+    "fp_share_by_agreement_quartile": [
+      0.009594445321129874,
+      0.001107169893836247,
+      0.0008635645142617075,
+      0.0008205778389089213
+    ],
+    "agreement_quartile_edges": [
+      0.6095238095238096,
+      0.6571428571428571,
+      0.7714285714285714
+    ],
+    "spearman_agreement_z": -0.33423243463702207,
+    "agreement_mean": {
+      "FP": 0.6882639670041244,
+      "TP": 0.6536666666666667
+    },
+    "agreement_median": {
+      "FP": 0.7619047619047619,
+      "TP": 0.6571428571428571
+    }
+  },
+  "missed": {
+    "z_threshold": -1.1485689537780452,
+    "groups": [
+      "volume",
+      "timing_rate",
+      "packet_size",
+      "tcp_behavior",
+      "retransmission",
+      "protocol"
+    ],
+    "by_attack": {
+      "Infilteration": {
+        "n_fn": 400,
+        "n_tp": 0,
+        "fn_weight_share": 1.0,
+        "mean_phi_fn": {
+          "volume": -0.21998540985330473,
+          "timing_rate": -0.4831580631605178,
+          "packet_size": -0.4923945233841703,
+          "tcp_behavior": -0.22438699024224648,
+          "retransmission": 0.002878861026576171,
+          "protocol": 0.028202281793905513
+        },
+        "mean_phi_tp": null,
+        "mean_z_fn": -4.552279335838085,
+        "mean_z_tp": null
+      }
+    },
+    "all_fn": {
+      "n": 400,
+      "mean_z": -4.552279335838085,
+      "mean_phi": {
+        "volume": -0.21998540985330473,
+        "timing_rate": -0.4831580631605178,
+        "packet_size": -0.4923945233841703,
+        "tcp_behavior": -0.22438699024224648,
+        "retransmission": 0.002878861026576171,
+        "protocol": 0.028202281793905513
+      }
+    }
+  }
+}

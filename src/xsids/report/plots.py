@@ -1,6 +1,6 @@
-"""Biểu đồ so sánh dựng từ reports/*.json (và lime_sample.parquet nếu có). Mỗi hàm vẽ một hình, trả về đường dẫn.
+"""Biểu đồ so sánh dựng từ reports/*.json (và data/processed/ cho một số hình). Mỗi hàm vẽ một hình, trả về đường dẫn.
 
-Màu cố định để đọc nhanh: SHAP xanh dương, LIME cam, ngẫu nhiên xám; UNSW xanh ngọc, CSE tím.
+Màu cố định để đọc nhanh: SHAP xanh dương, ngẫu nhiên xám; UNSW xanh ngọc, CSE tím.
 """
 from __future__ import annotations
 
@@ -11,12 +11,11 @@ import numpy as np
 from xsids.report.summaries import (
     GROUP_ORDER,
     MODEL_SHORT,
-    agreement_metrics,
 )
 
-C_SHAP, C_LIME, C_RAND = "#1f77b4", "#ff7f0e", "#8c8c8c"
+C_SHAP, C_RAND = "#1f77b4", "#8c8c8c"
 C_DS = {"unsw": "#2a9d8f", "cse": "#7b6fd0"}
-C_SINGLE, C_VOTE, C_STACK = "#a9b8c9", "#6f8fb5", "#1f4e79"
+C_SINGLE, C_STACK = "#a9b8c9", "#1f4e79"
 
 
 def _plt():
@@ -76,35 +75,6 @@ def fig_recall_per_attack(rep: dict, out: Path) -> Path | None:
 
 
 # ── 2. SHAP gộp ──────────────────────────────────────────────────────────────
-# ── 3. LIME so với SHAP ──────────────────────────────────────────────────────
-def fig_agreement(rep: dict, out: Path) -> Path | None:
-    dss = _ds_with(rep, "lime")
-    if not dss:
-        return None
-    plt = _plt()
-    mets = {ds: agreement_metrics(rep["lime"][ds]) for ds in dss}
-    labels = [m[0] for m in mets[dss[0]]]
-    n = len(labels)
-    h = 0.8 / len(dss)
-    fig, ax = plt.subplots(figsize=(8.6, 0.62 * n + 1.6))
-    for i, ds in enumerate(dss):
-        ys = np.arange(n) + (i - (len(dss) - 1) / 2) * h
-        vals = [np.nan if v is None else v for _, v in mets[ds]]
-        ax.barh(ys, vals, h, color=C_DS.get(ds, "#444"), label=ds.upper())
-        for y, v in zip(ys, vals):
-            if not np.isnan(v):
-                ax.text(v + 0.01, y, f"{v:.2f}", va="center", fontsize=8)
-    ax.set_yticks(np.arange(n), labels)
-    ax.invert_yaxis()
-    ax.set_xlim(0, 1.1)
-    ax.axvline(1.0, color="#bbb", lw=1)
-    ax.set_xlabel("Giá trị (1,0 = hoàn hảo; riêng R² là độ khớp của mô hình thay thế LIME)")
-    ax.set_title("LIME so với SHAP gộp: đồng thuận, ổn định và độ khớp")
-    ax.legend(frameon=False, loc="lower right")
-    fig.tight_layout()
-    return _save(fig, out, "fig_agreement.png")
-
-
 # ── 4. ablation, cross-dataset, LOFO ─────────────────────────────────────────
 def fig_ablation(rep: dict, out: Path) -> Path | None:
     dss = _ds_with(rep, "ablation")
@@ -178,7 +148,7 @@ def fig_cross_dataset(rep: dict, out: Path) -> Path | None:
 # (khóa, nhãn, hệ số đổi đơn vị cho chênh lệch, đơn vị, chiều tốt): FAR thấp hơn tốt hơn nên chênh lệch đảo dấu
 REPEAT_METRICS = [("dr", "DR", 100.0, "điểm %", 1), ("far", "FAR", 1000.0, "điểm ‰", -1),
                   ("macro_f1", "macro-F1", 100.0, "điểm %", 1), ("pr_auc", "PR-AUC", 100.0, "điểm %", 1)]
-REPEAT_MODELS = ["rf", "et", "xgb", "lgbm", "voting", "stack_explainable"]
+REPEAT_MODELS = ["rf", "et", "xgb", "lgbm", "stack_explainable"]
 
 
 def _repeat_ds(rep: dict) -> list[str]:
@@ -187,7 +157,7 @@ def _repeat_ds(rep: dict) -> list[str]:
 
 
 def fig_repeat_runs(rep: dict, out: Path) -> Path | None:
-    """Giá trị của từng lần lặp cho 6 mô hình: chấm tròn là phép chia, tam giác là seed; vạch ngang là trung bình."""
+    """Giá trị của từng lần lặp cho 5 mô hình: chấm tròn là phép chia, tam giác là seed; vạch ngang là trung bình."""
     dss = _repeat_ds(rep)
     if not dss:
         return None
@@ -198,12 +168,11 @@ def fig_repeat_runs(rep: dict, out: Path) -> Path | None:
         msp = rep["multisplit"][ds]["metrics"]
         mse = ((rep.get("multiseed") or {}).get(ds) or {}).get("metrics") or {}
         n_sp = len(rep["multisplit"][ds].get("splits") or [])
-        n_se = len(((rep.get("multiseed") or {}).get(ds) or {}).get("seeds") or [])
         for j, (q, lab, _, _, better) in enumerate(REPEAT_METRICS):
             ax = axes[i][j]
             scale = 1000.0 if q == "far" else 1.0
             for x, m in enumerate(REPEAT_MODELS):
-                col = C_STACK if m == "stack_explainable" else C_VOTE if m == "voting" else C_SINGLE
+                col = C_STACK if m == "stack_explainable" else C_SINGLE
                 if m in msp:
                     v = np.array(msp[m][q]["values"]) * scale
                     ax.scatter(x - 0.13 + rng.uniform(-0.06, 0.06, len(v)), v, s=18, color=col, alpha=0.85, zorder=3,
@@ -223,66 +192,16 @@ def fig_repeat_runs(rep: dict, out: Path) -> Path | None:
                     t.set_fontweight("bold")
     from matplotlib.lines import Line2D
 
-    handles = [Line2D([], [], marker="o", ls="-", color="#555", label=f"phép chia train/val/test khác nhau (n = {n_sp}); vạch liền: trung bình"),
-               Line2D([], [], marker="^", ls="--", color="#555", markerfacecolor="white",
-                      label=f"seed huấn luyện khác nhau, cùng phép chia (n = {n_se}); vạch đứt: trung bình")]
+    n_se = {ds: len(((rep.get("multiseed") or {}).get(ds) or {}).get("seeds") or []) for ds in dss}
+    handles = [Line2D([], [], marker="o", ls="-", color="#555", label=f"phép chia train/val/test khác nhau (n = {n_sp}); vạch liền: trung bình")]
+    if any(n_se.values()):
+        se_txt = ", ".join(f"{ds.upper()} n = {n}" for ds, n in n_se.items() if n)
+        handles.append(Line2D([], [], marker="^", ls="--", color="#555", markerfacecolor="white",
+                              label=f"seed huấn luyện khác nhau, cùng phép chia ({se_txt}); vạch đứt: trung bình"))
     fig.suptitle("Kết quả từng lần lặp: mỗi điểm là một lần huấn luyện và đánh giá lại", fontsize=12.5, fontweight="bold", y=1.03)
-    fig.legend(handles=handles, loc="upper center", ncol=2, frameon=False, fontsize=9.5, bbox_to_anchor=(0.5, 1.0))
+    fig.legend(handles=handles, loc="upper center", ncol=len(handles), frameon=False, fontsize=9.5, bbox_to_anchor=(0.5, 1.0))
     fig.tight_layout(rect=(0, 0, 1, 0.96))
     return _save(fig, out, "fig_repeat_runs.png")
-
-
-def _signed_diff(entry: dict, sv: list, vv: list, better: int, factor: float, corrected: bool):
-    d = (np.asarray(sv, dtype="float64") - np.asarray(vv, dtype="float64")) * better * factor
-    ci = entry.get("ci95_corrected" if corrected and "ci95_corrected" in entry else "ci95") or [np.nan, np.nan]
-    ci = sorted(np.asarray(ci, dtype="float64") * better * factor)
-    return d, ci
-
-
-def fig_repeat_diff(rep: dict, out: Path) -> Path | None:
-    """Chênh lệch Stacking − Voting của từng lần lặp, đổi dấu để phía trên 0 luôn là stacking tốt hơn, kèm KTC 95%."""
-    dss = _repeat_ds(rep)
-    if not dss:
-        return None
-    plt = _plt()
-    fig, axes = plt.subplots(len(dss), 4, figsize=(16.5, 3.5 * len(dss)), squeeze=False)
-    rng = np.random.default_rng(1)
-    for i, ds in enumerate(dss):
-        srcs = []
-        ms = (rep.get("multiseed") or {}).get(ds) or {}
-        if ms.get("metrics") and ms.get("stack_minus_voting"):
-            srcs.append(("Qua seed", ms, False, "p_value_paired_t"))
-        srcs.append(("Qua phép chia", rep["multisplit"][ds], True, "p_value_corrected_t"))
-        for j, (q, lab, factor, unit, better) in enumerate(REPEAT_METRICS):
-            ax = axes[i][j]
-            ax.axhline(0, color="#777", lw=1, ls="--", zorder=1)
-            for x, (name, src, corr, pkey) in enumerate(srcs):
-                met, ent = src["metrics"], src["stack_minus_voting"].get(q)
-                if not ent or "stack_explainable" not in met or "voting" not in met:
-                    continue
-                d, ci = _signed_diff(ent, met["stack_explainable"][q]["values"], met["voting"][q]["values"], better, factor, corr)
-                cols = np.where(d > 0, "#2a9d4f", np.where(d < 0, "#d1495b", "#999"))
-                ax.scatter(x + rng.uniform(-0.12, 0.12, len(d)), d, s=26, c=cols, alpha=0.85, zorder=3, edgecolor="white",
-                           linewidth=0.5)
-                ax.errorbar(x + 0.3, d.mean(), yerr=[[d.mean() - ci[0]], [ci[1] - d.mean()]], fmt="D", color="#222",
-                            ms=6, capsize=5, lw=1.6, zorder=4)
-                p = ent.get(pkey, ent.get("p_value_paired_t"))
-                k, n = int((d > 0).sum()), len(d)
-                ptxt = "" if p is None or (isinstance(p, float) and np.isnan(p)) else f"p = {p:.3g}\n"
-                ax.annotate(f"{ptxt}tốt hơn {k}/{n}", (x + 0.3, 1.0), xycoords=("data", "axes fraction"), ha="center",
-                            va="top", fontsize=8, color="#333")
-            ax.set_xticks(range(len(srcs)), [s[0] for s in srcs])
-            ax.set_xlim(-0.5, len(srcs) - 0.2)
-            lo, hi = ax.get_ylim()
-            ax.set_ylim(lo, hi + (hi - lo) * 0.28)
-            ax.grid(axis="y", alpha=0.25)
-            ax.set_title(f"{ds.upper()}: {lab}", fontsize=10.5)
-            ax.set_ylabel(f"chênh lệch ({unit})", fontsize=8.5)
-    fig.suptitle("Stacking − Soft voting theo từng lần lặp (phía trên đường 0: stacking tốt hơn)\n"
-                 "◆ trung bình và khoảng tin cậy 95%; p qua phép chia là kiểm định t đã hiệu chỉnh Nadeau–Bengio",
-                 fontsize=12, fontweight="bold", y=1.02)
-    fig.tight_layout()
-    return _save(fig, out, "fig_repeat_diff.png")
 
 
 # ── 12. A(x) và cảnh báo sai; tấn công bị bỏ sót ──────────────────────────────
@@ -379,22 +298,28 @@ def fig_missed(rep: dict, out: Path, processed: Path | None = None) -> Path | No
 
 
 # ── 13. kiểm tra bổ sung cho lời giải thích ──────────────────────────────────
-def _ec_conditions(ec: dict, sn: dict | None) -> list[tuple[str, dict | None]]:
+def _seed_pairs(rep: dict, ds: str) -> dict | None:
+    """Độ ổn định mức đặc trưng giữa các seed (trung bình qua các cặp mô hình).
+
+    Nguồn: các mô hình nhiều seed cùng phép chia (scripts/22, phần seeds)."""
+    sd = ((((rep.get("explain_checks") or {}).get(ds) or {}).get("seeds") or {}).get("path") or {}).get("feature")
+    return {k[:-5]: v for k, v in sd.items() if k.endswith("_mean")} if sd else None
+
+
+def _ec_conditions(ec: dict, sn: dict | None, seeds: dict | None = None) -> list[tuple[str, dict | None]]:
     """(nhãn, bộ chỉ số so sánh) cho từng kiểu thay đổi, đều đo trên SHAP gộp path-dependent trừ khi ghi khác."""
     rb = (ec.get("robust") or {}).get("levels") or {}
-    sd = ((ec.get("seeds") or {}).get("path") or {}).get("feature") or {}
-    seeds = {k[:-5]: v for k, v in sd.items() if k.endswith("_mean")} if sd else None
     val = (ec.get("value") or {}).get("feature") or {}
     return [("Nhiễu đầu vào ±1%", (rb.get("0.01") or {}).get("shap_path")),
             ("Nhiễu đầu vào ±5%", (rb.get("0.05") or {}).get("shap_path")),
-            ("Huấn luyện lại\n(8 seed, từng cặp)", seeds),
+            ("Huấn luyện lại\n(seed khác, từng cặp)", seeds),
             ("Đổi tập nền\n(interventional)", val.get("int_vs_int_other_bg")),
             ("Đổi hàm giá trị\n(path ↔ interventional)", val.get("path_vs_int")),
-            ("Nhãn xáo trộn\n(kiểm tra tỉnh táo)", (sn or {}).get("feature"))]
+            ("Nhãn xáo trộn\n(kiểm tra tính hợp lý)", (sn or {}).get("feature"))]
 
 
 def fig_explain_checks(rep: dict, out: Path) -> Path | None:
-    """Lời giải thích thay đổi bao nhiêu dưới từng kiểu thay đổi; LIME so với SHAP khi nhiễu đầu vào."""
+    """Lời giải thích thay đổi bao nhiêu dưới từng kiểu thay đổi, và khả năng chịu nhiễu khi nhiễu đầu vào."""
     dss = [ds for ds in rep["datasets"] if ((rep.get("explain_checks") or {}).get(ds) or {}) and not rep["explain_checks"][ds].get("fast")]
     if not dss:
         return None
@@ -406,7 +331,7 @@ def fig_explain_checks(rep: dict, out: Path) -> Path | None:
         ax = axes[col]
         labels = None
         for i, ds in enumerate(dss):
-            conds = _ec_conditions(rep["explain_checks"][ds], (rep.get("sanity") or {}).get(ds))
+            conds = _ec_conditions(rep["explain_checks"][ds], (rep.get("sanity") or {}).get(ds), _seed_pairs(rep, ds))
             labels = [c[0] for c in conds]
             vals = [np.nan if c[1] is None else c[1].get(metric, np.nan) for c in conds]
             ys = np.arange(len(conds)) + (i - (len(dss) - 1) / 2) * h
@@ -425,8 +350,8 @@ def fig_explain_checks(rep: dict, out: Path) -> Path | None:
     ax = axes[2]
     names = [("SHAP path, nhiễu ±1%", lambda r: r["levels"]["0.01"]["shap_path"]),
              ("SHAP interventional,\nnhiễu ±1%", lambda r: r["levels"]["0.01"]["shap_int"]),
-             ("LIME, nhiễu ±1%\n(kèm seed khác)", lambda r: r["lime"]["input_and_seed"]),
-             ("LIME, chỉ đổi seed", lambda r: r["lime"]["seed_only"])]
+             ("SHAP path, nhiễu ±5%", lambda r: r["levels"]["0.05"]["shap_path"]),
+             ("SHAP interventional,\nnhiễu ±5%", lambda r: r["levels"]["0.05"]["shap_int"])]
     for i, ds in enumerate(dss):
         rb = rep["explain_checks"][ds].get("robust")
         if not rb:
@@ -445,7 +370,7 @@ def fig_explain_checks(rep: dict, out: Path) -> Path | None:
     ax.set_yticks(np.arange(len(names)), [n for n, _ in names], fontsize=9)
     ax.invert_yaxis()
     ax.set_xlim(0, 1.12)
-    ax.set_title("Độ bền cục bộ: SHAP gộp và LIME\n(Spearman |φ| từng luồng)", fontsize=10)
+    ax.set_title("Khả năng chịu nhiễu của SHAP gộp\n(Spearman |φ| từng luồng)", fontsize=10)
     ax.grid(axis="x", alpha=0.25)
     fig.suptitle("Lời giải thích thay đổi bao nhiêu khi đổi đầu vào, đổi lần huấn luyện, đổi cách định nghĩa hoặc khi mô hình không học gì",
                  fontsize=12, fontweight="bold", y=1.02)
@@ -464,7 +389,7 @@ def fig_deletion_knn(rep: dict, out: Path) -> Path | None:
     fig, axes = plt.subplots(1, ncol, figsize=(4.6 * len(dss) + (4.2 if grp else 0), 4.4), squeeze=False,
                              gridspec_kw={"width_ratios": [1.1] * len(dss) + ([1.0] if grp else [])})
     sty = {"shap_path": ("SHAP gộp (path)", C_SHAP), "shap_int": ("SHAP gộp (interventional)", "#2a9d8f"),
-           "lime": ("LIME", C_LIME), "random": ("Ngẫu nhiên", C_RAND)}
+           "random": ("Ngẫu nhiên", C_RAND)}
     if grp:  # ô cuối: xóa trọn nhóm đặc trưng, toàn mẫu giải thích
         ax = axes[0][-1]
         cats, vals = [], {"shap_path": [], "random_features": [], "random_groups": []}
@@ -516,9 +441,9 @@ def fig_deletion_knn(rep: dict, out: Path) -> Path | None:
 def make_all(rep: dict, out_dir, processed_dir=None, log=print) -> list[Path]:
     """Vẽ mọi hình có đủ dữ liệu. Hình nào thiếu dữ liệu hoặc lỗi thì bỏ qua và báo, không làm hỏng các hình khác."""
     out = Path(out_dir)
-    jobs = [("fig_recall_per_attack", lambda: fig_recall_per_attack(rep, out)), ("fig_agreement", lambda: fig_agreement(rep, out)),
+    jobs = [("fig_recall_per_attack", lambda: fig_recall_per_attack(rep, out)),
             ("fig_ablation", lambda: fig_ablation(rep, out)), ("fig_cross_dataset", lambda: fig_cross_dataset(rep, out)),
-            ("fig_repeat_runs", lambda: fig_repeat_runs(rep, out)), ("fig_repeat_diff", lambda: fig_repeat_diff(rep, out)),
+            ("fig_repeat_runs", lambda: fig_repeat_runs(rep, out)),
             ("fig_trust", lambda: fig_trust(rep, out, processed_dir)), ("fig_missed", lambda: fig_missed(rep, out, processed_dir)),
             ("fig_explain_checks", lambda: fig_explain_checks(rep, out)), ("fig_deletion_knn", lambda: fig_deletion_knn(rep, out))]
     made = []

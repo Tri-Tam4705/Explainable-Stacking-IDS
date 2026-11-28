@@ -26,12 +26,16 @@ def read_netflow_csv(
     seed: int = 42,
     chunksize: int = 500_000,
     keep_ip: bool = False,
+    compact: bool = False,
 ):
     """Đọc file CSV, trả về (df, info).
 
     - Chỉ đọc các cột cần thiết (bỏ địa chỉ IP để tiết kiệm RAM).
     - sample_frac < 1: lấy mẫu ĐỀU từng khối nên giữ nguyên tỷ lệ tấn công tự nhiên.
     - Đổi tên cột nhãn về `label` (0/1) và `attack` (chuỗi).
+    - compact=True: thu nhỏ từng khối ngay khi đọc (cột số nguyên về kiểu nguyên nhỏ nhất, cột tên tấn công về
+      category). Phép đổi kiểu không làm mất giá trị, nên kết quả làm sạch và gộp trùng không đổi; dùng khi đọc
+      toàn bộ file lớn (NF-CSE-CIC-IDS2018-v2 có 18,9 triệu dòng).
     """
     path = Path(path)
     if not path.exists():
@@ -62,8 +66,10 @@ def read_netflow_csv(
         n_read += len(chunk)
         if sample_frac < 1.0:
             chunk = chunk[rng.random(len(chunk)) < sample_frac]
+        if compact:
+            chunk = _compact_chunk(chunk, attack_source)
         parts.append(chunk)
-    df = pd.concat(parts, ignore_index=True)
+    df = _concat_parts(parts, attack_source) if compact else pd.concat(parts, ignore_index=True)
     del parts
 
     df, std_info = _standardize(df, label_source, attack_source)
@@ -78,6 +84,31 @@ def read_netflow_csv(
     }
     log.info("Đã nạp %s: %d/%d dòng, %d cột", path.name, len(df), n_read, df.shape[1])
     return df, info
+
+
+def _compact_chunk(chunk: pd.DataFrame, attack_source: str) -> pd.DataFrame:
+    """Đổi kiểu không mất giá trị: số nguyên về kiểu nguyên nhỏ nhất, tên tấn công về category."""
+    for c in chunk.columns:
+        if c == attack_source:
+            chunk[c] = chunk[c].astype(str).str.strip().astype("category")
+        elif pd.api.types.is_integer_dtype(chunk[c]):
+            chunk[c] = pd.to_numeric(chunk[c], downcast="integer")
+    return chunk
+
+
+def _concat_parts(parts: list[pd.DataFrame], attack_source: str) -> pd.DataFrame:
+    """Nối các khối đã thu nhỏ. Mỗi cột nhận kiểu chung của các khối; category được hợp nhất danh mục."""
+    if attack_source not in parts[0].columns:
+        return pd.concat(parts, ignore_index=True)
+    from pandas.api.types import union_categoricals
+
+    pos = parts[0].columns.get_loc(attack_source)
+    att = union_categoricals([p[attack_source] for p in parts])
+    for p in parts:
+        del p[attack_source]
+    df = pd.concat(parts, ignore_index=True)
+    df.insert(pos, attack_source, pd.Categorical(att))
+    return df
 
 
 def _standardize(df: pd.DataFrame, label_source: str, attack_source: str):
@@ -97,7 +128,9 @@ def _standardize(df: pd.DataFrame, label_source: str, attack_source: str):
 
     # --- tên tấn công ---
     if attack_source in df.columns:
-        att = df[attack_source].astype(str).str.strip()
+        att = df[attack_source]
+        if not isinstance(att.dtype, pd.CategoricalDtype):  # category từ compact=True đã được strip
+            att = att.astype(str).str.strip()
     else:
         log.warning("Không có cột '%s': suy ra từ nhãn nhị phân", attack_source)
         att = pd.Series(np.where(df[label_source] == 0, "Benign", "Attack"), index=df.index)

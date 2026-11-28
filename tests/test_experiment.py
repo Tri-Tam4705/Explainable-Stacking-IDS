@@ -37,7 +37,7 @@ def test_fit_and_evaluate_system_on_a_feature_subset():
     system = fit_system(X[keep], y, att, PARAMS, seed=0, n_jobs=1, folds=3, C=10.0)
     assert set(system["models"]) == set(BASE_NAMES) and len(system["w"]) == len(BASE_NAMES)
     s = scores(system, Xt[keep])
-    assert set(s) == set(BASE_NAMES) | {"voting", "stack_explainable"}
+    assert set(s) == set(BASE_NAMES) | {"stack_explainable"}
     assert all(((v >= 0) & (v <= 1)).all() for v in s.values())
     res = evaluate_system(system, thresholds(system, Xv[keep], yv, wv), Xt[keep], yt, wt, at, 0.3, per_attack=True)
     stack = res["stack_explainable"]

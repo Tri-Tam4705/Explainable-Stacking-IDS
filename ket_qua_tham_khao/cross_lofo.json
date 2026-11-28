@@ -1,34 +1,34 @@
 {
   "cross_dataset": {
     "train_unsw_test_unsw": {
-      "threshold": 0.3916215329945015,
+      "threshold": 0.3888730294391052,
       "weighted": {
-        "dr": 0.9834036112012109,
-        "far": 0.0026933682481572532,
-        "precision": 0.935173761052848,
-        "f1_attack": 0.9586824769433465,
-        "macro_f1": 0.978503112282368,
-        "tp": 18191.0,
-        "fp": 1261.0,
-        "fn": 307.0,
-        "tn": 466926.0,
-        "pr_auc": 0.9785108418880437,
-        "roc_auc": 0.9993852308431559,
-        "precision_at_natural_prevalence": 0.9379763378209827
+        "dr": 0.9842145096767219,
+        "far": 0.002695504146847307,
+        "precision": 0.9351756728991165,
+        "f1_attack": 0.9590686403624296,
+        "macro_f1": 0.9787036630533855,
+        "tp": 18206.0,
+        "fp": 1262.0,
+        "fn": 292.0,
+        "tn": 466925.0,
+        "pr_auc": 0.9785081969982494,
+        "roc_auc": 0.999385213292253,
+        "precision_at_natural_prevalence": 0.9379781724957111
       },
       "unweighted": {
         "dr": 0.9647736405036164,
-        "far": 0.023624214820190694,
-        "precision": 0.8841291272861176,
-        "f1_attack": 0.9226926279382566,
-        "macro_f1": 0.9537299226367961,
+        "far": 0.02364924047148327,
+        "precision": 0.884020618556701,
+        "f1_attack": 0.9226335340079416,
+        "macro_f1": 0.9536939692857619,
         "tp": 7203.0,
-        "fp": 944.0,
+        "fp": 945.0,
         "fn": 263.0,
-        "tn": 39015.0,
-        "pr_auc": 0.9598241580580155,
-        "roc_auc": 0.9946585133903691,
-        "precision_at_natural_prevalence": 0.6284569870585667
+        "tn": 39014.0,
+        "pr_auc": 0.959845296481986,
+        "roc_auc": 0.9946607659001024,
+        "precision_at_natural_prevalence": 0.6282097339470097
       },
       "per_attack_recall": {
         "Analysis": {
@@ -52,14 +52,14 @@
         "Exploits": {
           "n_vectors": 4529,
           "n_weighted": 8761,
-          "recall_weighted": 0.9910969067458053,
-          "recall_unweighted": 0.9836608522852727
+          "recall_weighted": 0.9909827645245977,
+          "recall_unweighted": 0.9834400529918305
         },
         "Fuzzers": {
           "n_vectors": 1349,
           "n_weighted": 4021,
-          "recall_weighted": 0.966923650833126,
-          "recall_unweighted": 0.9236471460340994
+          "recall_weighted": 0.9709027605073365,
+          "recall_unweighted": 0.9243884358784284
         },
         "Generic": {
           "n_vectors": 734,
@@ -89,152 +89,152 @@
       "natural_prevalence_used": 0.03977159103935365
     },
     "train_unsw_test_cse": {
-      "threshold": 0.3916215329945015,
+      "threshold": 0.3888730294391053,
       "weighted": {
-        "dr": 0.02376795268938327,
-        "far": 0.23396836206722676,
-        "precision": 0.012676987162798149,
-        "f1_attack": 0.016534862307436116,
-        "macro_f1": 0.41369953271001714,
-        "tp": 2532.0,
-        "fp": 197200.0,
-        "fn": 103998.0,
-        "tn": 645649.0,
-        "pr_auc": 0.0632049699259721,
-        "roc_auc": 0.1493451814437633,
-        "precision_at_natural_prevalence": 0.013581531252560545
+        "dr": 0.022258331828766395,
+        "far": 0.23664100708935998,
+        "precision": 0.012116843874668286,
+        "f1_attack": 0.01569159872848443,
+        "macro_f1": 0.41155625965108866,
+        "tp": 9616.0,
+        "fp": 783990.0,
+        "fn": 422402.0,
+        "tn": 2529003.0,
+        "pr_auc": 0.06509983726354591,
+        "roc_auc": 0.1501517874738895,
+        "precision_at_natural_prevalence": 0.012569493639261124
       },
       "unweighted": {
-        "dr": 0.07114756082798693,
-        "far": 0.42313332993128605,
-        "precision": 0.012177498303644962,
-        "f1_attack": 0.020795648039627603,
-        "macro_f1": 0.3610838899949069,
-        "tp": 2351.0,
-        "fp": 190710.0,
-        "fn": 30693.0,
-        "tn": 259999.0,
-        "pr_auc": 0.03605545736352134,
-        "roc_auc": 0.0901647878034031,
-        "precision_at_natural_prevalence": 0.022281755378436196
+        "dr": 0.0814812090226117,
+        "far": 0.43856619025918164,
+        "precision": 0.012017049808169316,
+        "f1_attack": 0.020945069127473948,
+        "macro_f1": 0.35670171581741694,
+        "tp": 8861.0,
+        "fp": 728508.0,
+        "fn": 99888.0,
+        "tn": 932605.0,
+        "pr_auc": 0.03249106734831493,
+        "roc_auc": 0.09812641160700772,
+        "precision_at_natural_prevalence": 0.024527097655069052
       },
       "per_attack_recall": {
         "Bot": {
-          "n_vectors": 46,
-          "n_weighted": 2641,
+          "n_vectors": 94,
+          "n_weighted": 10558,
           "recall_weighted": 0.0,
           "recall_unweighted": 0.0
         },
         "Brute Force -Web": {
-          "n_vectors": 25,
-          "n_weighted": 25,
-          "recall_weighted": 0.2,
-          "recall_unweighted": 0.2
+          "n_vectors": 40,
+          "n_weighted": 79,
+          "recall_weighted": 0.5949367088607594,
+          "recall_unweighted": 0.5
         },
         "Brute Force -XSS": {
-          "n_vectors": 9,
-          "n_weighted": 9,
-          "recall_weighted": 0.2222222222222222,
-          "recall_unweighted": 0.2222222222222222
+          "n_vectors": 23,
+          "n_weighted": 23,
+          "recall_weighted": 0.0,
+          "recall_unweighted": 0.0
         },
         "DDOS attack-HOIC": {
-          "n_vectors": 7940,
-          "n_weighted": 52432,
+          "n_vectors": 19148,
+          "n_weighted": 216123,
           "recall_weighted": 0.0,
           "recall_unweighted": 0.0
         },
         "DDOS attack-LOIC-UDP": {
-          "n_vectors": 103,
-          "n_weighted": 103,
-          "recall_weighted": 0.1650485436893204,
-          "recall_unweighted": 0.1650485436893204
+          "n_vectors": 409,
+          "n_weighted": 410,
+          "recall_weighted": 0.15853658536585366,
+          "recall_unweighted": 0.15647921760391198
         },
         "DDoS attacks-LOIC-HTTP": {
-          "n_vectors": 928,
-          "n_weighted": 15317,
-          "recall_weighted": 0.03421035450806294,
-          "recall_unweighted": 0.5581896551724138
+          "n_vectors": 3358,
+          "n_weighted": 61441,
+          "recall_weighted": 0.03544864178642926,
+          "recall_unweighted": 0.6078022632519356
         },
         "DoS attacks-GoldenEye": {
-          "n_vectors": 1381,
-          "n_weighted": 1390,
+          "n_vectors": 5403,
+          "n_weighted": 5543,
           "recall_weighted": 0.0,
           "recall_unweighted": 0.0
         },
         "DoS attacks-Hulk": {
-          "n_vectors": 17894,
-          "n_weighted": 21648,
+          "n_vectors": 62307,
+          "n_weighted": 86260,
           "recall_weighted": 0.0,
           "recall_unweighted": 0.0
         },
         "DoS attacks-SlowHTTPTest": {
-          "n_vectors": 2,
-          "n_weighted": 789,
+          "n_vectors": 3,
+          "n_weighted": 3074,
           "recall_weighted": 0.0,
           "recall_unweighted": 0.0
         },
         "DoS attacks-Slowloris": {
-          "n_vectors": 19,
-          "n_weighted": 455,
+          "n_vectors": 37,
+          "n_weighted": 1893,
           "recall_weighted": 0.0,
           "recall_unweighted": 0.0
         },
         "FTP-BruteForce": {
-          "n_vectors": 2,
-          "n_weighted": 1491,
+          "n_vectors": 4,
+          "n_weighted": 5819,
           "recall_weighted": 0.0,
           "recall_unweighted": 0.0
         },
         "Infilteration": {
-          "n_vectors": 3907,
-          "n_weighted": 5490,
-          "recall_weighted": 0.361384335154827,
-          "recall_unweighted": 0.4630151011005887
+          "n_vectors": 14973,
+          "n_weighted": 21824,
+          "recall_weighted": 0.33568548387096775,
+          "recall_unweighted": 0.4498764442663461
         },
         "SQL Injection": {
-          "n_vectors": 3,
-          "n_weighted": 3,
+          "n_vectors": 10,
+          "n_weighted": 10,
           "recall_weighted": 0.0,
           "recall_unweighted": 0.0
         },
         "SSH-Bruteforce": {
-          "n_vectors": 785,
-          "n_weighted": 4737,
+          "n_vectors": 2940,
+          "n_weighted": 18961,
           "recall_weighted": 0.0,
           "recall_unweighted": 0.0
         }
       },
-      "natural_prevalence_used": 0.11935818489405303
+      "natural_prevalence_used": 0.11920234135972577
     },
     "train_cse_test_unsw": {
-      "threshold": 0.8221534283440227,
+      "threshold": 0.24075056655075594,
       "weighted": {
-        "dr": 0.0005405989836739107,
-        "far": 1.281539214032e-05,
-        "precision": 0.625,
-        "f1_attack": 0.0010802635843145728,
-        "macro_f1": 0.4908559490462772,
-        "tp": 10.0,
-        "fp": 6.0,
-        "fn": 18488.0,
-        "tn": 468181.0,
-        "pr_auc": 0.02631762335360189,
-        "roc_auc": 0.2610751565586201,
-        "precision_at_natural_prevalence": 0.6359925411318486
+        "dr": 0.0007027786787760839,
+        "far": 0.0007731953257993067,
+        "precision": 0.034666666666666665,
+        "f1_attack": 0.0013776294176866422,
+        "macro_f1": 0.4908160754545554,
+        "tp": 13.0,
+        "fp": 362.0,
+        "fn": 18485.0,
+        "tn": 467825.0,
+        "pr_auc": 0.0237038320398089,
+        "roc_auc": 0.2373884767223702,
+        "precision_at_natural_prevalence": 0.03628091498755787
       },
       "unweighted": {
-        "dr": 0.0002678810608090008,
-        "far": 7.507695387772466e-05,
-        "precision": 0.4,
-        "f1_attack": 0.000535403560433677,
-        "macro_f1": 0.4575400441050317,
-        "tp": 2.0,
-        "fp": 3.0,
-        "fn": 7464.0,
-        "tn": 39956.0,
-        "pr_auc": 0.14356029965521394,
-        "roc_auc": 0.3404468484563139,
-        "precision_at_natural_prevalence": 0.12875757690531273
+        "dr": 0.000669702652022502,
+        "far": 0.0010260517029955704,
+        "precision": 0.10869565217391304,
+        "f1_attack": 0.001331203407880724,
+        "macro_f1": 0.45771751496048396,
+        "tp": 5.0,
+        "fp": 41.0,
+        "fn": 7461.0,
+        "tn": 39918.0,
+        "pr_auc": 0.11563927438923745,
+        "roc_auc": 0.2747918360895326,
+        "precision_at_natural_prevalence": 0.0263224520518903
       },
       "per_attack_recall": {
         "Analysis": {
@@ -258,14 +258,14 @@
         "Exploits": {
           "n_vectors": 4529,
           "n_weighted": 8761,
-          "recall_weighted": 0.0001141422212076247,
-          "recall_unweighted": 0.00022079929344226098
+          "recall_weighted": 0.0003424266636228741,
+          "recall_unweighted": 0.0006623978803267829
         },
         "Fuzzers": {
           "n_vectors": 1349,
           "n_weighted": 4021,
-          "recall_weighted": 0.0,
-          "recall_unweighted": 0.0
+          "recall_weighted": 0.0002486943546381497,
+          "recall_unweighted": 0.0007412898443291327
         },
         "Generic": {
           "n_vectors": 734,
@@ -295,384 +295,385 @@
       "natural_prevalence_used": 0.03977159103935365
     },
     "train_cse_test_cse": {
-      "threshold": 0.8221534283440227,
+      "threshold": 0.24075056655075594,
       "weighted": {
-        "dr": 0.9338777809067869,
-        "far": 5.813615487471659e-05,
-        "precision": 0.999507710855478,
-        "f1_attack": 0.965578822216291,
-        "macro_f1": 0.9806942290520964,
-        "tp": 99486.0,
-        "fp": 49.0,
-        "fn": 7044.0,
-        "tn": 842800.0,
-        "pr_auc": 0.957797006781397,
-        "roc_auc": 0.9698703929460449,
-        "precision_at_natural_prevalence": 0.9995409035549317
+        "dr": 0.9360397020494516,
+        "far": 0.00020404510362684135,
+        "precision": 0.998331119680444,
+        "f1_attack": 0.9661824437329766,
+        "macro_f1": 0.980963742023736,
+        "tp": 404386.0,
+        "fp": 676.0,
+        "fn": 27632.0,
+        "tn": 3312317.0,
+        "pr_auc": 0.9586376383655103,
+        "roc_auc": 0.9743579198548131,
+        "precision_at_natural_prevalence": 0.99839185833392
       },
       "unweighted": {
-        "dr": 0.8843662994794819,
-        "far": 8.65303333192814e-05,
-        "precision": 0.9986672134508919,
-        "f1_attack": 0.9380477000609891,
-        "macro_f1": 0.9668917245333668,
-        "tp": 29223.0,
-        "fp": 39.0,
-        "fn": 3821.0,
-        "tn": 450670.0,
-        "pr_auc": 0.9153579299735057,
-        "roc_auc": 0.95755639840597,
-        "precision_at_natural_prevalence": 0.9992786103937485
+        "dr": 0.8656907189951172,
+        "far": 0.0002293642876794053,
+        "precision": 0.995969277643773,
+        "f1_attack": 0.9262715658252695,
+        "macro_f1": 0.9608898335490745,
+        "tp": 94143.0,
+        "fp": 381.0,
+        "fn": 14606.0,
+        "tn": 1660732.0,
+        "pr_auc": 0.898830623070861,
+        "roc_auc": 0.9515346144949336,
+        "precision_at_natural_prevalence": 0.9980460880030085
       },
       "per_attack_recall": {
         "Bot": {
-          "n_vectors": 46,
-          "n_weighted": 2641,
-          "recall_weighted": 0.9996213555471413,
-          "recall_unweighted": 0.9782608695652174
+          "n_vectors": 94,
+          "n_weighted": 10558,
+          "recall_weighted": 0.9974426974805835,
+          "recall_unweighted": 0.9893617021276596
         },
         "Brute Force -Web": {
-          "n_vectors": 25,
-          "n_weighted": 25,
-          "recall_weighted": 0.92,
-          "recall_unweighted": 0.92
+          "n_vectors": 40,
+          "n_weighted": 79,
+          "recall_weighted": 0.9367088607594937,
+          "recall_unweighted": 0.9
         },
         "Brute Force -XSS": {
-          "n_vectors": 9,
-          "n_weighted": 9,
-          "recall_weighted": 0.8888888888888888,
-          "recall_unweighted": 0.8888888888888888
+          "n_vectors": 23,
+          "n_weighted": 23,
+          "recall_weighted": 1.0,
+          "recall_unweighted": 1.0
         },
         "DDOS attack-HOIC": {
-          "n_vectors": 7940,
-          "n_weighted": 52432,
+          "n_vectors": 19148,
+          "n_weighted": 216123,
           "recall_weighted": 1.0,
           "recall_unweighted": 1.0
         },
         "DDOS attack-LOIC-UDP": {
-          "n_vectors": 103,
-          "n_weighted": 103,
+          "n_vectors": 409,
+          "n_weighted": 410,
           "recall_weighted": 1.0,
           "recall_unweighted": 1.0
         },
         "DDoS attacks-LOIC-HTTP": {
-          "n_vectors": 928,
-          "n_weighted": 15317,
-          "recall_weighted": 0.8630932950316642,
-          "recall_unweighted": 0.9967672413793104
+          "n_vectors": 3358,
+          "n_weighted": 61441,
+          "recall_weighted": 0.8624859621425432,
+          "recall_unweighted": 0.9988088147706968
         },
         "DoS attacks-GoldenEye": {
-          "n_vectors": 1381,
-          "n_weighted": 1390,
+          "n_vectors": 5403,
+          "n_weighted": 5543,
           "recall_weighted": 1.0,
           "recall_unweighted": 1.0
         },
         "DoS attacks-Hulk": {
-          "n_vectors": 17894,
-          "n_weighted": 21648,
-          "recall_weighted": 1.0,
-          "recall_unweighted": 1.0
+          "n_vectors": 62307,
+          "n_weighted": 86260,
+          "recall_weighted": 0.9986900069557153,
+          "recall_unweighted": 0.9999839504389555
         },
         "DoS attacks-SlowHTTPTest": {
-          "n_vectors": 2,
-          "n_weighted": 789,
+          "n_vectors": 3,
+          "n_weighted": 3074,
           "recall_weighted": 1.0,
           "recall_unweighted": 1.0
         },
         "DoS attacks-Slowloris": {
-          "n_vectors": 19,
-          "n_weighted": 455,
-          "recall_weighted": 1.0,
-          "recall_unweighted": 1.0
+          "n_vectors": 37,
+          "n_weighted": 1893,
+          "recall_weighted": 0.9899630216587427,
+          "recall_unweighted": 0.918918918918919
         },
         "FTP-BruteForce": {
-          "n_vectors": 2,
-          "n_weighted": 1491,
+          "n_vectors": 4,
+          "n_weighted": 5819,
           "recall_weighted": 1.0,
           "recall_unweighted": 1.0
         },
         "Infilteration": {
-          "n_vectors": 3907,
-          "n_weighted": 5490,
-          "recall_weighted": 0.1,
-          "recall_unweighted": 0.02431533145636038
+          "n_vectors": 14973,
+          "n_weighted": 21824,
+          "recall_weighted": 0.12875733137829912,
+          "recall_unweighted": 0.025712949976624593
         },
         "SQL Injection": {
-          "n_vectors": 3,
-          "n_weighted": 3,
-          "recall_weighted": 0.6666666666666666,
-          "recall_unweighted": 0.6666666666666666
+          "n_vectors": 10,
+          "n_weighted": 10,
+          "recall_weighted": 0.6,
+          "recall_unweighted": 0.6
         },
         "SSH-Bruteforce": {
-          "n_vectors": 785,
-          "n_weighted": 4737,
-          "recall_weighted": 0.9997888959256913,
-          "recall_unweighted": 0.9987261146496815
+          "n_vectors": 2940,
+          "n_weighted": 18961,
+          "recall_weighted": 0.9999472601656031,
+          "recall_unweighted": 0.9996598639455783
         }
       },
-      "natural_prevalence_used": 0.11935818489405303
+      "natural_prevalence_used": 0.11920234135972577
     }
   },
   "lofo": {
     "unsw": {
-      "baseline_macro_f1": 0.9773795518489136,
+      "baseline_macro_f1": 0.9773664542133467,
       "features": {
         "src_to_dst_bytes_per_s": {
-          "macro_f1_without": 0.6440964611614006,
-          "f1_drop": 0.33328309068751294,
+          "macro_f1_without": 0.6491855873289003,
+          "f1_drop": 0.32818086688444637,
           "group": "timing_rate"
         },
-        "bytes_per_pkt_out": {
-          "macro_f1_without": 0.6840815072114331,
-          "f1_drop": 0.29329804463748044,
+        "src_to_dst_throughput": {
+          "macro_f1_without": 0.7947251613656491,
+          "f1_drop": 0.1826412928476976,
+          "group": "timing_rate"
+        },
+        "in_pkt_frac": {
+          "macro_f1_without": 0.93077312802294,
+          "f1_drop": 0.04659332619040668,
           "group": "volume"
         },
         "shortest_pkt": {
-          "macro_f1_without": 0.8973437274639556,
-          "f1_drop": 0.08003582438495793,
+          "macro_f1_without": 0.9679507185030229,
+          "f1_drop": 0.009415735710323725,
           "group": "packet_size"
         },
-        "in_pkt_frac": {
-          "macro_f1_without": 0.9277659785541902,
-          "f1_drop": 0.04961357329472338,
+        "out_bytes": {
+          "macro_f1_without": 0.9716401047455807,
+          "f1_drop": 0.0057263494677659565,
+          "group": "volume"
+        },
+        "in_byte_frac": {
+          "macro_f1_without": 0.9718805922199232,
+          "f1_drop": 0.005485861993423491,
           "group": "volume"
         },
         "longest_pkt": {
-          "macro_f1_without": 0.9650652345040089,
-          "f1_drop": 0.012314317344904624,
+          "macro_f1_without": 0.9720496467698037,
+          "f1_drop": 0.005316807443543015,
           "group": "packet_size"
         },
-        "in_byte_frac": {
-          "macro_f1_without": 0.9719870377907522,
-          "f1_drop": 0.005392514058161324,
+        "out_pkts": {
+          "macro_f1_without": 0.9738220754276825,
+          "f1_drop": 0.0035443787856641595,
           "group": "volume"
         },
         "bytes_per_pkt_in": {
-          "macro_f1_without": 0.9722066713161195,
-          "f1_drop": 0.0051728805327940774,
+          "macro_f1_without": 0.9743877845788254,
+          "f1_drop": 0.0029786696345213137,
           "group": "volume"
         },
-        "src_to_dst_throughput": {
-          "macro_f1_without": 0.9729912206326197,
-          "f1_drop": 0.004388331216293895,
-          "group": "timing_rate"
+        "bytes_per_pkt_out": {
+          "macro_f1_without": 0.9743980577784608,
+          "f1_drop": 0.0029683964348858893,
+          "group": "volume"
         },
         "dst_to_src_bytes_per_s": {
-          "macro_f1_without": 0.9732549067492242,
-          "f1_drop": 0.00412464509968935,
+          "macro_f1_without": 0.9748919284943731,
+          "f1_drop": 0.0024745257189735526,
           "group": "timing_rate"
-        },
-        "dst_to_src_throughput": {
-          "macro_f1_without": 0.9741115152864276,
-          "f1_drop": 0.0032680365624859764,
-          "group": "timing_rate"
-        },
-        "out_bytes": {
-          "macro_f1_without": 0.9744706576041257,
-          "f1_drop": 0.0029088942447879074,
-          "group": "volume"
         },
         "is_tcp": {
-          "macro_f1_without": 0.9756610136256758,
-          "f1_drop": 0.0017185382232377533,
+          "macro_f1_without": 0.9756478582445424,
+          "f1_drop": 0.001718595968804304,
           "group": "protocol"
         },
-        "out_pkts": {
-          "macro_f1_without": 0.9756816474158052,
-          "f1_drop": 0.0016979044331083548,
-          "group": "volume"
-        },
-        "client_psh": {
-          "macro_f1_without": 0.9759854562176722,
-          "f1_drop": 0.0013940956312413766,
-          "group": "tcp_behavior"
+        "frac_pkts_le128": {
+          "macro_f1_without": 0.97584939738106,
+          "f1_drop": 0.0015170568322866451,
+          "group": "packet_size"
         },
         "tcp_win_in": {
-          "macro_f1_without": 0.9760070911003935,
-          "f1_drop": 0.0013724607485200435,
+          "macro_f1_without": 0.9759328462844086,
+          "f1_drop": 0.0014336079289380965,
+          "group": "tcp_behavior"
+        },
+        "client_psh": {
+          "macro_f1_without": 0.9759866552167802,
+          "f1_drop": 0.0013797989965664836,
           "group": "tcp_behavior"
         },
         "frac_pkts_128_256": {
           "macro_f1_without": 0.9760428674329762,
-          "f1_drop": 0.0013366844159373725,
+          "f1_drop": 0.0013235867803704782,
           "group": "packet_size"
         },
-        "frac_pkts_le128": {
-          "macro_f1_without": 0.9763648363948513,
-          "f1_drop": 0.0010147154540622871,
-          "group": "packet_size"
+        "dst_to_src_throughput": {
+          "macro_f1_without": 0.9765080610813176,
+          "f1_drop": 0.0008583931320290672,
+          "group": "timing_rate"
         },
         "server_fin": {
-          "macro_f1_without": 0.9769321803721962,
-          "f1_drop": 0.000447371476717362,
+          "macro_f1_without": 0.9769333359050221,
+          "f1_drop": 0.0004331183083245982,
           "group": "tcp_behavior"
         },
         "retrans_in_pkts": {
           "macro_f1_without": 0.9770403835073133,
-          "f1_drop": 0.0003391683416003044,
+          "f1_drop": 0.00032607070603341004,
           "group": "retransmission"
         },
         "frac_pkts_1024_1514": {
           "macro_f1_without": 0.977202443011994,
-          "f1_drop": 0.00017710883691957058,
+          "f1_drop": 0.00016401120135267622,
           "group": "packet_size"
         },
-        "server_syn": {
-          "macro_f1_without": 0.9772300872390844,
-          "f1_drop": 0.0001494646098291197,
-          "group": "tcp_behavior"
-        },
         "duration_in_ms": {
-          "macro_f1_without": 0.9772486051307705,
-          "f1_drop": 0.0001309467181430657,
+          "macro_f1_without": 0.9772355140803677,
+          "f1_drop": 0.000130940132978985,
           "group": "timing_rate"
+        },
+        "server_syn": {
+          "macro_f1_without": 0.9772455496232539,
+          "f1_drop": 0.00012090459009272969,
+          "group": "tcp_behavior"
         },
         "server_psh": {
           "macro_f1_without": 0.9773732641858242,
-          "f1_drop": 6.287663089410422e-06,
+          "f1_drop": -6.809972477483939e-06,
           "group": "tcp_behavior"
         },
         "frac_pkts_512_1024": {
           "macro_f1_without": 0.9776379708424583,
-          "f1_drop": -0.00025841899354472897,
+          "f1_drop": -0.00027151662911162333,
           "group": "packet_size"
         },
         "frac_pkts_256_512": {
-          "macro_f1_without": 0.9777139560752792,
-          "f1_drop": -0.0003344042263656588,
+          "macro_f1_without": 0.9776494194711007,
+          "f1_drop": -0.0002829652577540642,
           "group": "packet_size"
         }
       }
     },
     "cse": {
-      "baseline_macro_f1": 0.9804571820392796,
+      "baseline_macro_f1": 0.9815184681504163,
       "features": {
-        "longest_pkt": {
-          "macro_f1_without": 0.9487462632009245,
-          "f1_drop": 0.031710918838355084,
-          "group": "packet_size"
-        },
-        "bytes_per_pkt_in": {
-          "macro_f1_without": 0.9696358645782335,
-          "f1_drop": 0.010821317461046087,
-          "group": "volume"
-        },
         "tcp_win_in": {
-          "macro_f1_without": 0.9706865196319555,
-          "f1_drop": 0.009770662407324049,
+          "macro_f1_without": 0.900797682348957,
+          "f1_drop": 0.08072078580145936,
           "group": "tcp_behavior"
-        },
-        "frac_pkts_512_1024": {
-          "macro_f1_without": 0.9780298306752852,
-          "f1_drop": 0.002427351363994412,
-          "group": "packet_size"
-        },
-        "server_fin": {
-          "macro_f1_without": 0.9781967674915246,
-          "f1_drop": 0.002260414547754941,
-          "group": "tcp_behavior"
-        },
-        "duration_in_ms": {
-          "macro_f1_without": 0.9783837420039309,
-          "f1_drop": 0.002073440035348706,
-          "group": "timing_rate"
-        },
-        "dst_to_src_throughput": {
-          "macro_f1_without": 0.979163723552047,
-          "f1_drop": 0.0012934584872326127,
-          "group": "timing_rate"
-        },
-        "frac_pkts_256_512": {
-          "macro_f1_without": 0.9795106053362759,
-          "f1_drop": 0.0009465767030036876,
-          "group": "packet_size"
-        },
-        "shortest_pkt": {
-          "macro_f1_without": 0.979548059752666,
-          "f1_drop": 0.0009091222866135507,
-          "group": "packet_size"
-        },
-        "frac_pkts_128_256": {
-          "macro_f1_without": 0.9796219800516459,
-          "f1_drop": 0.0008352019876336492,
-          "group": "packet_size"
-        },
-        "out_bytes": {
-          "macro_f1_without": 0.9797781277481139,
-          "f1_drop": 0.0006790542911656594,
-          "group": "volume"
-        },
-        "frac_pkts_le128": {
-          "macro_f1_without": 0.9798286871032417,
-          "f1_drop": 0.0006284949360378933,
-          "group": "packet_size"
-        },
-        "src_to_dst_throughput": {
-          "macro_f1_without": 0.9799484014216824,
-          "f1_drop": 0.0005087806175971821,
-          "group": "timing_rate"
-        },
-        "dst_to_src_bytes_per_s": {
-          "macro_f1_without": 0.9800223421206542,
-          "f1_drop": 0.00043483991862536264,
-          "group": "timing_rate"
-        },
-        "in_byte_frac": {
-          "macro_f1_without": 0.9800312163017144,
-          "f1_drop": 0.0004259657375651482,
-          "group": "volume"
         },
         "in_pkt_frac": {
-          "macro_f1_without": 0.9800807288606947,
-          "f1_drop": 0.0003764531785848124,
+          "macro_f1_without": 0.9716598533327763,
+          "f1_drop": 0.009858614817640055,
           "group": "volume"
         },
-        "frac_pkts_1024_1514": {
-          "macro_f1_without": 0.980090901377541,
-          "f1_drop": 0.00036628066173860496,
+        "frac_pkts_512_1024": {
+          "macro_f1_without": 0.9751343658741369,
+          "f1_drop": 0.006384102276279391,
+          "group": "packet_size"
+        },
+        "duration_in_ms": {
+          "macro_f1_without": 0.9756264448083278,
+          "f1_drop": 0.005892023342088493,
+          "group": "timing_rate"
+        },
+        "src_to_dst_bytes_per_s": {
+          "macro_f1_without": 0.9763067218359329,
+          "f1_drop": 0.005211746314483401,
+          "group": "timing_rate"
+        },
+        "out_pkts": {
+          "macro_f1_without": 0.9774897520156303,
+          "f1_drop": 0.004028716134786059,
+          "group": "volume"
+        },
+        "longest_pkt": {
+          "macro_f1_without": 0.9778023878721785,
+          "f1_drop": 0.0037160802782377766,
           "group": "packet_size"
         },
         "bytes_per_pkt_out": {
-          "macro_f1_without": 0.9801242390303242,
-          "f1_drop": 0.00033294300895536644,
+          "macro_f1_without": 0.9779763338195442,
+          "f1_drop": 0.0035421343308721376,
           "group": "volume"
         },
-        "out_pkts": {
-          "macro_f1_without": 0.980258743523002,
-          "f1_drop": 0.00019843851627754372,
+        "out_bytes": {
+          "macro_f1_without": 0.9783516777815133,
+          "f1_drop": 0.003166790368902994,
           "group": "volume"
         },
-        "src_to_dst_bytes_per_s": {
-          "macro_f1_without": 0.9803281204032945,
-          "f1_drop": 0.0001290616359850283,
+        "dst_to_src_bytes_per_s": {
+          "macro_f1_without": 0.978411991175038,
+          "f1_drop": 0.0031064769753783583,
+          "group": "timing_rate"
+        },
+        "server_fin": {
+          "macro_f1_without": 0.9792065716487284,
+          "f1_drop": 0.002311896501687949,
+          "group": "tcp_behavior"
+        },
+        "in_byte_frac": {
+          "macro_f1_without": 0.9796603412754263,
+          "f1_drop": 0.0018581268749899849,
+          "group": "volume"
+        },
+        "frac_pkts_le128": {
+          "macro_f1_without": 0.9799833408064952,
+          "f1_drop": 0.0015351273439211388,
+          "group": "packet_size"
+        },
+        "dst_to_src_throughput": {
+          "macro_f1_without": 0.9803793417305107,
+          "f1_drop": 0.001139126419905656,
+          "group": "timing_rate"
+        },
+        "bytes_per_pkt_in": {
+          "macro_f1_without": 0.9804731152394048,
+          "f1_drop": 0.0010453529110114879,
+          "group": "volume"
+        },
+        "frac_pkts_256_512": {
+          "macro_f1_without": 0.9805086213531444,
+          "f1_drop": 0.001009846797271896,
+          "group": "packet_size"
+        },
+        "frac_pkts_1024_1514": {
+          "macro_f1_without": 0.9809177029998886,
+          "f1_drop": 0.00060076515052776,
+          "group": "packet_size"
+        },
+        "frac_pkts_128_256": {
+          "macro_f1_without": 0.9811317188050198,
+          "f1_drop": 0.00038674934539650874,
+          "group": "packet_size"
+        },
+        "src_to_dst_throughput": {
+          "macro_f1_without": 0.981183545407561,
+          "f1_drop": 0.00033492274285529255,
           "group": "timing_rate"
         },
         "client_psh": {
-          "macro_f1_without": 0.9803530405721746,
-          "f1_drop": 0.00010414146710491234,
+          "macro_f1_without": 0.9811999697395386,
+          "f1_drop": 0.00031849841087772113,
           "group": "tcp_behavior"
+        },
+        "shortest_pkt": {
+          "macro_f1_without": 0.9813765958074339,
+          "f1_drop": 0.0001418723429824631,
+          "group": "packet_size"
         },
         "retrans_in_pkts": {
-          "macro_f1_without": 0.9804034134032034,
-          "f1_drop": 5.3768636076201304e-05,
+          "macro_f1_without": 0.9814867641700782,
+          "f1_drop": 3.170398033813804e-05,
           "group": "retransmission"
         },
-        "server_syn": {
-          "macro_f1_without": 0.9804396624944336,
-          "f1_drop": 1.7519544845967516e-05,
-          "group": "tcp_behavior"
-        },
         "server_psh": {
-          "macro_f1_without": 0.9804545435036525,
-          "f1_drop": 2.6385356270974825e-06,
+          "macro_f1_without": 0.98151451039817,
+          "f1_drop": 3.957752246375179e-06,
           "group": "tcp_behavior"
         },
         "is_tcp": {
-          "macro_f1_without": 0.9804571820392796,
-          "f1_drop": 0.0,
+          "macro_f1_without": 0.981515739557888,
+          "f1_drop": 2.728592528367102e-06,
           "group": "protocol"
+        },
+        "server_syn": {
+          "macro_f1_without": 0.9815203891398008,
+          "f1_drop": -1.9209893844518433e-06,
+          "group": "tcp_behavior"
         }
       }
     }
-  }
+  },
+  "fill": "median"
 }

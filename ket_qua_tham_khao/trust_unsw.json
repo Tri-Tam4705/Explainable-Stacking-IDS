@@ -1,0 +1,165 @@
+{
+  "dataset": "unsw",
+  "threshold": 0.3888730294391052,
+  "n_per_role": {
+    "FP": 400,
+    "TP": 400,
+    "FN": 263
+  },
+  "population_per_role": {
+    "FP": 945,
+    "TP": 7203,
+    "FN": 263,
+    "TN": 39014
+  },
+  "additivity_error_max": 2.572795740451994e-06,
+  "trust": {
+    "n_fp": 400,
+    "n_tp": 400,
+    "auc_low_agreement_detects_fp": 0.6125027339905335,
+    "auc_low_agreement_ci95": [
+      0.542569115969317,
+      0.6902741632323752
+    ],
+    "auc_low_z_detects_fp": 0.7837833351559944,
+    "auc_low_z_ci95": [
+      0.7374457911761713,
+      0.8282606816194783
+    ],
+    "auc_low_agreement_within_z_quartiles": 0.4954473155353207,
+    "auc_within_z_ci95": [
+      0.41221249341849875,
+      0.6010949561874314
+    ],
+    "fp_share_by_agreement_quartile": [
+      0.07765438241739626,
+      0.08741155833912148,
+      0.053603335318642045,
+      0.033267107147807604
+    ],
+    "agreement_quartile_edges": [
+      0.5714285714285715,
+      0.6761904761904761,
+      0.7619047619047619
+    ],
+    "spearman_agreement_z": 0.4145494999795709,
+    "agreement_mean": {
+      "FP": 0.6194047619047619,
+      "TP": 0.6924285714285713
+    },
+    "agreement_median": {
+      "FP": 0.6476190476190475,
+      "TP": 0.7142857142857144
+    }
+  },
+  "missed": {
+    "z_threshold": -0.45205185750711974,
+    "groups": [
+      "volume",
+      "timing_rate",
+      "packet_size",
+      "tcp_behavior",
+      "retransmission",
+      "protocol"
+    ],
+    "by_attack": {
+      "Analysis": {
+        "n_fn": 53,
+        "n_tp": 0,
+        "fn_weight_share": 0.1815068493150685,
+        "mean_phi_fn": {
+          "volume": -0.3253172045492575,
+          "timing_rate": -0.11272753988534598,
+          "packet_size": 1.4090652667775119,
+          "tcp_behavior": 0.8177294111901531,
+          "retransmission": -0.0012522083479446907,
+          "protocol": 0.03734250966208033
+        },
+        "mean_phi_tp": null,
+        "mean_z_fn": -0.9499389488539977,
+        "mean_z_tp": null
+      },
+      "DoS": {
+        "n_fn": 23,
+        "n_tp": 42,
+        "fn_weight_share": 0.0821917808219178,
+        "mean_phi_fn": {
+          "volume": -0.2960580653032543,
+          "timing_rate": -0.18567052024491307,
+          "packet_size": 1.4318660012566358,
+          "tcp_behavior": 0.8066999567238317,
+          "retransmission": 0.0011826573841446052,
+          "protocol": 0.040566250258362586
+        },
+        "mean_phi_tp": {
+          "volume": 0.7989597983271765,
+          "timing_rate": 0.6909329967369903,
+          "packet_size": 2.3772660885317074,
+          "tcp_behavior": 1.1679139522135205,
+          "retransmission": 0.0520053090762272,
+          "protocol": 0.08260847850145832
+        },
+        "mean_z_fn": -0.9761929033976386,
+        "mean_z_tp": 2.3949075871653336
+      },
+      "Exploits": {
+        "n_fn": 75,
+        "n_tp": 228,
+        "fn_weight_share": 0.2705479452054795,
+        "mean_phi_fn": {
+          "volume": -0.19011115101269474,
+          "timing_rate": -0.117647010743474,
+          "packet_size": 1.3918785582309108,
+          "tcp_behavior": 0.7753808481533477,
+          "retransmission": -0.001678631291845241,
+          "protocol": 0.02868019516261566
+        },
+        "mean_phi_tp": {
+          "volume": 1.4847709829472966,
+          "timing_rate": 0.805675756931667,
+          "packet_size": 2.120061031570972,
+          "tcp_behavior": 1.1876898400713556,
+          "retransmission": 0.047535263177410345,
+          "protocol": 0.11504043978216381
+        },
+        "mean_z_fn": -0.8882764032218886,
+        "mean_z_tp": 2.9859942589725197
+      },
+      "Fuzzers": {
+        "n_fn": 102,
+        "n_tp": 78,
+        "fn_weight_share": 0.4006849315068493,
+        "mean_phi_fn": {
+          "volume": -0.24420755089559035,
+          "timing_rate": 0.016536432239500926,
+          "packet_size": 1.3331449473621684,
+          "tcp_behavior": 0.7570887722452241,
+          "retransmission": -0.08275256765038352,
+          "protocol": 0.04740331749166081
+        },
+        "mean_phi_tp": {
+          "volume": 0.8772317198428352,
+          "timing_rate": 0.7246787104926392,
+          "packet_size": 1.8916475638911234,
+          "tcp_behavior": 1.0689972672339545,
+          "retransmission": 0.02932958228516832,
+          "protocol": 0.10980897975276616
+        },
+        "mean_z_fn": -0.9475657609214637,
+        "mean_z_tp": 1.9269147121765695
+      }
+    },
+    "all_fn": {
+      "n": 263,
+      "mean_z": -0.9254945905596202,
+      "mean_phi": {
+        "volume": -0.1794146205142384,
+        "timing_rate": -0.06638991774011684,
+        "packet_size": 1.3124890244925451,
+        "tcp_behavior": 0.7721405359886521,
+        "retransmission": -0.03310848289703496,
+        "protocol": 0.04356803532038648
+      }
+    }
+  }
+}

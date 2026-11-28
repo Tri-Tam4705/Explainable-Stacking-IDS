@@ -69,7 +69,7 @@ for k, n in enumerate(BASE_NAMES):
     for j, g in enumerate(gnames):
         out[f"phi_{n}_{g}"] = G_base[k][:, j]
 out["z"], out["agreement"] = ex["z"], A
-out["test_idx"] = pick  # chỉ số hàng trong tập test; bước 12 (LIME) đọc lại để giải thích đúng cùng các luồng
+out["test_idx"] = pick  # chỉ số hàng trong tập test; bước 22 và 24 đọc lại để chạy trên đúng các luồng này
 sub = te.iloc[pick].reset_index(drop=True)
 for c in (LABEL_COL, ATTACK_COL, FAMILY_COL, WEIGHT_COL):
     out[c] = sub[c].to_numpy()

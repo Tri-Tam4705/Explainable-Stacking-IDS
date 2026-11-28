@@ -13,7 +13,7 @@ from __future__ import annotations
 import numpy as np
 from scipy.stats import kendalltau
 
-from xsids.explain.lime_stack import rank_corr_rows, topk_jaccard
+from xsids.explain.common import rank_corr_rows, stratified_pick, topk_jaccard
 
 
 # ── so sánh hai bộ đóng góp ──────────────────────────────────────────────────
@@ -276,6 +276,4 @@ def knn_group_deletion_test(score_fn, X, group_attr: dict, group_cols, imputer: 
 
 def pick_common(explain_idx, attack, n: int, seed: int) -> np.ndarray:
     """Tập luồng chung cho phép so qua seed và phép kiểm tra ngẫu nhiên hóa nhãn (cùng seed thì cùng tập)."""
-    from xsids.explain.lime_stack import stratified_pick
-
     return np.sort(stratified_pick(np.asarray(explain_idx), np.asarray(attack), n, np.random.default_rng(seed + 20)))

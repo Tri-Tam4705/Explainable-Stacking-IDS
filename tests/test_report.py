@@ -3,37 +3,18 @@ import pytest
 
 from xsids.report.console import bar, best_marks, num, pct, table
 from xsids.report.summaries import (
-    agreement_metrics,
     collect_models,
     compare_text,
     cross_text,
-    deletion_ks,
-    lime_text,
+    attack_type_text,
+    group_shapley_text,
+    label_audit_text,
     missed_text,
     models_text,
     multisplit_text,
-    relative_fidelity,
     render_all,
     retrain_text,
 )
-
-
-def _lime(shap5=0.79, lime5=0.74, rand5=0.32):
-    dele = {"1": {m: {"mean_drop": v, "flip_rate": v} for m, v in (("shap", 0.6), ("lime", 0.5), ("random", 0.06))},
-            "5": {m: {"mean_drop": v, "flip_rate": min(v, 1.0)} for m, v in (("shap", shap5), ("lime", lime5), ("random", rand5))},
-            "n_eligible_mean": 18.4}
-    summ = lambda m: {"mean": m, "p10": m - 0.1, "p50": m, "p90": m + 0.1, "n": 10}  # noqa: E731
-    return {
-        "dataset": "unsw", "target": "proba", "n_lime": 271, "num_perturbations": 5000, "discretizer": "quartile", "top_k": 5,
-        "deletion_test": dele,
-        "agreement_shap_lime": {"feature_spearman_abs": summ(0.38), "topk_jaccard": summ(0.35), "topk_sign_agreement": summ(0.71),
-                                "group_spearman": summ(0.51), "top1_same_rate": 0.0},
-        "global_importance": {"features": ["a", "b", "c"], "shap": [0.5, 0.3, 0.2], "lime": [0.6, 0.3, 0.1], "spearman": 0.74, "topk_overlap": 4},
-        "stability_lime": {"n_flows": 50, "repeats": 5, "spearman": summ(0.75), "topk_jaccard": summ(0.78), "top1_same_rate": 1.0},
-        "local_fidelity": {"lime_r2": summ(0.24), "frac_r2_below_0.5": 1.0, "local_pred_abs_error": summ(0.55)},
-        "importance_by_family": {"DoS": {"n": 100, "shap_top": ["a", "b", "c"], "lime_top": ["a", "c", "b"], "overlap": 4, "k": 5}},
-        "lime_top1_feature_counts": {"a": 271}, "shap_top1_feature_counts": {"b": 200, "a": 71},
-    }
 
 
 def _model(dr, far):
@@ -60,27 +41,6 @@ def test_table_columns_are_aligned_and_group_rows_span():
     assert all(" │ " in x for x in regular) and "▸ NHÓM" in lines[4]
 
 
-def test_relative_fidelity_matches_formula_and_guards_division():
-    d = _lime()["deletion_test"]["5"]
-    assert relative_fidelity(d) == pytest.approx((0.74 - 0.32) / (0.79 - 0.32))
-    tie = {m: {"mean_drop": 0.3} for m in ("shap", "lime", "random")}
-    assert relative_fidelity(tie) is None                  # SHAP không hơn ngẫu nhiên: không có nghĩa để chia
-    assert relative_fidelity({}) is None
-    assert deletion_ks(_lime()["deletion_test"]) == ["1", "5"]   # bỏ qua khóa n_eligible_mean
-
-
-def test_agreement_metrics_shape_and_clipping():
-    m = agreement_metrics(_lime(shap5=0.5, lime5=0.9, rand5=0.1))   # LIME vượt SHAP -> kẹp về 1,0
-    assert len(m) == 10 and m[-1][1] == 1.0 and m[0][1] == 0.74
-
-
-def test_lime_text_contains_key_sections_and_values():
-    t = lime_text("unsw", _lime())
-    for needle in ("TRUNG THỰC CỤC BỘ", "ĐỒNG THUẬN", "ỔN ĐỊNH", "MÔ HÌNH THAY THẾ", "DoS", "UNSW", "89%"):
-        assert needle in t
-    assert lime_text("unsw", None) == ""
-
-
 def test_models_text_marks_best_per_column():
     t = models_text("unsw", {"rf": _model(0.98, 0.003), "xgb": _model(0.97, 0.001)})
     rf_line = next(x for x in t.splitlines() if "Random Forest" in x)
@@ -104,29 +64,39 @@ def test_cross_text_reports_retained_dr():
     assert "trong miền ★" in t
 
 
-def _rep(with_lime=True):
+def _rep():
     ds = ["unsw", "cse"]
     empty = {d: None for d in ds}
     return {"datasets": ds, "baselines": dict(empty), "stacking": dict(empty), "explain": dict(empty),
-            "stability": dict(empty), "ablation": dict(empty), "cross_lofo": None,
-            "lime": {"unsw": _lime(), "cse": _lime(0.83, 0.38, 0.25)} if with_lime else dict(empty)}
+            "stability": dict(empty), "ablation": dict(empty), "cross_lofo": None}
 
 
 def test_render_all_skips_missing_parts_without_crashing():
-    t = render_all(_rep(with_lime=False))
-    assert "TỔNG HỢP KẾT QUẢ" in t and "LIME so với SHAP" not in t
-    full = render_all(_rep())
-    assert "SO SÁNH GIỮA CÁC BỘ DỮ LIỆU" in full and full.count("LIME so với SHAP gộp") == 2
-    assert compare_text(_rep(with_lime=False)) == ""
+    t = render_all(_rep())
+    assert "TỔNG HỢP KẾT QUẢ" in t and "SO SÁNH GIỮA CÁC BỘ DỮ LIỆU" not in t
+    assert compare_text(_rep()) == ""
+
+
+def test_compare_text_lists_model_explanation_and_faithfulness_rows():
+    rep = _rep()
+    rep["stacking"]["unsw"] = {"results": {"stack_explainable": _model(0.9842, 0.0027)}}
+    rep["stability"]["unsw"] = {"stability": {"kendall_tau_mean": 0.95}, "stability_feature": {"kendall_tau_mean": 0.9}}
+    rep["explain"]["unsw"] = {"agreement": {"mean": 0.81}}
+    rep["group_shapley"] = {"unsw": {"full": {"deletion": {"1": {m: {"flip_rate": f} for m, f in
+                                                                 (("shap_path", 0.1), ("group_shapley", 0.135),
+                                                                  ("oracle", 0.156), ("random", 0.03))}}}}}
+    t = compare_text(rep)
+    assert "SO SÁNH GIỮA CÁC BỘ DỮ LIỆU" in t and "0.9842" in t and "0.950" in t
+    assert "Shapley nhóm" in t and "15.6%" in t and "CSE" not in t
 
 
 def test_extra_experiment_sections_render_values_and_skip_missing_or_fast_runs():
     m = {"dr": 0.98, "far": 0.003, "macro_f1": 0.977, "pr_auc": 0.979, "roc_auc": 0.99}
-    ms = {"fast": False, "splits": [1, 2], "metrics": {"voting": {k: {"mean": v, "std": 0.001} for k, v in m.items()}},
-          "stack_minus_voting": {k: {"mean_diff": 0.0066 if k == "pr_auc" else 0.0, "std_diff": 0.001, "n": 2,
-                                     "p_value_paired_t": 0.0123, "a_better_in": 2} for k in m}}
+    ms = {"fast": False, "splits": [1, 2], "metrics": {"stack_explainable": {k: {"mean": v, "std": 0.001} for k, v in m.items()}},
+          "stack_vs_base": {"rf": {k: {"mean_diff": 0.0066 if k == "pr_auc" else 0.0, "std_diff": 0.001, "n": 2,
+                                       "p_value_paired_t": 0.0123, "a_better_in": 2} for k in m}}}
     t = multisplit_text("unsw", ms)
-    assert "NHIỀU PHÉP CHIA — UNSW" in t and "+0.0066" in t and "0.0123" in t and "2/2" in t
+    assert "NHIỀU PHÉP CHIA — UNSW" in t and "+0.0066" in t and "0.0123" in t and "2/2" in t and "− Random Forest" in t
     s = {"stack_explainable": m}
     rt = {"configs": {"full": {"n_kept": 25, "in_domain": s, "cross": s},
                       "drop_x": {"n_kept": 24, "in_domain": {"stack_explainable": dict(m, macro_f1=0.975)}, "cross": s}}}
@@ -149,9 +119,12 @@ def test_make_all_creates_figures_for_available_data_and_skips_the_rest(tmp_path
     from xsids.report.plots import make_all
 
     skipped = []
-    made = make_all(_rep(), tmp_path, processed_dir=None, log=skipped.append)
+    rep = _rep()
+    rep["explain_checks"] = {"unsw": _ec_json(), "cse": None}
+    rep["sanity"] = {"unsw": None, "cse": None}
+    made = make_all(rep, tmp_path, processed_dir=None, log=skipped.append)
     names = {p.name for p in made}
-    assert "fig_agreement.png" in names
+    assert {"fig_explain_checks.png", "fig_deletion_knn.png"} <= names and "fig_agreement.png" not in names
     assert all(p.exists() and p.stat().st_size > 5000 for p in made)
     assert "fig_ablation.png" not in names and any("fig_ablation" in m for m in skipped)   # thiếu dữ liệu nên bỏ qua, không lỗi
     assert not any("Error" in m for m in skipped)
@@ -161,28 +134,26 @@ def _repeat_json(n, key, ratio=None):
     rng = np.random.default_rng(n)
     base = {"dr": 0.98, "far": 0.003, "macro_f1": 0.977, "pr_auc": 0.975}
     metrics = {}
-    for m in ["rf", "et", "xgb", "lgbm", "voting", "stack_explainable"]:
+    for m in ["rf", "et", "xgb", "lgbm", "stack_explainable"]:
         metrics[m] = {}
         for q, v in base.items():
             vals = v + rng.normal(0, 0.001, n) + (0.006 if m == "stack_explainable" and q == "pr_auc" else 0)
             metrics[m][q] = {"values": list(vals), "mean": float(vals.mean()), "std": float(vals.std(ddof=1))}
-    from xsids.models.experiment import paired_summary
+    from xsids.models.experiment import stack_vs_base
 
-    paired = {q: paired_summary(metrics["stack_explainable"][q]["values"], metrics["voting"][q]["values"],
-                                lower_is_better=(q == "far"), test_train_ratio=ratio) for q in base}
-    return {"fast": False, key: list(range(1, n + 1)), "metrics": metrics, "stack_minus_voting": paired}
+    paired = stack_vs_base(metrics, list(base), test_train_ratio=ratio)
+    return {"fast": False, key: list(range(1, n + 1)), "metrics": metrics, "stack_vs_base": paired}
 
 
 def test_repeat_figures_and_text_render_from_multiseed_and_multisplit(tmp_path):
     pytest.importorskip("matplotlib")
-    from xsids.report.plots import fig_repeat_diff, fig_repeat_runs
+    from xsids.report.plots import fig_repeat_runs
 
     rep = _rep()
     rep["multisplit"] = {"unsw": _repeat_json(10, "splits", 0.29), "cse": None}
     rep["multiseed"] = {"unsw": dict(_repeat_json(8, "seeds"), **{"seeds": [f"s{i}" for i in range(8)]}), "cse": None}
-    for f in (fig_repeat_runs, fig_repeat_diff):
-        p = f(rep, tmp_path)
-        assert p is not None and p.exists() and p.stat().st_size > 20000
+    p = fig_repeat_runs(rep, tmp_path)
+    assert p is not None and p.exists() and p.stat().st_size > 20000
     t = multisplit_text("unsw", rep["multisplit"]["unsw"])
     assert "t hiệu chỉnh" in t and "Wilcoxon" in t and "10/10" in t        # PR-AUC: stacking hơn ở cả 10 phép chia
     rep["multisplit"]["unsw"]["fast"] = True
@@ -197,18 +168,18 @@ def _ec_json():
     B = A + rng.normal(0, 0.3, A.shape)
     c = compare(A, B, 5)
     lvl = {"shap_path": dict(c, group_top1_same=0.9), "shap_int": c, "median_abs_dz": 0.5, "still_flagged": 0.95}
-    dele = {str(k): {m: {"mean_drop": 0.1 * k, "flip_rate": 0.1 * k} for m in ("shap_path", "shap_int", "lime", "random")} for k in (1, 3, 5)}
+    dele = {str(k): {m: {"mean_drop": 0.1 * k, "flip_rate": 0.1 * k} for m in ("shap_path", "shap_int", "random")} for k in (1, 3, 5)}
     knn = dict(dele, ood={"method": "shap_path", "k": 5, "nn_dist_original_median": 1.0, "nn_dist_median_fill_median": 3.0, "nn_dist_knn_fill_median": 1.1})
     return {"fast": False, "background_size": 500,
-            "value": {"additivity_error_interventional": {"stack": 1e-6}, "feature": {"path_vs_int": c, "int_vs_int_other_bg": c, "lime_vs_path": c, "lime_vs_int": c},
+            "value": {"additivity_error_interventional": {"stack": 1e-6}, "feature": {"path_vs_int": c, "int_vs_int_other_bg": c},
                       "group": {"path_vs_int": compare(A[:, :6], B[:, :6], 1), "int_vs_int_other_bg": compare(A[:, :6], A[:, :6], 1)}},
             "knn": {"median_fill": dele, "knn_fill": knn,
-                    "group": {g: {m: {"flip_rate": 0.1 * int(g), "mean_drop": 0.1} for m in ("shap_path", "lime", "random_features", "random_groups")} for g in ("1", "2")},
+                    "group": {g: {m: {"flip_rate": 0.1 * int(g), "mean_drop": 0.1} for m in ("shap_path", "shap_int", "random_features", "random_groups")} for g in ("1", "2")},
                     "full": {"n_flows": 30, "knn_fill": knn,
                              "group": {g: {"shap_path": {"flip_rate": 0.3 * int(g), "mean_drop": 0.2, "vs_random_features": {"mean_diff": 0.05, "ci95": [0.01, 0.09]}},
                                            "random_features": {"flip_rate": 0.05, "mean_drop": 0.1}, "random_groups": {"flip_rate": 0.02, "mean_drop": 0.1}}
                                        for g in ("1", "2")}}},
-            "robust": {"levels": {"0.01": lvl, "0.05": lvl}, "lime": {"rel": 0.01, "input_and_seed": c, "seed_only": c}},
+            "robust": {"levels": {"0.01": lvl, "0.05": lvl}},
             "seeds": {"models": [{}] * 3, "path": {"feature": pairwise([A, B, A], 5), "group": pairwise([A[:, :6], B[:, :6]], 1)}},
             "weighted": {"rank_weighted": ["packet_size", "volume"], "kendall": 1.0}}
 
@@ -231,5 +202,50 @@ def test_explain_check_figures_and_text_render(tmp_path):
         assert p is not None and p.stat().st_size > 20000
     t = explain_checks_text("unsw", rep["explain_checks"]["unsw"], sn)
     assert "KIỂM TRA BỔ SUNG" in t and "Nhãn xáo trộn" in t and "láng giềng" in t
-    assert "Xóa trọn nhóm" in t and "toàn mẫu giải thích, 30 luồng" in t
+    assert "Xóa trọn nhóm" in t and "toàn mẫu giải thích, 30 luồng" in t and "LIME" not in t
     assert explain_checks_text("unsw", dict(_ec_json(), fast=True), sn) == ""
+
+
+def test_group_shapley_text_renders_deletion_and_skips_fast_runs():
+    meths = ("shap_path", "shap_int", "group_shapley", "oracle", "random")
+    dele = {"n_flows": 271, **{g: {m: {"flip_rate": f} for m, f in zip(meths, (0.04, 0.05, 0.125, 0.162, 0.032))}
+                               for g in ("1", "2")}}
+    fc = {m: {"mean": v} for m, v in (("shap_path", 0.61), ("group_shapley", 0.71), ("ceiling_same_operator", 0.73))}
+    ag = lambda s: {"spearman_signed_mean": s, "top1_signed_same": 0.9}  # noqa: E731
+    gs = {"fast": False, "group": {"deletion": dele, "faithfulness_correlation": fc, "kernel_check_max_abs_diff": 4.2e-7,
+                                   "stability_ref_B_vs_C": ag(0.93), "seconds_per_flow_one_table": 0.18}}
+    t = group_shapley_text("unsw", gs)
+    assert "SHAPLEY NHÓM TRONG PHÂN PHỐI — UNSW" in t and "Oracle (mức tối đa)" in t and "16.2%" in t
+    assert "0.71" in t and "0.73" in t and "0.93" in t and "Kiểm tra chéo" in t and "LIME" not in t
+    assert group_shapley_text("unsw", {**gs, "fast": True}) == "" and group_shapley_text("unsw", None) == ""
+
+
+def test_data_limit_texts_render_and_skip_missing_or_fast():
+    assert attack_type_text("cse", {"fast": True}) == "" and label_audit_text("cse", None) == ""
+    pc = {"precision": 0.9, "recall": 0.8, "f1": 0.85, "n_vectors": 5, "n_weighted": 50}
+    at = {"fast": False, "config": "lr0.05", "test": {"accuracy": 0.97, "macro_f1": 0.81,
+          "per_class": {"Bot": pc, "Empty": {**pc, "n_vectors": 0}}}, "ceiling": {"accuracy_ceiling": 0.99},
+          "end_to_end": {"overall": {"detected": 0.9, "detected_and_named": 0.88, "named_given_detected": 0.97}},
+          "explain": {"Bot": {"top_group": "volume"}}}
+    t = attack_type_text("cse", at)
+    assert "lr0.05" in t and "Bot" in t and "volume" in t and "Empty" not in t and "88.0%" in t
+    ew = {"weighted": {"dr": 0.93, "far": 0.00006, "pr_auc": 0.95}}
+    la = {"fast": False, "overlap": {"overall": {"attack_recall_ceiling": 0.95},
+                                     "by_attack": {"Infilteration": {"label": 1, "n_weighted": 100, "shared_with_other_label": 0.6,
+                                                                     "unreachable": 0.5},
+                                                   "Benign": {"label": 0, "n_weighted": 900, "shared_with_other_label": 0.01,
+                                                              "unreachable": 0.0}}},
+          "confident_learning": {"suspect_share_vectors": 0.02, "suspect_share_weighted": 0.01,
+                                 "by_attack": {"Infilteration": {"suspect_share_weighted": 0.8}, "Benign": {"suspect_share_weighted": 0.001}}},
+          "effect": {"n_test_suspects": 12, "main_model": {"test_all": ew, "test_without_suspects": ew},
+                     "retrained_without_suspects": {"test_all": ew, "test_without_suspects": ew}}}
+    t = label_audit_text("cse", la)
+    assert "KIỂM TOÁN NHÃN — CSE" in t and "Infilteration" in t and "80.0%" in t and "95.00%" in t and "Huấn luyện lại" in t
+
+
+def test_seed_pairs_reads_own_explain_checks():
+    from xsids.report.plots import _seed_pairs
+
+    assert _seed_pairs({"explain_checks": {"cse": {}}}, "cse") is None
+    own = _seed_pairs({"explain_checks": {"unsw": _ec_json()}}, "unsw")
+    assert own is not None and "spearman_flow_mean" in own

@@ -22,7 +22,8 @@ datasets:
     name: NF-CSE-CIC-IDS2018-v2
     file: NF-CSE-CIC-IDS2018-v2.csv      # đặt trong data/raw/
     # path: "D:/du_lieu/NF-CSE-CIC-IDS2018-v2.csv"   # bỏ dấu # nếu file nằm ở chỗ khác
-    sample_frac: 0.25
+    sample_frac: 1.0
+    compact: true                        # thu nhỏ kiểu số không mất giá trị khi đọc (18,9 triệu dòng)
 
 # Gom tên tấn công thô thành "họ" (regex, không phân biệt hoa thường).
 # Tên không khớp mẫu nào sẽ vào "Other" và được liệt kê trong báo cáo kiểm toán.

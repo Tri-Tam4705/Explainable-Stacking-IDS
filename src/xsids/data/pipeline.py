@@ -10,13 +10,14 @@ from xsids.utils import get_logger
 log = get_logger()
 
 
-def prepare_dataset(csv_path, out_dir, cfg: dict, name: str = "", sample_frac: float | None = None) -> dict:
+def prepare_dataset(csv_path, out_dir, cfg: dict, name: str = "", sample_frac: float | None = None,
+                    compact: bool = False) -> dict:
     cols = cfg["columns"]
     seed = cfg["seed"]
     frac = 1.0 if sample_frac is None else sample_frac
 
     df, load_info = read_netflow_csv(
-        csv_path, cols["label_source"], cols["attack_source"], sample_frac=frac, seed=seed
+        csv_path, cols["label_source"], cols["attack_source"], sample_frac=frac, seed=seed, compact=compact
     )
     df, fam_info = add_family(df, cfg["families"])
     df, clean_rep = clean_dataset(df, cfg["cleaning"])

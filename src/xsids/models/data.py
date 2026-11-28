@@ -23,17 +23,6 @@ def xyw(df: pd.DataFrame, features: list[str]):
             df[ATTACK_COL].astype(str).to_numpy())
 
 
-def cap_train(df: pd.DataFrame, max_rows: int | None, seed: int) -> pd.DataFrame:
-    """Giữ toàn bộ vector tấn công, lấy mẫu phần Benign để tổng không vượt max_rows."""
-    if not max_rows or len(df) <= max_rows:
-        return df
-    att = df[df[LABEL_COL] == 1]
-    ben = df[df[LABEL_COL] == 0]
-    n_ben = max(1, max_rows - len(att))
-    ben = ben.sample(n=min(n_ben, len(ben)), random_state=seed)
-    return pd.concat([att, ben]).sort_index().reset_index(drop=True)
-
-
 def natural_prevalence(proc_dir, ds: str) -> float:
     """Tỷ lệ tấn công tự nhiên (có trọng số) của toàn dataset, lấy từ manifest bước 1."""
     with open(Path(proc_dir) / ds / "manifest.json", "r", encoding="utf-8") as f:

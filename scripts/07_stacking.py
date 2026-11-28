@@ -1,4 +1,4 @@
-"""Bước 4: stacking out-of-fold với meta-learner tuyến tính; so với mô hình đơn, voting, stacking trên xác suất."""
+"""Bước 4: stacking out-of-fold với meta-learner tuyến tính; so với 4 mô hình đơn."""
 import argparse
 import json
 import time
@@ -6,13 +6,12 @@ from pathlib import Path
 
 import joblib
 import numpy as np
-from sklearn.linear_model import LogisticRegression
 
 import _bootstrap  # noqa: F401
 from xsids.config import load_config, resolve_path
-from xsids.models.data import cap_train, load_feature_set, load_split, natural_prevalence, xyw
+from xsids.models.data import load_feature_set, load_split, natural_prevalence, xyw
 from xsids.models.evaluate import best_threshold, evaluate
-from xsids.models.stacking import fit_meta, oof_raw, proba_matrix, raw_matrix, stack_logit
+from xsids.models.stacking import fit_meta, oof_raw, raw_matrix, stack_logit
 from xsids.models.zoo import BASE_NAMES, get_params, load_models_cfg
 from xsids.report.summaries import models_text
 from xsids.utils import get_logger, write_json
@@ -34,7 +33,7 @@ feats = load_feature_set(proc)["features"]
 seed, n_jobs, folds = (args.seed if args.seed is not None else mcfg["seed"]), mcfg["n_jobs"], mcfg["cv_folds"]
 params = get_params(mcfg, args.fast)
 
-tr = cap_train(load_split(proc, args.dataset, "train"), mcfg["train_cap"].get(args.dataset), seed)
+tr = load_split(proc, args.dataset, "train")
 va, te = load_split(proc, args.dataset, "val"), load_split(proc, args.dataset, "test")
 Xtr, ytr, _, atr = xyw(tr, feats)
 Xva, yva, wva, _ = xyw(va, feats)
@@ -50,25 +49,20 @@ for k, n in enumerate(BASE_NAMES):
 
 w, b, _ = fit_meta(F_oof, ytr, mcfg["meta"]["C"])
 log.info("Meta-learner (đầu ra thô): w = %s, b = %.4f", {n: round(float(v), 4) for n, v in zip(BASE_NAMES, w)}, b)
-P_oof = proba_matrix(F_oof)
-lr_p = LogisticRegression(C=mcfg["meta"]["C"], max_iter=5000).fit(P_oof, ytr)  # stacking thông thường trên xác suất
 
 F_va, F_te = raw_matrix(models, Xva), raw_matrix(models, Xte)
 z_va, z_te = stack_logit(F_va, w, b), stack_logit(F_te, w, b)
 s_va, s_te = 1 / (1 + np.exp(-z_va)), 1 / (1 + np.exp(-z_te))
-sp_va = lr_p.predict_proba(proba_matrix(F_va))[:, 1]
-sp_te = lr_p.predict_proba(proba_matrix(F_te))[:, 1]
 
 res = {
     "stack_explainable": evaluate(yte, s_te, wte, best_threshold(yva, s_va, wva), ate, pi),
-    "stack_on_probabilities": evaluate(yte, sp_te, wte, best_threshold(yva, sp_va, wva), ate, pi),
 }
 stem_b = f"baselines_{args.dataset}" + (f"_{args.tag}" if args.tag else "")
 base_path = resolve_path(cfg, "reports_dir") / f"{stem_b}.json"
 base_res = json.load(open(base_path, encoding="utf-8"))["results"] if base_path.exists() else {}
 
 joblib.dump({"w": w, "b": b, "names": BASE_NAMES, "features": feats, "C": mcfg["meta"]["C"],
-             "threshold": res["stack_explainable"]["threshold"], "lr_probabilities": lr_p},
+             "threshold": res["stack_explainable"]["threshold"]},
             mdir / "stack.joblib")
 
 rows = [("Mô hình đơn tốt nhất (PR-AUC)", None)] + [(k, k) for k in base_res]

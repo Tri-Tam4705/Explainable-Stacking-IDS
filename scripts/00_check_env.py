@@ -6,7 +6,7 @@ import sys
 import _bootstrap  # noqa: F401
 
 STEP1 = ["numpy", "pandas", "sklearn", "scipy", "yaml", "pyarrow", "joblib", "pytest"]
-LATER = ["xgboost", "lightgbm", "shap", "lime", "matplotlib"]
+LATER = ["xgboost", "lightgbm", "shap", "matplotlib"]
 
 
 def check(names):

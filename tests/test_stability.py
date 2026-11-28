@@ -70,15 +70,15 @@ def test_shift_and_multiseed_text_and_render_all_include_them():
     assert "tcp_win_in" in t and "1/2 đặc trưng" in t and "UNSW → CSE" in t and "0.150" in t
     v = lambda m: {"mean": m, "std": 0.001, "values": [m, m]}  # noqa: E731
     ms = {"seeds": ["seed gốc", "seed1"], "metrics": {k: {m: v(0.9) for m in ("dr", "far", "macro_f1", "pr_auc")}
-                                                      for k in ("voting", "stack_explainable")},
-          "stack_minus_voting": {m: {"mean_diff": 0.0002, "std_diff": 0.0005, "n_seeds": 2, "stack_better_in": 1}
-                                 for m in ("dr", "far", "macro_f1", "pr_auc")}}
+                                                      for k in ("rf", "stack_explainable")},
+          "stack_vs_base": {"rf": {m: {"mean_diff": 0.0002, "std_diff": 0.0005, "n": 2, "a_better_in": 1}
+                                   for m in ("dr", "far", "macro_f1", "pr_auc")}}}
     t2 = multiseed_text("unsw", ms)
-    assert "NHIỀU SEED — UNSW" in t2 and "Voting" in t2 and "1/2" in t2 and "+0.0002" in t2
+    assert "NHIỀU SEED — UNSW" in t2 and "− Random Forest" in t2 and "1/2" in t2 and "+0.0002" in t2
     assert shift_text(None) == "" and multiseed_text("unsw", None) == ""
     empty = {"unsw": None}
     rep = {"datasets": ["unsw"], "baselines": dict(empty), "stacking": dict(empty), "explain": dict(empty),
-           "stability": {"unsw": _stab()}, "ablation": dict(empty), "lime": dict(empty), "cross_lofo": None,
+           "stability": {"unsw": _stab()}, "ablation": dict(empty), "cross_lofo": None,
            "shift": sh, "multiseed": {"unsw": ms}}
     full = render_all(rep)
     assert "DỊCH CHUYỂN PHÂN PHỐI" in full and "NHIỀU SEED" in full and "ĐỘ ỔN ĐỊNH" in full

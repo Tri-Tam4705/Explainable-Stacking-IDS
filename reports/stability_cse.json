@@ -1,6 +1,6 @@
 {
   "dataset": "cse",
-  "n_sample": 1003,
+  "n_sample": 1263,
   "n_bootstrap": 200,
   "stability": {
     "kendall_tau_mean": 0.9999999999999999,
@@ -219,37 +219,37 @@
     ]
   },
   "stability_feature": {
-    "kendall_tau_mean": 0.9861333333333332,
-    "kendall_tau_std": 0.008442221929747596,
+    "kendall_tau_mean": 0.9777999999999998,
+    "kendall_tau_std": 0.010668958087211107,
     "n_columns": 25,
     "top_k": 5,
-    "topk_jaccard_mean": 0.9016666666666666,
+    "topk_jaccard_mean": 0.9416666666666665,
     "top_features": [
       "duration_in_ms",
       "tcp_win_in",
-      "frac_pkts_512_1024",
       "longest_pkt",
+      "frac_pkts_512_1024",
       "shortest_pkt"
     ]
   },
   "recompute_check": {
-    "n_flows": 1003,
+    "n_flows": 1263,
     "per_flow_kendall_tau_mean": 0.9999999999999998,
     "per_flow_kendall_tau_min": 0.9999999999999999,
     "max_abs_diff_group_phi": 0.0,
-    "max_abs_diff_z": 1.7763568394002505e-15,
+    "max_abs_diff_z": 5.551115123125783e-17,
     "matches_saved": true
   },
   "fidelity": {
-    "r2_group_to_z": 0.9999999999998507
+    "r2_group_to_z": 0.9999999999997604
   },
   "e1_lgbm_single": {
-    "agreement_with_stack_mean": 0.8172909841902863,
-    "agreement_with_stack_p50": 0.8857142857142857,
-    "fidelity_r2_group_to_z": 0.9711556715848928
+    "agreement_with_stack_mean": 0.8991516796742449,
+    "agreement_with_stack_p50": 0.9428571428571428,
+    "fidelity_r2_group_to_z": 0.919520324267595
   },
   "e2_uniform_ensemble": {
-    "agreement_with_stack_mean": 0.9179034325594645,
-    "agreement_with_stack_p50": 0.9428571428571428
+    "agreement_with_stack_mean": 0.9568374618255855,
+    "agreement_with_stack_p50": 1.0
   }
 }

@@ -1,0 +1,447 @@
+{
+  "dataset": "cse",
+  "meta": {
+    "n_train": 6194418,
+    "names": [
+      "rf",
+      "et",
+      "xgb",
+      "lgbm"
+    ],
+    "saved_weights": {
+      "rf": 0.05692823778813093,
+      "et": 0.031882625156303177,
+      "xgb": 0.8229130781115767,
+      "lgbm": 0.16769456418077708
+    },
+    "output_scale": {
+      "rf": {
+        "std": 0.22206353602754153,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "et": {
+        "std": 0.21844500877892808,
+        "min": 0.0,
+        "max": 0.9999853444339099
+      },
+      "xgb": {
+        "std": 3.8544181160226807,
+        "min": -12.032424926757812,
+        "max": 13.892062187194824
+      },
+      "lgbm": {
+        "std": 10.249227464758647,
+        "min": -3163.738198389248,
+        "max": 101.41047622800357
+      }
+    },
+    "standardized_weights": {
+      "rf": 0.012641685782995212,
+      "et": 0.006964600332128945,
+      "xgb": 3.1718510761889225,
+      "lgbm": 1.718739732880298
+    },
+    "pearson": [
+      [
+        1.0,
+        0.992945670805166,
+        0.9648482571438445,
+        0.3614087385194734
+      ],
+      [
+        0.992945670805166,
+        1.0,
+        0.9571578588497228,
+        0.35866546575278935
+      ],
+      [
+        0.9648482571438445,
+        0.9571578588497227,
+        1.0,
+        0.38326528835853524
+      ],
+      [
+        0.36140873851947347,
+        0.3586654657527894,
+        0.3832652883585353,
+        1.0
+      ]
+    ],
+    "spearman": [
+      [
+        0.9999999999999999,
+        0.8218122751304469,
+        0.9144664076653453,
+        0.9163933371819097
+      ],
+      [
+        0.8218122751304469,
+        1.0,
+        0.7631334809445547,
+        0.7689467049992083
+      ],
+      [
+        0.9144664076653454,
+        0.7631334809445547,
+        1.0,
+        0.954795724091272
+      ],
+      [
+        0.9163933371819097,
+        0.7689467049992084,
+        0.954795724091272,
+        0.9999999999999999
+      ]
+    ],
+    "vif": {
+      "rf": 86.44380523549609,
+      "et": 71.18700883491967,
+      "xgb": 14.784299874269381,
+      "lgbm": 1.1735910409191344
+    },
+    "variants": {
+      "full": {
+        "weights": {
+          "rf": 0.05692823778788842,
+          "et": 0.03188262515614306,
+          "xgb": 0.8229130781125299,
+          "lgbm": 0.167694564179601
+        },
+        "bias": -0.03712948835629828,
+        "oof_logloss": 0.04616196073832012,
+        "test": {
+          "dr": 0.9360397020494516,
+          "far": 0.00020404510362684135,
+          "macro_f1": 0.980963742023736,
+          "pr_auc": 0.9586376383661505
+        }
+      },
+      "nonneg": {
+        "weights": {
+          "rf": 2.3409134981630824,
+          "et": 0.0068559907998069405,
+          "xgb": 0.756459594299883,
+          "lgbm": 0.18219221532531693
+        },
+        "bias": -0.302811842460519,
+        "oof_logloss": 0.046143236913093605,
+        "test": {
+          "dr": 0.9355952761227542,
+          "far": 9.085440265041309e-05,
+          "macro_f1": 0.9810755971031919,
+          "pr_auc": 0.9588223684387717
+        }
+      },
+      "only_rf": {
+        "weights": {
+          "rf": 12.38370826747908
+        },
+        "bias": -4.831374258907498,
+        "oof_logloss": 0.047377722719848706,
+        "test": {
+          "dr": 0.9361693262780717,
+          "far": 0.00018442538212426045,
+          "macro_f1": 0.981044932639754,
+          "pr_auc": 0.9711125984373168
+        }
+      },
+      "drop_rf": {
+        "weights": {
+          "et": 0.03197973550162073,
+          "xgb": 0.8212056985694046,
+          "lgbm": 0.1694558089301382
+        },
+        "bias": -0.03632365120650099,
+        "oof_logloss": 0.04616331445876125,
+        "test": {
+          "dr": 0.9367665236170715,
+          "far": 0.00020404510362684135,
+          "macro_f1": 0.9811810680528403,
+          "pr_auc": 0.9586420690194346
+        }
+      },
+      "only_et": {
+        "weights": {
+          "et": 16.321995162720928
+        },
+        "bias": -4.901692845538069,
+        "oof_logloss": 0.04824892106332735,
+        "test": {
+          "dr": 0.9299635663328842,
+          "far": 2.2638140195285654e-05,
+          "macro_f1": 0.9795336755969233,
+          "pr_auc": 0.9569611645067819
+        }
+      },
+      "drop_et": {
+        "weights": {
+          "rf": 0.05707203182733402,
+          "xgb": 0.8226112237578492,
+          "lgbm": 0.16802331674067206
+        },
+        "bias": -0.03668980131381004,
+        "oof_logloss": 0.046162309480160424,
+        "test": {
+          "dr": 0.9367665236170715,
+          "far": 0.00020404510362684135,
+          "macro_f1": 0.9811810680528403,
+          "pr_auc": 0.9586475163864225
+        }
+      },
+      "only_xgb": {
+        "weights": {
+          "xgb": 0.9659998516219879
+        },
+        "bias": -0.15831146342449892,
+        "oof_logloss": 0.04619583651307306,
+        "test": {
+          "dr": 0.935583702530913,
+          "far": 8.904335143479024e-05,
+          "macro_f1": 0.9810760524100917,
+          "pr_auc": 0.9581830104293344
+        }
+      },
+      "drop_xgb": {
+        "weights": {
+          "rf": 0.008848250896080469,
+          "et": 0.008117891177298064,
+          "lgbm": 0.9614392229502423
+        },
+        "bias": -0.15618493551413987,
+        "oof_logloss": 0.0465184942331096,
+        "test": {
+          "dr": 0.9369517010865288,
+          "far": 7.364941610199598e-05,
+          "macro_f1": 0.9815184681504163,
+          "pr_auc": 0.9734471755196955
+        }
+      },
+      "only_lgbm": {
+        "weights": {
+          "lgbm": 0.9613916346484955
+        },
+        "bias": -0.15611149399863786,
+        "oof_logloss": 0.0465188528420428,
+        "test": {
+          "dr": 0.9369517010865288,
+          "far": 7.364941610199598e-05,
+          "macro_f1": 0.9815184681504163,
+          "pr_auc": 0.9734467031424974
+        }
+      },
+      "drop_lgbm": {
+        "weights": {
+          "rf": 0.008972703217302952,
+          "et": 0.008262340776769583,
+          "xgb": 0.9660250779312406
+        },
+        "bias": -0.1583328803868308,
+        "oof_logloss": 0.046195414828302805,
+        "test": {
+          "dr": 0.9355860172492813,
+          "far": 8.904335143479024e-05,
+          "macro_f1": 0.9810767450632742,
+          "pr_auc": 0.9581829923992625
+        }
+      }
+    },
+    "bootstrap": {
+      "n": 200,
+      "weights": {
+        "rf": {
+          "mean": 0.08769510238464998,
+          "p2.5": 0.049708007331610606,
+          "p97.5": 0.20714465911579508,
+          "frac_negative": 0.0
+        },
+        "et": {
+          "mean": 0.04647177213182015,
+          "p2.5": 0.027608244787150283,
+          "p97.5": 0.10348658258486335,
+          "frac_negative": 0.0
+        },
+        "xgb": {
+          "mean": 0.8337374177448971,
+          "p2.5": 0.7808298053216496,
+          "p97.5": 0.895293708030726,
+          "frac_negative": 0.0
+        },
+        "lgbm": {
+          "mean": 0.16717231401526633,
+          "p2.5": 0.12899092652473743,
+          "p97.5": 0.2157228524165129,
+          "frac_negative": 0.0
+        }
+      }
+    },
+    "seconds": 5260.9,
+    "fast": false
+  },
+  "missed": {
+    "threshold": 0.24075056655075594,
+    "attack_mass": 432018.0,
+    "missed_mass": 27632.0,
+    "dr": 0.9360397020494516,
+    "dr_without_top_attack": {
+      "attack": "Infilteration",
+      "dr": 0.9789904289189993
+    },
+    "by_attack": [
+      {
+        "attack": "Infilteration",
+        "n_vectors": 14973,
+        "n_weighted": 21824.0,
+        "recall": 0.12875733137829912,
+        "missed_weighted": 19014.0,
+        "missed_share_of_attack_mass": 0.04401205505326167,
+        "missed_also_by_all_base_models": 0.9464079099610813,
+        "missed_in_label_conflict_groups": 0.1431576732933628,
+        "median_p_of_missed": 0.010131169821488036
+      },
+      {
+        "attack": "DDoS attacks-LOIC-HTTP",
+        "n_vectors": 3358,
+        "n_weighted": 61441.0,
+        "recall": 0.8624859621425432,
+        "missed_weighted": 8449.0,
+        "missed_share_of_attack_mass": 0.01955705549305816,
+        "missed_also_by_all_base_models": 1.0,
+        "missed_in_label_conflict_groups": 0.0,
+        "median_p_of_missed": 0.005290231036678217
+      },
+      {
+        "attack": "DoS attacks-Hulk",
+        "n_vectors": 62307,
+        "n_weighted": 86260.0,
+        "recall": 0.9986900069557153,
+        "missed_weighted": 113.0,
+        "missed_share_of_attack_mass": 0.0002615631756084237,
+        "missed_also_by_all_base_models": 1.0,
+        "missed_in_label_conflict_groups": 0.0,
+        "median_p_of_missed": 0.013041583834943898
+      },
+      {
+        "attack": "Bot",
+        "n_vectors": 94,
+        "n_weighted": 10558.0,
+        "recall": 0.9974426974805835,
+        "missed_weighted": 27.0,
+        "missed_share_of_attack_mass": 6.249739594183576e-05,
+        "missed_also_by_all_base_models": 1.0,
+        "missed_in_label_conflict_groups": 1.0,
+        "median_p_of_missed": 0.017447375299771934
+      },
+      {
+        "attack": "DoS attacks-Slowloris",
+        "n_vectors": 37,
+        "n_weighted": 1893.0,
+        "recall": 0.9899630216587427,
+        "missed_weighted": 19.0,
+        "missed_share_of_attack_mass": 4.3979648996106646e-05,
+        "missed_also_by_all_base_models": 1.0,
+        "missed_in_label_conflict_groups": 0.0,
+        "median_p_of_missed": 0.1260541661392735
+      },
+      {
+        "attack": "Brute Force -Web",
+        "n_vectors": 40,
+        "n_weighted": 79.0,
+        "recall": 0.9367088607594937,
+        "missed_weighted": 5.0,
+        "missed_share_of_attack_mass": 1.1573591841080695e-05,
+        "missed_also_by_all_base_models": 0.2,
+        "missed_in_label_conflict_groups": 0.0,
+        "median_p_of_missed": 0.12986610986322517
+      },
+      {
+        "attack": "SQL Injection",
+        "n_vectors": 10,
+        "n_weighted": 10.0,
+        "recall": 0.6,
+        "missed_weighted": 4.0,
+        "missed_share_of_attack_mass": 9.258873472864557e-06,
+        "missed_also_by_all_base_models": 0.5,
+        "missed_in_label_conflict_groups": 0.0,
+        "median_p_of_missed": 0.06030050660985187
+      },
+      {
+        "attack": "SSH-Bruteforce",
+        "n_vectors": 2940,
+        "n_weighted": 18961.0,
+        "recall": 0.9999472601656031,
+        "missed_weighted": 1.0,
+        "missed_share_of_attack_mass": 2.3147183682161393e-06,
+        "missed_also_by_all_base_models": 0.0,
+        "missed_in_label_conflict_groups": 0.0,
+        "median_p_of_missed": 0.16238906910093973
+      },
+      {
+        "attack": "Brute Force -XSS",
+        "n_vectors": 23,
+        "n_weighted": 23.0,
+        "recall": 1.0,
+        "missed_weighted": 0.0,
+        "missed_share_of_attack_mass": 0.0,
+        "missed_also_by_all_base_models": null,
+        "missed_in_label_conflict_groups": null,
+        "median_p_of_missed": null
+      },
+      {
+        "attack": "DDOS attack-HOIC",
+        "n_vectors": 19148,
+        "n_weighted": 216123.0,
+        "recall": 1.0,
+        "missed_weighted": 0.0,
+        "missed_share_of_attack_mass": 0.0,
+        "missed_also_by_all_base_models": null,
+        "missed_in_label_conflict_groups": null,
+        "median_p_of_missed": null
+      },
+      {
+        "attack": "DDOS attack-LOIC-UDP",
+        "n_vectors": 409,
+        "n_weighted": 410.0,
+        "recall": 1.0,
+        "missed_weighted": 0.0,
+        "missed_share_of_attack_mass": 0.0,
+        "missed_also_by_all_base_models": null,
+        "missed_in_label_conflict_groups": null,
+        "median_p_of_missed": null
+      },
+      {
+        "attack": "DoS attacks-GoldenEye",
+        "n_vectors": 5403,
+        "n_weighted": 5543.0,
+        "recall": 1.0,
+        "missed_weighted": 0.0,
+        "missed_share_of_attack_mass": 0.0,
+        "missed_also_by_all_base_models": null,
+        "missed_in_label_conflict_groups": null,
+        "median_p_of_missed": null
+      },
+      {
+        "attack": "DoS attacks-SlowHTTPTest",
+        "n_vectors": 3,
+        "n_weighted": 3074.0,
+        "recall": 1.0,
+        "missed_weighted": 0.0,
+        "missed_share_of_attack_mass": 0.0,
+        "missed_also_by_all_base_models": null,
+        "missed_in_label_conflict_groups": null,
+        "median_p_of_missed": null
+      },
+      {
+        "attack": "FTP-BruteForce",
+        "n_vectors": 4,
+        "n_weighted": 5819.0,
+        "recall": 1.0,
+        "missed_weighted": 0.0,
+        "missed_share_of_attack_mass": 0.0,
+        "missed_also_by_all_base_models": null,
+        "missed_in_label_conflict_groups": null,
+        "median_p_of_missed": null
+      }
+    ]
+  }
+}

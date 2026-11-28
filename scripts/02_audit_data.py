@@ -22,7 +22,8 @@ csv_path = dataset_csv_path(cfg, args.dataset, args.raw_dir)
 frac = args.sample_frac if args.sample_frac is not None else ds["sample_frac"]
 
 df, info = read_netflow_csv(csv_path, cfg["columns"]["label_source"],
-                            cfg["columns"]["attack_source"], sample_frac=frac, seed=cfg["seed"])
+                            cfg["columns"]["attack_source"], sample_frac=frac, seed=cfg["seed"],
+                            compact=ds.get("compact", False))
 df, fam = add_family(df, cfg["families"])
 rep = audit_dataframe(df, cfg["audit"], fam)
 rep["load"] = info

@@ -3,11 +3,9 @@ import pandas as pd
 import pytest
 
 from xsids.explain.shap_stack import agreement_score, group_attribution
-from xsids.models.data import cap_train
 from xsids.models.evaluate import best_threshold, evaluate, precision_at_prevalence
 from xsids.models.stacking import fit_meta, stack_logit
 from xsids.models.zoo import BASE_NAMES
-from xsids.schema import LABEL_COL
 
 
 def test_precision_at_prevalence_matches_bayes_example():
@@ -55,14 +53,6 @@ def test_best_threshold_gives_same_validation_predictions_as_the_best_score():
     prec, rec, t = precision_recall_curve(y, s, sample_weight=w)
     f1 = 2 * prec[:-1] * rec[:-1] / np.maximum(prec[:-1] + rec[:-1], 1e-12)
     assert ((s >= best_threshold(y, s, w)) == (s >= t[int(np.argmax(f1))])).all()
-
-
-def test_cap_train_keeps_all_attacks():
-    rng = np.random.default_rng(0)
-    df = pd.DataFrame({LABEL_COL: (rng.random(5000) < 0.1).astype(int), "x": rng.normal(size=5000)})
-    out = cap_train(df, 2000, 1)
-    assert len(out) == 2000 and out[LABEL_COL].sum() == df[LABEL_COL].sum()
-    assert cap_train(df, None, 1) is df
 
 
 def test_meta_logit_is_linear_in_raw_outputs():

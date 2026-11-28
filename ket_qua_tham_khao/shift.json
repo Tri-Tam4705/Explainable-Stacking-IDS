@@ -1,0 +1,250 @@
+{
+  "features": [
+    {
+      "feature": "out_pkts",
+      "ks_all": 0.7093597650527954,
+      "psi_all": 5.213723426795369,
+      "ks_benign": 0.7625199556350708,
+      "psi_benign": 6.687902657580119
+    },
+    {
+      "feature": "src_to_dst_bytes_per_s",
+      "ks_all": 0.6778304576873779,
+      "psi_all": 4.561773091346399,
+      "ks_benign": 0.7227126955986023,
+      "psi_benign": 4.653055450874169
+    },
+    {
+      "feature": "shortest_pkt",
+      "ks_all": 0.23806291818618774,
+      "psi_all": 3.260754061632985,
+      "ks_benign": 0.19368073344230652,
+      "psi_benign": 4.125358895136815
+    },
+    {
+      "feature": "dst_to_src_bytes_per_s",
+      "ks_all": 0.4929860234260559,
+      "psi_all": 3.415828362790683,
+      "ks_benign": 0.5294656753540039,
+      "psi_benign": 4.050179965685345
+    },
+    {
+      "feature": "out_bytes",
+      "ks_all": 0.5376797914505005,
+      "psi_all": 3.229080545788093,
+      "ks_benign": 0.5784438252449036,
+      "psi_benign": 4.029981823478656
+    },
+    {
+      "feature": "src_to_dst_throughput",
+      "ks_all": 0.7035114169120789,
+      "psi_all": 3.27340500453052,
+      "ks_benign": 0.717984676361084,
+      "psi_benign": 3.834416290341103
+    },
+    {
+      "feature": "in_byte_frac",
+      "ks_all": 0.5512923002243042,
+      "psi_all": 2.586981414271456,
+      "ks_benign": 0.57941734790802,
+      "psi_benign": 3.001292261621518
+    },
+    {
+      "feature": "dst_to_src_throughput",
+      "ks_all": 0.5227004289627075,
+      "psi_all": 2.870904020902937,
+      "ks_benign": 0.5330073237419128,
+      "psi_benign": 2.810566752919608
+    },
+    {
+      "feature": "longest_pkt",
+      "ks_all": 0.3824715316295624,
+      "psi_all": 1.730561140857249,
+      "ks_benign": 0.4669318199157715,
+      "psi_benign": 2.3093355918933693
+    },
+    {
+      "feature": "bytes_per_pkt_out",
+      "ks_all": 0.5547358393669128,
+      "psi_all": 1.9521658822361128,
+      "ks_benign": 0.5783436894416809,
+      "psi_benign": 2.260243117564789
+    },
+    {
+      "feature": "bytes_per_pkt_in",
+      "ks_all": 0.1401917040348053,
+      "psi_all": 1.8249360799823813,
+      "ks_benign": 0.15420952439308167,
+      "psi_benign": 1.609144457146407
+    },
+    {
+      "feature": "frac_pkts_128_256",
+      "ks_all": 0.3241906762123108,
+      "psi_all": 1.153465144747643,
+      "ks_benign": 0.386121928691864,
+      "psi_benign": 1.2569475309100713
+    },
+    {
+      "feature": "frac_pkts_le128",
+      "ks_all": 0.2413628101348877,
+      "psi_all": 0.8108673549732226,
+      "ks_benign": 0.2940490245819092,
+      "psi_benign": 1.06714096241676
+    },
+    {
+      "feature": "tcp_win_in",
+      "ks_all": 0.3395894169807434,
+      "psi_all": 0.5937792492445233,
+      "ks_benign": 0.30241620540618896,
+      "psi_benign": 0.2049462467154572
+    },
+    {
+      "feature": "in_pkt_frac",
+      "ks_all": 0.1453462839126587,
+      "psi_all": 0.3215091082875282,
+      "ks_benign": 0.11237646639347076,
+      "psi_benign": 0.12369367350042625
+    },
+    {
+      "feature": "frac_pkts_1024_1514",
+      "ks_all": 0.14516901969909668,
+      "psi_all": 0.12861789638079302,
+      "ks_benign": 0.12085551023483276,
+      "psi_benign": 0.06606999342641848
+    },
+    {
+      "feature": "frac_pkts_256_512",
+      "ks_all": 0.0447465181350708,
+      "psi_all": 0.015492379818012448,
+      "ks_benign": 0.05754196643829346,
+      "psi_benign": 0.01306484751894699
+    },
+    {
+      "feature": "frac_pkts_512_1024",
+      "ks_all": 0.04648327827453613,
+      "psi_all": 0.00034940752135305744,
+      "ks_benign": 0.0302850604057312,
+      "psi_benign": 0.005073513239080606
+    },
+    {
+      "feature": "duration_in_ms",
+      "ks_all": 0.051317572593688965,
+      "psi_all": 0.02519715897070563,
+      "ks_benign": 0.08838313817977905,
+      "psi_benign": 0.0
+    },
+    {
+      "feature": "client_psh",
+      "ks_all": 0.13514238595962524,
+      "psi_all": 0.0,
+      "ks_benign": 0.14312565326690674,
+      "psi_benign": 0.0
+    },
+    {
+      "feature": "server_psh",
+      "ks_all": 0.03908270597457886,
+      "psi_all": 0.0,
+      "ks_benign": 0.12289363145828247,
+      "psi_benign": 0.0
+    },
+    {
+      "feature": "server_fin",
+      "ks_all": 0.18245244026184082,
+      "psi_all": 0.0,
+      "ks_benign": 0.1415250301361084,
+      "psi_benign": 0.0
+    },
+    {
+      "feature": "server_syn",
+      "ks_all": 0.15364903211593628,
+      "psi_all": 0.0,
+      "ks_benign": 0.1190871000289917,
+      "psi_benign": 0.0
+    },
+    {
+      "feature": "retrans_in_pkts",
+      "ks_all": 0.3280995488166809,
+      "psi_all": 0.7264771473735497,
+      "ks_benign": 0.26044511795043945,
+      "psi_benign": 0.0
+    },
+    {
+      "feature": "is_tcp",
+      "ks_all": 0.24135464429855347,
+      "psi_all": 0.0,
+      "ks_benign": 0.19786864519119263,
+      "psi_benign": 0.0
+    }
+  ],
+  "cross": {
+    "unsw->unsw": {
+      "prevalence": 0.03977159103935365,
+      "roc_auc": 0.999385213292253,
+      "pr_auc": 0.9785081969982494,
+      "source_threshold": {
+        "dr": 0.9842145096767219,
+        "far": 0.002695504146847307,
+        "macro_f1": 0.9787036630533855
+      },
+      "recalibrated_threshold": {
+        "dr": 0.9842145096767219,
+        "far": 0.002695504146847307,
+        "macro_f1": 0.9787036630533855
+      },
+      "p_attack_mean_benign": 0.0037348317407100715,
+      "p_attack_mean_attack": 0.8862008027463201
+    },
+    "unsw->cse": {
+      "prevalence": 0.11920234135972577,
+      "roc_auc": 0.1501517874738895,
+      "pr_auc": 0.06509983726354591,
+      "source_threshold": {
+        "dr": 0.022258331828766395,
+        "far": 0.23664100708935998,
+        "macro_f1": 0.41155625965108866
+      },
+      "recalibrated_threshold": {
+        "dr": 1.0,
+        "far": 0.9999996981581307,
+        "macro_f1": 0.10342742753976246
+      },
+      "p_attack_mean_benign": 0.2191803710258089,
+      "p_attack_mean_attack": 0.02940307713346233
+    },
+    "cse->unsw": {
+      "prevalence": 0.03977159103935365,
+      "roc_auc": 0.2373884767223702,
+      "pr_auc": 0.0237038320398089,
+      "source_threshold": {
+        "dr": 0.0007027786787760839,
+        "far": 0.0007731953257993067,
+        "macro_f1": 0.4908160754545554
+      },
+      "recalibrated_threshold": {
+        "dr": 0.9998918802032652,
+        "far": 0.9997244690689832,
+        "macro_f1": 0.036897425457239855
+      },
+      "p_attack_mean_benign": 0.01131818324421504,
+      "p_attack_mean_attack": 0.004173354491760009
+    },
+    "cse->cse": {
+      "prevalence": 0.11920234135972577,
+      "roc_auc": 0.9743579198548131,
+      "pr_auc": 0.9586376383655103,
+      "source_threshold": {
+        "dr": 0.9360397020494516,
+        "far": 0.00020404510362684135,
+        "macro_f1": 0.980963742023736
+      },
+      "recalibrated_threshold": {
+        "dr": 0.9360397020494516,
+        "far": 0.00020404510362684135,
+        "macro_f1": 0.980963742023736
+      },
+      "p_attack_mean_benign": 0.007122725701055927,
+      "p_attack_mean_attack": 0.9318133313169521
+    }
+  },
+  "psi_note": "PSI > 0,25 thường coi là lệch lớn; KS ∈ [0,1]"
+}

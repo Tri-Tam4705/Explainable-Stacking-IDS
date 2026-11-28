@@ -21,7 +21,7 @@ from sklearn.linear_model import LinearRegression
 
 import _bootstrap  # noqa: F401
 from xsids.config import load_config, resolve_path
-from xsids.explain.lime_stack import recover_sample_idx
+from xsids.explain.common import recover_sample_idx
 from xsids.explain.shap_stack import agreement_score, explain_stack, group_attribution
 from xsids.explain.stability import bootstrap_rank_stability, kendall_tau_rows
 from xsids.features.engineer import GROUP_ORDER

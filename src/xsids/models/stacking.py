@@ -7,7 +7,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedKFold
 
 from xsids.data.split import make_strata
-from xsids.models.zoo import BASE_NAMES, make_model, raw_output, to_proba
+from xsids.models.zoo import BASE_NAMES, make_model, raw_output
 
 
 def oof_raw(name: str, params: dict, X, y, attack, folds: int, seed: int, n_jobs: int) -> np.ndarray:
@@ -36,6 +36,3 @@ def stack_logit(F: np.ndarray, w: np.ndarray, b: float) -> np.ndarray:
 def raw_matrix(models: dict, X) -> np.ndarray:
     return np.stack([raw_output(n, models[n], X) for n in BASE_NAMES], axis=1)
 
-
-def proba_matrix(F: np.ndarray) -> np.ndarray:
-    return np.stack([to_proba(n, F[:, k]) for k, n in enumerate(BASE_NAMES)], axis=1)

@@ -1,4 +1,4 @@
-"""Huấn luyện và đánh giá trọn một hệ (4 mô hình đơn, soft voting, stacking giải thích được) trên một tập đặc trưng bất kỳ.
+"""Huấn luyện và đánh giá trọn một hệ (4 mô hình đơn và stacking giải thích được) trên một tập đặc trưng bất kỳ.
 
 Dùng cho các thí nghiệm phải huấn luyện lại nhiều lần (bỏ đặc trưng rồi huấn luyện lại, nhiều phép chia dữ liệu).
 Cùng quy trình với scripts/06_baselines.py và 07_stacking.py: mô hình cuối huấn luyện trên toàn bộ train, meta-learner
@@ -25,10 +25,9 @@ def fit_system(Xtr, ytr, atr, params: dict, seed: int, n_jobs: int, folds: int, 
 
 
 def scores(system: dict, X) -> dict:
-    """Điểm (xác suất tấn công) của 4 mô hình đơn, soft voting và stacking trên X."""
+    """Điểm (xác suất tấn công) của 4 mô hình đơn và stacking trên X."""
     F = raw_matrix(system["models"], X)
     out = {n: to_proba(n, F[:, k]) for k, n in enumerate(BASE_NAMES)}
-    out["voting"] = np.mean([out[n] for n in BASE_NAMES], axis=0)
     out["stack_explainable"] = expit(stack_logit(F, system["w"], system["b"]))
     return out
 
@@ -80,4 +79,21 @@ def paired_summary(a: np.ndarray, b: np.ndarray, lower_is_better: bool = False, 
         out["test_train_ratio"] = float(test_train_ratio)
         out["p_value_corrected_t"] = float(2 * tdist.sf(abs(tc), n - 1)) if ok else float("nan")
         out["ci95_corrected"] = [float(d.mean() - q * se), float(d.mean() + q * se)] if ok else [float("nan")] * 2
+    return out
+
+
+def stack_vs_base(metrics: dict, metric_names=("dr", "far", "macro_f1", "pr_auc"), test_train_ratio: float | None = None) -> dict:
+    """Chênh lệch ghép cặp Stacking − từng mô hình đơn qua các lần lặp: {mô hình: {chỉ số: paired_summary}}.
+
+    metrics có dạng {mô hình: {chỉ số: {"values": [...]}}} như trong multiseed_*.json và multisplit_*.json.
+    """
+    if "stack_explainable" not in metrics:
+        return {}
+    out = {}
+    for n in BASE_NAMES:
+        if n not in metrics:
+            continue
+        out[n] = {q: paired_summary(metrics["stack_explainable"][q]["values"], metrics[n][q]["values"],
+                                    lower_is_better=(q == "far"), test_train_ratio=test_train_ratio)
+                  for q in metric_names if q in metrics[n] and q in metrics["stack_explainable"]}
     return out

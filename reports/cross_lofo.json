@@ -89,152 +89,152 @@
       "natural_prevalence_used": 0.03977159103935365
     },
     "train_unsw_test_cse": {
-      "threshold": 0.3888730294391052,
+      "threshold": 0.3888730294391053,
       "weighted": {
-        "dr": 0.023758565662254764,
-        "far": 0.23338106825777807,
-        "precision": 0.012703527474954325,
-        "f1_attack": 0.016555143475729804,
-        "macro_f1": 0.4138941724489796,
-        "tp": 2531.0,
-        "fp": 196705.0,
-        "fn": 103999.0,
-        "tn": 646144.0,
-        "pr_auc": 0.06322614078031576,
-        "roc_auc": 0.1497774913144233,
-        "precision_at_natural_prevalence": 0.01360993919736666
+        "dr": 0.022258331828766395,
+        "far": 0.23664100708935998,
+        "precision": 0.012116843874668286,
+        "f1_attack": 0.01569159872848443,
+        "macro_f1": 0.41155625965108866,
+        "tp": 9616.0,
+        "fp": 783990.0,
+        "fn": 422402.0,
+        "tn": 2529003.0,
+        "pr_auc": 0.06509983726354591,
+        "roc_auc": 0.1501517874738895,
+        "precision_at_natural_prevalence": 0.012569493639261124
       },
       "unweighted": {
-        "dr": 0.07111729814792397,
-        "far": 0.4220794348459871,
-        "precision": 0.012202404133239869,
-        "f1_attack": 0.02083065563380594,
-        "macro_f1": 0.36151665593463683,
-        "tp": 2350.0,
-        "fp": 190235.0,
-        "fn": 30694.0,
-        "tn": 260474.0,
-        "pr_auc": 0.036057208277493404,
-        "roc_auc": 0.09027216828391098,
-        "precision_at_natural_prevalence": 0.022326859689711286
+        "dr": 0.0814812090226117,
+        "far": 0.43856619025918164,
+        "precision": 0.012017049808169316,
+        "f1_attack": 0.020945069127473948,
+        "macro_f1": 0.35670171581741694,
+        "tp": 8861.0,
+        "fp": 728508.0,
+        "fn": 99888.0,
+        "tn": 932605.0,
+        "pr_auc": 0.03249106734831493,
+        "roc_auc": 0.09812641160700772,
+        "precision_at_natural_prevalence": 0.024527097655069052
       },
       "per_attack_recall": {
         "Bot": {
-          "n_vectors": 46,
-          "n_weighted": 2641,
+          "n_vectors": 94,
+          "n_weighted": 10558,
           "recall_weighted": 0.0,
           "recall_unweighted": 0.0
         },
         "Brute Force -Web": {
-          "n_vectors": 25,
-          "n_weighted": 25,
-          "recall_weighted": 0.2,
-          "recall_unweighted": 0.2
+          "n_vectors": 40,
+          "n_weighted": 79,
+          "recall_weighted": 0.5949367088607594,
+          "recall_unweighted": 0.5
         },
         "Brute Force -XSS": {
-          "n_vectors": 9,
-          "n_weighted": 9,
-          "recall_weighted": 0.2222222222222222,
-          "recall_unweighted": 0.2222222222222222
+          "n_vectors": 23,
+          "n_weighted": 23,
+          "recall_weighted": 0.0,
+          "recall_unweighted": 0.0
         },
         "DDOS attack-HOIC": {
-          "n_vectors": 7940,
-          "n_weighted": 52432,
+          "n_vectors": 19148,
+          "n_weighted": 216123,
           "recall_weighted": 0.0,
           "recall_unweighted": 0.0
         },
         "DDOS attack-LOIC-UDP": {
-          "n_vectors": 103,
-          "n_weighted": 103,
-          "recall_weighted": 0.1650485436893204,
-          "recall_unweighted": 0.1650485436893204
+          "n_vectors": 409,
+          "n_weighted": 410,
+          "recall_weighted": 0.15853658536585366,
+          "recall_unweighted": 0.15647921760391198
         },
         "DDoS attacks-LOIC-HTTP": {
-          "n_vectors": 928,
-          "n_weighted": 15317,
-          "recall_weighted": 0.03460207612456748,
-          "recall_unweighted": 0.5646551724137931
+          "n_vectors": 3358,
+          "n_weighted": 61441,
+          "recall_weighted": 0.03544864178642926,
+          "recall_unweighted": 0.6078022632519356
         },
         "DoS attacks-GoldenEye": {
-          "n_vectors": 1381,
-          "n_weighted": 1390,
+          "n_vectors": 5403,
+          "n_weighted": 5543,
           "recall_weighted": 0.0,
           "recall_unweighted": 0.0
         },
         "DoS attacks-Hulk": {
-          "n_vectors": 17894,
-          "n_weighted": 21648,
+          "n_vectors": 62307,
+          "n_weighted": 86260,
           "recall_weighted": 0.0,
           "recall_unweighted": 0.0
         },
         "DoS attacks-SlowHTTPTest": {
-          "n_vectors": 2,
-          "n_weighted": 789,
+          "n_vectors": 3,
+          "n_weighted": 3074,
           "recall_weighted": 0.0,
           "recall_unweighted": 0.0
         },
         "DoS attacks-Slowloris": {
-          "n_vectors": 19,
-          "n_weighted": 455,
+          "n_vectors": 37,
+          "n_weighted": 1893,
           "recall_weighted": 0.0,
           "recall_unweighted": 0.0
         },
         "FTP-BruteForce": {
-          "n_vectors": 2,
-          "n_weighted": 1491,
+          "n_vectors": 4,
+          "n_weighted": 5819,
           "recall_weighted": 0.0,
           "recall_unweighted": 0.0
         },
         "Infilteration": {
-          "n_vectors": 3907,
-          "n_weighted": 5490,
-          "recall_weighted": 0.36010928961748634,
-          "recall_unweighted": 0.4612234450985411
+          "n_vectors": 14973,
+          "n_weighted": 21824,
+          "recall_weighted": 0.33568548387096775,
+          "recall_unweighted": 0.4498764442663461
         },
         "SQL Injection": {
-          "n_vectors": 3,
-          "n_weighted": 3,
+          "n_vectors": 10,
+          "n_weighted": 10,
           "recall_weighted": 0.0,
           "recall_unweighted": 0.0
         },
         "SSH-Bruteforce": {
-          "n_vectors": 785,
-          "n_weighted": 4737,
+          "n_vectors": 2940,
+          "n_weighted": 18961,
           "recall_weighted": 0.0,
           "recall_unweighted": 0.0
         }
       },
-      "natural_prevalence_used": 0.11935818489405303
+      "natural_prevalence_used": 0.11920234135972577
     },
     "train_cse_test_unsw": {
-      "threshold": 0.8205315402883713,
+      "threshold": 0.24075056655075594,
       "weighted": {
-        "dr": 0.0005405989836739107,
-        "far": 1.281539214032e-05,
-        "precision": 0.625,
-        "f1_attack": 0.0010802635843145728,
-        "macro_f1": 0.4908559490462772,
-        "tp": 10.0,
-        "fp": 6.0,
-        "fn": 18488.0,
-        "tn": 468181.0,
-        "pr_auc": 0.02631762335360189,
-        "roc_auc": 0.2610751565586201,
-        "precision_at_natural_prevalence": 0.6359925411318486
+        "dr": 0.0007027786787760839,
+        "far": 0.0007731953257993067,
+        "precision": 0.034666666666666665,
+        "f1_attack": 0.0013776294176866422,
+        "macro_f1": 0.4908160754545554,
+        "tp": 13.0,
+        "fp": 362.0,
+        "fn": 18485.0,
+        "tn": 467825.0,
+        "pr_auc": 0.0237038320398089,
+        "roc_auc": 0.2373884767223702,
+        "precision_at_natural_prevalence": 0.03628091498755787
       },
       "unweighted": {
-        "dr": 0.0002678810608090008,
-        "far": 7.507695387772466e-05,
-        "precision": 0.4,
-        "f1_attack": 0.000535403560433677,
-        "macro_f1": 0.4575400441050317,
-        "tp": 2.0,
-        "fp": 3.0,
-        "fn": 7464.0,
-        "tn": 39956.0,
-        "pr_auc": 0.14356029965521394,
-        "roc_auc": 0.3404468484563139,
-        "precision_at_natural_prevalence": 0.12875757690531273
+        "dr": 0.000669702652022502,
+        "far": 0.0010260517029955704,
+        "precision": 0.10869565217391304,
+        "f1_attack": 0.001331203407880724,
+        "macro_f1": 0.45771751496048396,
+        "tp": 5.0,
+        "fp": 41.0,
+        "fn": 7461.0,
+        "tn": 39918.0,
+        "pr_auc": 0.11563927438923745,
+        "roc_auc": 0.2747918360895326,
+        "precision_at_natural_prevalence": 0.0263224520518903
       },
       "per_attack_recall": {
         "Analysis": {
@@ -258,14 +258,14 @@
         "Exploits": {
           "n_vectors": 4529,
           "n_weighted": 8761,
-          "recall_weighted": 0.0001141422212076247,
-          "recall_unweighted": 0.00022079929344226098
+          "recall_weighted": 0.0003424266636228741,
+          "recall_unweighted": 0.0006623978803267829
         },
         "Fuzzers": {
           "n_vectors": 1349,
           "n_weighted": 4021,
-          "recall_weighted": 0.0,
-          "recall_unweighted": 0.0
+          "recall_weighted": 0.0002486943546381497,
+          "recall_unweighted": 0.0007412898443291327
         },
         "Generic": {
           "n_vectors": 734,
@@ -295,122 +295,122 @@
       "natural_prevalence_used": 0.03977159103935365
     },
     "train_cse_test_cse": {
-      "threshold": 0.8205315402883713,
+      "threshold": 0.24075056655075594,
       "weighted": {
-        "dr": 0.9338777809067869,
-        "far": 5.813615487471659e-05,
-        "precision": 0.999507710855478,
-        "f1_attack": 0.965578822216291,
-        "macro_f1": 0.9806942290520964,
-        "tp": 99486.0,
-        "fp": 49.0,
-        "fn": 7044.0,
-        "tn": 842800.0,
-        "pr_auc": 0.957797006781397,
-        "roc_auc": 0.9698703929460449,
-        "precision_at_natural_prevalence": 0.9995409035549317
+        "dr": 0.9360397020494516,
+        "far": 0.00020404510362684135,
+        "precision": 0.998331119680444,
+        "f1_attack": 0.9661824437329766,
+        "macro_f1": 0.980963742023736,
+        "tp": 404386.0,
+        "fp": 676.0,
+        "fn": 27632.0,
+        "tn": 3312317.0,
+        "pr_auc": 0.9586376383655103,
+        "roc_auc": 0.9743579198548131,
+        "precision_at_natural_prevalence": 0.99839185833392
       },
       "unweighted": {
-        "dr": 0.8843662994794819,
-        "far": 8.65303333192814e-05,
-        "precision": 0.9986672134508919,
-        "f1_attack": 0.9380477000609891,
-        "macro_f1": 0.9668917245333668,
-        "tp": 29223.0,
-        "fp": 39.0,
-        "fn": 3821.0,
-        "tn": 450670.0,
-        "pr_auc": 0.9153579299735057,
-        "roc_auc": 0.95755639840597,
-        "precision_at_natural_prevalence": 0.9992786103937485
+        "dr": 0.8656907189951172,
+        "far": 0.0002293642876794053,
+        "precision": 0.995969277643773,
+        "f1_attack": 0.9262715658252695,
+        "macro_f1": 0.9608898335490745,
+        "tp": 94143.0,
+        "fp": 381.0,
+        "fn": 14606.0,
+        "tn": 1660732.0,
+        "pr_auc": 0.898830623070861,
+        "roc_auc": 0.9515346144949336,
+        "precision_at_natural_prevalence": 0.9980460880030085
       },
       "per_attack_recall": {
         "Bot": {
-          "n_vectors": 46,
-          "n_weighted": 2641,
-          "recall_weighted": 0.9996213555471413,
-          "recall_unweighted": 0.9782608695652174
+          "n_vectors": 94,
+          "n_weighted": 10558,
+          "recall_weighted": 0.9974426974805835,
+          "recall_unweighted": 0.9893617021276596
         },
         "Brute Force -Web": {
-          "n_vectors": 25,
-          "n_weighted": 25,
-          "recall_weighted": 0.92,
-          "recall_unweighted": 0.92
+          "n_vectors": 40,
+          "n_weighted": 79,
+          "recall_weighted": 0.9367088607594937,
+          "recall_unweighted": 0.9
         },
         "Brute Force -XSS": {
-          "n_vectors": 9,
-          "n_weighted": 9,
-          "recall_weighted": 0.8888888888888888,
-          "recall_unweighted": 0.8888888888888888
+          "n_vectors": 23,
+          "n_weighted": 23,
+          "recall_weighted": 1.0,
+          "recall_unweighted": 1.0
         },
         "DDOS attack-HOIC": {
-          "n_vectors": 7940,
-          "n_weighted": 52432,
+          "n_vectors": 19148,
+          "n_weighted": 216123,
           "recall_weighted": 1.0,
           "recall_unweighted": 1.0
         },
         "DDOS attack-LOIC-UDP": {
-          "n_vectors": 103,
-          "n_weighted": 103,
+          "n_vectors": 409,
+          "n_weighted": 410,
           "recall_weighted": 1.0,
           "recall_unweighted": 1.0
         },
         "DDoS attacks-LOIC-HTTP": {
-          "n_vectors": 928,
-          "n_weighted": 15317,
-          "recall_weighted": 0.8630932950316642,
-          "recall_unweighted": 0.9967672413793104
+          "n_vectors": 3358,
+          "n_weighted": 61441,
+          "recall_weighted": 0.8624859621425432,
+          "recall_unweighted": 0.9988088147706968
         },
         "DoS attacks-GoldenEye": {
-          "n_vectors": 1381,
-          "n_weighted": 1390,
+          "n_vectors": 5403,
+          "n_weighted": 5543,
           "recall_weighted": 1.0,
           "recall_unweighted": 1.0
         },
         "DoS attacks-Hulk": {
-          "n_vectors": 17894,
-          "n_weighted": 21648,
-          "recall_weighted": 1.0,
-          "recall_unweighted": 1.0
+          "n_vectors": 62307,
+          "n_weighted": 86260,
+          "recall_weighted": 0.9986900069557153,
+          "recall_unweighted": 0.9999839504389555
         },
         "DoS attacks-SlowHTTPTest": {
-          "n_vectors": 2,
-          "n_weighted": 789,
+          "n_vectors": 3,
+          "n_weighted": 3074,
           "recall_weighted": 1.0,
           "recall_unweighted": 1.0
         },
         "DoS attacks-Slowloris": {
-          "n_vectors": 19,
-          "n_weighted": 455,
-          "recall_weighted": 1.0,
-          "recall_unweighted": 1.0
+          "n_vectors": 37,
+          "n_weighted": 1893,
+          "recall_weighted": 0.9899630216587427,
+          "recall_unweighted": 0.918918918918919
         },
         "FTP-BruteForce": {
-          "n_vectors": 2,
-          "n_weighted": 1491,
+          "n_vectors": 4,
+          "n_weighted": 5819,
           "recall_weighted": 1.0,
           "recall_unweighted": 1.0
         },
         "Infilteration": {
-          "n_vectors": 3907,
-          "n_weighted": 5490,
-          "recall_weighted": 0.1,
-          "recall_unweighted": 0.02431533145636038
+          "n_vectors": 14973,
+          "n_weighted": 21824,
+          "recall_weighted": 0.12875733137829912,
+          "recall_unweighted": 0.025712949976624593
         },
         "SQL Injection": {
-          "n_vectors": 3,
-          "n_weighted": 3,
-          "recall_weighted": 0.6666666666666666,
-          "recall_unweighted": 0.6666666666666666
+          "n_vectors": 10,
+          "n_weighted": 10,
+          "recall_weighted": 0.6,
+          "recall_unweighted": 0.6
         },
         "SSH-Bruteforce": {
-          "n_vectors": 785,
-          "n_weighted": 4737,
-          "recall_weighted": 0.9997888959256913,
-          "recall_unweighted": 0.9987261146496815
+          "n_vectors": 2940,
+          "n_weighted": 18961,
+          "recall_weighted": 0.9999472601656031,
+          "recall_unweighted": 0.9996598639455783
         }
       },
-      "natural_prevalence_used": 0.11935818489405303
+      "natural_prevalence_used": 0.11920234135972577
     }
   },
   "lofo": {
@@ -545,132 +545,132 @@
       }
     },
     "cse": {
-      "baseline_macro_f1": 0.9804571820392796,
+      "baseline_macro_f1": 0.9815184681504163,
       "features": {
         "tcp_win_in": {
-          "macro_f1_without": 0.9706737435987205,
-          "f1_drop": 0.009783438440559067,
+          "macro_f1_without": 0.900797682348957,
+          "f1_drop": 0.08072078580145936,
           "group": "tcp_behavior"
         },
-        "shortest_pkt": {
-          "macro_f1_without": 0.9763318350555104,
-          "f1_drop": 0.004125346983769207,
-          "group": "packet_size"
-        },
-        "bytes_per_pkt_out": {
-          "macro_f1_without": 0.9776570743071598,
-          "f1_drop": 0.0028001077321198053,
+        "in_pkt_frac": {
+          "macro_f1_without": 0.9716598533327763,
+          "f1_drop": 0.009858614817640055,
           "group": "volume"
         },
         "frac_pkts_512_1024": {
-          "macro_f1_without": 0.9780298306752852,
-          "f1_drop": 0.002427351363994412,
+          "macro_f1_without": 0.9751343658741369,
+          "f1_drop": 0.006384102276279391,
           "group": "packet_size"
-        },
-        "server_fin": {
-          "macro_f1_without": 0.9781914898574222,
-          "f1_drop": 0.0022656921818573483,
-          "group": "tcp_behavior"
         },
         "duration_in_ms": {
-          "macro_f1_without": 0.9783837420039309,
-          "f1_drop": 0.002073440035348706,
+          "macro_f1_without": 0.9756264448083278,
+          "f1_drop": 0.005892023342088493,
           "group": "timing_rate"
-        },
-        "dst_to_src_bytes_per_s": {
-          "macro_f1_without": 0.9793807578631595,
-          "f1_drop": 0.0010764241761200832,
-          "group": "timing_rate"
-        },
-        "bytes_per_pkt_in": {
-          "macro_f1_without": 0.9794140841308494,
-          "f1_drop": 0.0010430979084301573,
-          "group": "volume"
-        },
-        "frac_pkts_256_512": {
-          "macro_f1_without": 0.9795134170474832,
-          "f1_drop": 0.0009437649917963808,
-          "group": "packet_size"
-        },
-        "frac_pkts_128_256": {
-          "macro_f1_without": 0.9796219800516459,
-          "f1_drop": 0.0008352019876336492,
-          "group": "packet_size"
-        },
-        "src_to_dst_throughput": {
-          "macro_f1_without": 0.9800816058848805,
-          "f1_drop": 0.0003755761543990932,
-          "group": "timing_rate"
-        },
-        "frac_pkts_1024_1514": {
-          "macro_f1_without": 0.980090901377541,
-          "f1_drop": 0.00036628066173860496,
-          "group": "packet_size"
-        },
-        "longest_pkt": {
-          "macro_f1_without": 0.9801249173592712,
-          "f1_drop": 0.00033226468000835396,
-          "group": "packet_size"
         },
         "src_to_dst_bytes_per_s": {
-          "macro_f1_without": 0.9801310204317937,
-          "f1_drop": 0.0003261616074858864,
+          "macro_f1_without": 0.9763067218359329,
+          "f1_drop": 0.005211746314483401,
           "group": "timing_rate"
         },
-        "in_byte_frac": {
-          "macro_f1_without": 0.9801316476390405,
-          "f1_drop": 0.0003255344002390803,
+        "out_pkts": {
+          "macro_f1_without": 0.9774897520156303,
+          "f1_drop": 0.004028716134786059,
+          "group": "volume"
+        },
+        "longest_pkt": {
+          "macro_f1_without": 0.9778023878721785,
+          "f1_drop": 0.0037160802782377766,
+          "group": "packet_size"
+        },
+        "bytes_per_pkt_out": {
+          "macro_f1_without": 0.9779763338195442,
+          "f1_drop": 0.0035421343308721376,
           "group": "volume"
         },
         "out_bytes": {
-          "macro_f1_without": 0.9802313959620539,
-          "f1_drop": 0.0002257860772256759,
+          "macro_f1_without": 0.9783516777815133,
+          "f1_drop": 0.003166790368902994,
           "group": "volume"
         },
-        "out_pkts": {
-          "macro_f1_without": 0.980258743523002,
-          "f1_drop": 0.00019843851627754372,
-          "group": "volume"
-        },
-        "dst_to_src_throughput": {
-          "macro_f1_without": 0.9803382154219109,
-          "f1_drop": 0.00011896661736865433,
+        "dst_to_src_bytes_per_s": {
+          "macro_f1_without": 0.978411991175038,
+          "f1_drop": 0.0031064769753783583,
           "group": "timing_rate"
         },
-        "in_pkt_frac": {
-          "macro_f1_without": 0.980351990521339,
-          "f1_drop": 0.00010519151794052828,
+        "server_fin": {
+          "macro_f1_without": 0.9792065716487284,
+          "f1_drop": 0.002311896501687949,
+          "group": "tcp_behavior"
+        },
+        "in_byte_frac": {
+          "macro_f1_without": 0.9796603412754263,
+          "f1_drop": 0.0018581268749899849,
           "group": "volume"
         },
-        "client_psh": {
-          "macro_f1_without": 0.9803530405721746,
-          "f1_drop": 0.00010414146710491234,
-          "group": "tcp_behavior"
-        },
-        "retrans_in_pkts": {
-          "macro_f1_without": 0.9804007751857999,
-          "f1_drop": 5.640685347962915e-05,
-          "group": "retransmission"
-        },
         "frac_pkts_le128": {
-          "macro_f1_without": 0.9804311617012568,
-          "f1_drop": 2.602033802279191e-05,
+          "macro_f1_without": 0.9799833408064952,
+          "f1_drop": 0.0015351273439211388,
           "group": "packet_size"
         },
-        "server_syn": {
-          "macro_f1_without": 0.9804370256911114,
-          "f1_drop": 2.015634816820988e-05,
+        "dst_to_src_throughput": {
+          "macro_f1_without": 0.9803793417305107,
+          "f1_drop": 0.001139126419905656,
+          "group": "timing_rate"
+        },
+        "bytes_per_pkt_in": {
+          "macro_f1_without": 0.9804731152394048,
+          "f1_drop": 0.0010453529110114879,
+          "group": "volume"
+        },
+        "frac_pkts_256_512": {
+          "macro_f1_without": 0.9805086213531444,
+          "f1_drop": 0.001009846797271896,
+          "group": "packet_size"
+        },
+        "frac_pkts_1024_1514": {
+          "macro_f1_without": 0.9809177029998886,
+          "f1_drop": 0.00060076515052776,
+          "group": "packet_size"
+        },
+        "frac_pkts_128_256": {
+          "macro_f1_without": 0.9811317188050198,
+          "f1_drop": 0.00038674934539650874,
+          "group": "packet_size"
+        },
+        "src_to_dst_throughput": {
+          "macro_f1_without": 0.981183545407561,
+          "f1_drop": 0.00033492274285529255,
+          "group": "timing_rate"
+        },
+        "client_psh": {
+          "macro_f1_without": 0.9811999697395386,
+          "f1_drop": 0.00031849841087772113,
           "group": "tcp_behavior"
         },
+        "shortest_pkt": {
+          "macro_f1_without": 0.9813765958074339,
+          "f1_drop": 0.0001418723429824631,
+          "group": "packet_size"
+        },
+        "retrans_in_pkts": {
+          "macro_f1_without": 0.9814867641700782,
+          "f1_drop": 3.170398033813804e-05,
+          "group": "retransmission"
+        },
         "server_psh": {
-          "macro_f1_without": 0.9804545435036525,
-          "f1_drop": 2.6385356270974825e-06,
+          "macro_f1_without": 0.98151451039817,
+          "f1_drop": 3.957752246375179e-06,
           "group": "tcp_behavior"
         },
         "is_tcp": {
-          "macro_f1_without": 0.9804571820392796,
-          "f1_drop": 0.0,
+          "macro_f1_without": 0.981515739557888,
+          "f1_drop": 2.728592528367102e-06,
           "group": "protocol"
+        },
+        "server_syn": {
+          "macro_f1_without": 0.9815203891398008,
+          "f1_drop": -1.9209893844518433e-06,
+          "group": "tcp_behavior"
         }
       }
     }

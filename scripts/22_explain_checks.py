@@ -5,18 +5,20 @@ Các phần (chọn bằng --parts, mặc định chạy hết):
              interventional với CÙNG một tập nền lành tính cho cả bốn mô hình (khi đó SHAP gộp là đúng SHAP
              interventional của cả hệ). Đo thêm độ nhạy theo cách rút tập nền (hai lần rút khác nhau).
   knn      : phép xóa đặc trưng trong phân phối (thay bằng giá trị của luồng lành tính gần nhất) cho SHAP path,
-             SHAP interventional, LIME và ngẫu nhiên; kèm phép xóa bằng trung vị lành tính để đối chiếu. Thêm phép xóa
+             SHAP interventional và ngẫu nhiên; kèm phép xóa bằng trung vị lành tính để đối chiếu. Thêm phép xóa
              theo NHÓM đặc trưng (xóa trọn 1 hoặc 2 nhóm đóng góp lớn nhất), và chạy lại SHAP path so với ngẫu nhiên trên
              toàn bộ mẫu giải thích của bước 08. Mỗi so sánh có chênh lệch ghép cặp theo luồng và khoảng tin cậy 95%.
   robust   : độ bền cục bộ. Nhân mỗi đặc trưng liên tục với (1 + u), u ~ U(−δ, δ), rồi so lời giải thích trước và sau.
-             LIME được đo cả độ dao động do nhiễu đầu vào và độ dao động chỉ do seed, để tách hai nguồn.
-  seeds    : độ ổn định khi huấn luyện lại: SHAP gộp trên cùng một tập luồng với 8 mô hình (seed 42 và 1 đến 7).
+  seeds    : độ ổn định khi huấn luyện lại: SHAP gộp trên cùng một tập luồng với các mô hình nhiều seed (seed 42
+             và 1 đến 7 trên cả hai bộ).
   weighted : thứ hạng toàn cục có trọng số khôi phục tỷ lệ của dòng cảnh báo thật, so với trung bình không trọng số.
 
 Dùng:
     python scripts/22_explain_checks.py --dataset unsw
     python scripts/22_explain_checks.py --dataset cse --parts value knn --fast
-Cần: bước 08 (explain_sample.parquet), 12 (lime_sample.parquet); phần seeds cần models/<ds>_seed<k>/ của bước 17.
+Các phần value, knn và robust chạy trên mẫu con cố định của mẫu giải thích (explain.n_subsample luồng, phân tầng theo
+tên tấn công, xem xsids.explain.common.explain_subsample). Bước 24 dùng đúng mẫu con này.
+Cần: bước 08 (explain_sample.parquet). Phần seeds cần models/<ds>_seed<k>/ của bước 17.
 Đầu ra: reports/explain_checks_<ds>.json, data/processed/<ds>/explain_int_sample.parquet. Không ghi đè kết quả chính.
 """
 import argparse
@@ -42,12 +44,10 @@ from xsids.explain.checks import (
     pick_common,
     stratum_weights,
 )
-from xsids.explain.lime_stack import (
+from xsids.explain.common import (
     binary_columns,
-    build_explainer,
     deletion_test,
-    lime_weights,
-    make_lime_predict_fn,
+    explain_subsample,
     make_proba_fn,
     stratified_pick,
 )
@@ -79,13 +79,14 @@ if args.fast:
     args.knn_ks, args.knn_groups = [1, 3], [1]
 
 cfg, mcfg = load_config(), load_models_cfg()
-ds, seed, K = args.dataset, mcfg["seed"], mcfg["lime"]["top_k"]
+ds, seed = args.dataset, mcfg["seed"]
+ecfg = dict(mcfg["explain"])
+if args.fast:
+    ecfg.update(mcfg.get("fast_explain") or {})
+K = ecfg["top_k"]
 root, proc, rdir = Path(cfg["_root"]), resolve_path(cfg, "processed_dir"), resolve_path(cfg, "reports_dir")
 fs = load_feature_set(proc)
 feats, groups = fs["features"], fs["groups"]
-lc = dict(mcfg["lime"])
-lc.update((mcfg.get("lime_per_dataset") or {}).get(ds) or {})
-ks = lc["deletion_ks"]
 
 
 def load_system(mdir: Path):
@@ -99,29 +100,27 @@ X, y, wt, att = xyw(te, feats)
 z_all = stack_logit(raw_matrix(models, X), w, b)
 flagged = np.flatnonzero(1 / (1 + np.exp(-z_all)) >= thr)
 es = pd.read_parquet(proc / ds / "explain_sample.parquet")
-ls = pd.read_parquet(proc / ds / "lime_sample.parquet")
-lime_idx = ls["test_idx"].to_numpy(dtype=int)
-assert np.allclose(ls["z"].to_numpy(), z_all[lime_idx], atol=1e-6), "lime_sample.parquet không khớp mô hình hiện tại: chạy lại bước 12"
-phi_path = ls[[f"shap_{f}" for f in feats]].to_numpy(dtype="float64")
-W_lime = ls[[f"lime_{f}" for f in feats]].to_numpy(dtype="float64")
-Xl = X.iloc[lime_idx]
+assert np.allclose(es["z"].to_numpy(), z_all[es["test_idx"].to_numpy(dtype=int)], atol=1e-6), "explain_sample.parquet không khớp mô hình hiện tại: chạy lại bước 08"
+sub_idx = explain_subsample(es["test_idx"].to_numpy(dtype=int), att, ecfg["n_subsample"], seed)
+Xl = X.iloc[sub_idx]
+phi_path = explain_stack(models, w, b, Xl)["phi_stack"]  # SHAP gộp path-dependent, tất định, trùng bước 08
 
 tr = load_split(proc, ds, "train")
 Xtr, ytr, _, _ = xyw(tr, feats)
 ben_idx = np.flatnonzero(ytr == 0)
 bg1 = Xtr.iloc[np.random.default_rng(seed + 10).choice(ben_idx, min(args.bg, len(ben_idx)), replace=False)]
 bg2 = Xtr.iloc[np.random.default_rng(seed + 11).choice(ben_idx, min(args.bg, len(ben_idx)), replace=False)]
-# nền và giá trị "lành tính điển hình" của LIME: giống hệt bước 12
-lime_bg_idx = np.random.default_rng(seed + 2).choice(len(Xtr), size=min(lc["background_size"], len(Xtr)), replace=False)
-Xbg_lime, ybg_lime = Xtr.iloc[lime_bg_idx].reset_index(drop=True), ytr[lime_bg_idx]
-baseline = Xbg_lime[ybg_lime == 0].median().to_numpy(dtype="float64")
+# giá trị "lành tính điển hình" cho phép xóa bằng trung vị: trung vị lành tính của một mẫu train
+base_idx = np.random.default_rng(seed + 2).choice(len(Xtr), size=min(ecfg["baseline_size"], len(Xtr)), replace=False)
+Xbase, ybase = Xtr.iloc[base_idx].reset_index(drop=True), ytr[base_idx]
+baseline = Xbase[ybase == 0].median().to_numpy(dtype="float64")
 bin_cols = binary_columns(Xtr)
 
 out_path = rdir / f"explain_checks_{ds}.json"
 out = json.load(open(out_path, encoding="utf-8")) if out_path.exists() else {}
 if out.get("fast", args.fast) != args.fast:
     out = {}
-out.update({"dataset": ds, "fast": args.fast, "background_drawn": int(len(bg1)), "background_size": int(min(len(bg1), INTERVENTIONAL_BG_MAX)), "n_lime_flows": int(len(lime_idx)),
+out.update({"dataset": ds, "fast": args.fast, "background_drawn": int(len(bg1)), "background_size": int(min(len(bg1), INTERVENTIONAL_BG_MAX)), "n_sub_flows": int(len(sub_idx)),
             "features": feats, "groups": GROUP_ORDER})
 
 
@@ -144,18 +143,15 @@ if "value" in args.parts or "knn" in args.parts or "robust" in args.parts:
     phi_int = ex1["phi_stack"]
     err = {k: float(v.max()) for k, v in ex1["additivity_error"].items()}
     log.info("SHAP interventional (nền %d luồng lành tính): %.0fs, sai số tính cộng lớn nhất %.1e", min(len(bg1), INTERVENTIONAL_BG_MAX), time.time() - t0, max(err.values()))
-    pd.DataFrame({"test_idx": lime_idx, **{f"int_{f}": phi_int[:, j] for j, f in enumerate(feats)}, "base": ex1["base_stack"]}).to_parquet(int_path, index=False)
+    pd.DataFrame({"test_idx": sub_idx, **{f"int_{f}": phi_int[:, j] for j, f in enumerate(feats)}, "base": ex1["base_stack"]}).to_parquet(int_path, index=False)
 if "value" in args.parts:
     ex2 = explain_stack(models, w, b, Xl, bg2)
-    Gp, Gi, Gi2, Gl = groups_of(phi_path), groups_of(phi_int), groups_of(ex2["phi_stack"]), groups_of(W_lime)
+    Gp, Gi, Gi2 = groups_of(phi_path), groups_of(phi_int), groups_of(ex2["phi_stack"])
     out["value"] = {
         "additivity_error_interventional": err, "base_interventional": ex1["base_stack"],
-        "feature": {"path_vs_int": compare(phi_path, phi_int, K), "int_vs_int_other_bg": compare(phi_int, ex2["phi_stack"], K),
-                    "lime_vs_path": compare(W_lime, phi_path, K), "lime_vs_int": compare(W_lime, phi_int, K)},
-        "group": {"path_vs_int": compare(Gp, Gi, 1), "int_vs_int_other_bg": compare(Gi, Gi2, 1),
-                  "lime_vs_path": compare(Gl, Gp, 1), "lime_vs_int": compare(Gl, Gi, 1)},
-        "global_group_importance": {"path": global_importance(Gp).tolist(), "interventional": global_importance(Gi).tolist(),
-                                    "lime": global_importance(Gl).tolist()},
+        "feature": {"path_vs_int": compare(phi_path, phi_int, K), "int_vs_int_other_bg": compare(phi_int, ex2["phi_stack"], K)},
+        "group": {"path_vs_int": compare(Gp, Gi, 1), "int_vs_int_other_bg": compare(Gi, Gi2, 1)},
+        "global_group_importance": {"path": global_importance(Gp).tolist(), "interventional": global_importance(Gi).tolist()},
         "global_feature_importance": {"path": global_importance(phi_path).tolist(), "interventional": global_importance(phi_int).tolist()},
     }
     v = out["value"]
@@ -165,7 +161,7 @@ if "value" in args.parts:
     save()
 if phi_int is None and int_path.exists():
     ip = pd.read_parquet(int_path)
-    if np.array_equal(ip["test_idx"].to_numpy(), lime_idx):
+    if np.array_equal(ip["test_idx"].to_numpy(), sub_idx):
         phi_int = ip[[f"int_{f}" for f in feats]].to_numpy(dtype="float64")
 
 score_fn = make_proba_fn(models, w, b, feats)
@@ -178,7 +174,7 @@ if "knn" in args.parts:
     imp = NeighborImputer(Xtr.iloc[ref_idx].to_numpy(dtype="float64"))
     all_idx = np.random.default_rng(seed + 13).choice(len(Xtr), min(args.knn_ref, len(Xtr)), replace=False)
     ood_ref = NeighborImputer(Xtr.iloc[all_idx].to_numpy(dtype="float64"))
-    attr = {"shap_path": phi_path, "shap_int": phi_int, "lime": W_lime}
+    attr = {"shap_path": phi_path, "shap_int": phi_int}
     kks = sorted(set(args.knn_ks))
     out["knn"] = {
         "median_fill": deletion_test(score_fn, A_rows, attr, baseline, kks, thr, np.random.default_rng(seed + 3)),
@@ -187,19 +183,19 @@ if "knn" in args.parts:
         "n_neighbors": 5, "ref_size": int(len(ref_idx)),
     }
     kk = "5" if 5 in kks else str(max(kks))
-    log.info("Xóa %s đặc trưng, thay bằng láng giềng lành tính (%.0fs): mất cảnh báo SHAP path %.0f%%, SHAP int %.0f%%, LIME %.0f%%, ngẫu nhiên %.0f%%",
-             kk, time.time() - t0, *[100 * out["knn"]["knn_fill"][kk][m]["flip_rate"] for m in ("shap_path", "shap_int", "lime", "random")])
+    log.info("Xóa %s đặc trưng, thay bằng láng giềng lành tính (%.0fs): mất cảnh báo SHAP path %.0f%%, SHAP int %.0f%%, ngẫu nhiên %.0f%%",
+             kk, time.time() - t0, *[100 * out["knn"]["knn_fill"][kk][m]["flip_rate"] for m in ("shap_path", "shap_int", "random")])
     save()
-    # xóa theo nhóm, trên cùng các luồng của LIME
+    # xóa theo nhóm, trên cùng mẫu con
     gnames = group_attribution(phi_path, feats, groups, GROUP_ORDER)[1]
     gcols = [[j for j, f in enumerate(feats) if groups[f] == g] for g in gnames]
-    gattr = {"shap_path": groups_of(phi_path), "shap_int": groups_of(phi_int), "lime": groups_of(W_lime)}
+    gattr = {"shap_path": groups_of(phi_path), "shap_int": groups_of(phi_int)}
     out["knn"]["group"] = knn_group_deletion_test(score_fn, A_rows, gattr, gcols, imp, args.knn_groups, thr,
                                                   np.random.default_rng(seed + 4))
     out["knn"]["group_names"] = gnames
     g1 = out["knn"]["group"][str(min(args.knn_groups))]
-    log.info("Xóa %d nhóm: mất cảnh báo SHAP path %.0f%%, LIME %.0f%%, nhóm ngẫu nhiên %.0f%%, cột ngẫu nhiên cùng số lượng %.0f%%",
-             min(args.knn_groups), *[100 * g1[m]["flip_rate"] for m in ("shap_path", "lime", "random_groups", "random_features")])
+    log.info("Xóa %d nhóm: mất cảnh báo SHAP path %.0f%%, SHAP int %.0f%%, nhóm ngẫu nhiên %.0f%%, cột ngẫu nhiên cùng số lượng %.0f%%",
+             min(args.knn_groups), *[100 * g1[m]["flip_rate"] for m in ("shap_path", "shap_int", "random_groups", "random_features")])
     save()
     # toàn bộ mẫu giải thích của bước 08: SHAP path so với ngẫu nhiên, mức đặc trưng và mức nhóm
     t1 = time.time()
@@ -227,8 +223,8 @@ if "knn" in args.parts:
 # ── robust: độ bền cục bộ ───────────────────────────────────────────────────
 if "robust" in args.parts:
     t0 = time.time()
-    sub = stratified_pick(np.arange(len(lime_idx)), att[lime_idx], min(args.n_robust, len(lime_idx)), np.random.default_rng(seed + 30))
-    Xs, z0 = A_rows[sub], z_all[lime_idx][sub]
+    sub = stratified_pick(np.arange(len(sub_idx)), att[sub_idx], min(args.n_robust, len(sub_idx)), np.random.default_rng(seed + 30))
+    Xs, z0 = A_rows[sub], z_all[sub_idx][sub]
     res = {"n_flows": int(len(sub)), "reps": args.robust_reps, "levels": {}}
     for rel in args.robust_rel:
         rows = {"shap_path": [], "shap_int": [], "dz": [], "still_flagged": []}
@@ -247,32 +243,22 @@ if "robust" in args.parts:
         res["levels"][str(rel)] = lvl
         log.info("Nhiễu ±%.0f%%: SHAP path Spearman %.3f, top-5 Jaccard %.3f | |Δz| trung vị %.3f",
                  100 * rel, lvl["shap_path"]["spearman_flow_mean"], lvl["shap_path"]["topk_jaccard_mean"], lvl["median_abs_dz"])
-    # LIME ở mức nhiễu nhỏ nhất: nhiễu đầu vào (seed khác) và chỉ seed (đầu vào giữ nguyên)
-    rel = min(args.robust_rel)
-    predict_fn = make_lime_predict_fn(models, w, b, feats, lc["target"])
-    lin, lseed = [], []
-    for r in range(args.robust_reps):
-        Xp = perturb(Xs, rel, np.random.default_rng(seed + 1000 + r + int(rel * 1e4)), bin_cols)
-        e1 = build_explainer(Xbg_lime, lc["target"], lc["discretizer"], lc["kernel_width"], seed + 200 + r)
-        lin.append(compare(W_lime[sub], lime_weights(e1, predict_fn, Xp, lc["target"], lc["num_perturbations"])["weights"], K))
-        e2 = build_explainer(Xbg_lime, lc["target"], lc["discretizer"], lc["kernel_width"], seed + 300 + r)
-        lseed.append(compare(W_lime[sub], lime_weights(e2, predict_fn, Xs, lc["target"], lc["num_perturbations"])["weights"], K))
-        log.info("  LIME lần %d/%d xong", r + 1, args.robust_reps)
-    avg = lambda L: {key: float(np.mean([d[key] for d in L])) for key in L[0] if key != "k"}  # noqa: E731
-    res["lime"] = {"rel": rel, "input_and_seed": avg(lin), "seed_only": avg(lseed)}
     res["seconds"] = round(time.time() - t0, 1)
     out["robust"] = res
-    log.info("LIME (±%.0f%%): Spearman %.3f khi đổi đầu vào, %.3f khi chỉ đổi seed", 100 * rel,
-             res["lime"]["input_and_seed"]["spearman_flow_mean"], res["lime"]["seed_only"]["spearman_flow_mean"])
     save()
 
 # ── seeds: độ ổn định khi huấn luyện lại ────────────────────────────────────
-if "seeds" in args.parts:
+seed_dirs = [root / "models" / ds] + sorted(p for p in (root / "models").glob(f"{ds}_seed*") if (p / "stack.joblib").exists())
+if "seeds" in args.parts and len(seed_dirs) < 2:
+    log.warning("seeds: không có models/%s_seed<k>/, bỏ qua (chạy scripts/17_multiseed.py trước)", ds)
+    out.pop("seeds", None)
+    save()
+elif "seeds" in args.parts:
     t0 = time.time()
     exp_idx = es["test_idx"].to_numpy(dtype=int)
     common = pick_common(exp_idx, att, args.n_seed_flows, seed)
     Xc = X.iloc[common]
-    dirs = [root / "models" / ds] + sorted(p for p in (root / "models").glob(f"{ds}_seed*") if (p / "stack.joblib").exists())
+    dirs = seed_dirs
     phis, phis_int, G, Gint, info = [], [], [], [], []
     for d in dirs:
         m_k, w_k, b_k, thr_k = load_system(d)

@@ -24,7 +24,7 @@ from xsids.config import load_config, resolve_path
 from xsids.explain.checks import compare, global_importance, pick_common
 from xsids.explain.shap_stack import explain_stack, group_attribution
 from xsids.features.engineer import GROUP_ORDER
-from xsids.models.data import cap_train, load_feature_set, load_split, xyw
+from xsids.models.data import load_feature_set, load_split, xyw
 from xsids.models.experiment import fit_system, scores
 from xsids.models.zoo import BASE_NAMES, get_params, load_models_cfg
 from xsids.utils import get_logger, write_json
@@ -37,7 +37,7 @@ ap.add_argument("--fast", action="store_true")
 args = ap.parse_args()
 
 cfg, mcfg = load_config(), load_models_cfg()
-ds, seed, K = args.dataset, mcfg["seed"], mcfg["lime"]["top_k"]
+ds, seed, K = args.dataset, mcfg["seed"], mcfg["explain"]["top_k"]
 root, proc, rdir = Path(cfg["_root"]), resolve_path(cfg, "processed_dir"), resolve_path(cfg, "reports_dir")
 fs = load_feature_set(proc)
 feats, groups = fs["features"], fs["groups"]
@@ -54,7 +54,7 @@ st = joblib.load(mdir / "stack.joblib")
 real = explain_stack({m: joblib.load(mdir / f"{m}.joblib") for m in BASE_NAMES}, np.asarray(st["w"]), float(st["b"]), Xc)
 
 t0 = time.time()
-tr = cap_train(load_split(proc, ds, "train"), mcfg["train_cap"].get(ds), seed)
+tr = load_split(proc, ds, "train")
 Xtr, ytr, _, _ = xyw(tr, feats)
 rng = np.random.default_rng(seed + 40)
 y_perm = rng.permutation(ytr)

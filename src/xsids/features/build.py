@@ -40,15 +40,24 @@ def build_features(proc_dir, datasets: list[str], feat_cfg: dict, extra: tuple[s
              {g: sum(1 for v in fs["groups"].values() if v == g) for g in dict.fromkeys(fs["groups"].values())})
 
     for d in datasets:
-        out_dir = ensure_dir(proc_dir / d / "features")
-        for sp in SPLITS:
-            df = pd.read_parquet(proc_dir / d / f"{sp}.parquet")
-            X, _ = engineer(df, extra)
-            out = pd.concat([X[fs["features"]].reset_index(drop=True),
-                             df[META_COLS].reset_index(drop=True)], axis=1)
-            out.to_parquet(out_dir / f"{sp}.parquet", index=False)
+        apply_feature_set(proc_dir, d, fs["features"], extra)
     write_json(fs, proc_dir / "feature_set.json")
     return fs
+
+
+def apply_feature_set(proc_dir, ds: str, features: list[str], extra: tuple[str, ...] = ()) -> None:
+    """Dựng các đặc trưng đã chọn cho train/val/test của một dataset và lưu vào <proc_dir>/<ds>/features.
+
+    Không chọn lại đặc trưng: dùng khi cần áp một bộ đặc trưng có sẵn lên dữ liệu chuẩn bị theo cách khác
+    (vd. một phép chia lại dữ liệu).
+    """
+    proc_dir = Path(proc_dir)
+    out_dir = ensure_dir(proc_dir / ds / "features")
+    for sp in SPLITS:
+        df = pd.read_parquet(proc_dir / ds / f"{sp}.parquet")
+        X, _ = engineer(df, extra)
+        out = pd.concat([X[features].reset_index(drop=True), df[META_COLS].reset_index(drop=True)], axis=1)
+        out.to_parquet(out_dir / f"{sp}.parquet", index=False)
 
 
 def render_report(fs: dict) -> str:

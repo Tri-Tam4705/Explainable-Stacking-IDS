@@ -1,0 +1,1620 @@
+{
+  "dataset": "cse",
+  "cross_dataset": "unsw",
+  "fast": false,
+  "n_features": 25,
+  "configs": {
+    "full": {
+      "dropped": [],
+      "n_kept": 25,
+      "in_domain": {
+        "rf": {
+          "dr": 0.9361693262780717,
+          "far": 0.00018442538212426045,
+          "macro_f1": 0.981044932639754,
+          "pr_auc": 0.9711125984373166,
+          "roc_auc": 0.9861404734907585,
+          "threshold": 0.2143232715480496,
+          "per_attack_recall": {
+            "Bot": 0.9974426974805835,
+            "Brute Force -Web": 0.9873417721518988,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624859621425432,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9982031068861581,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.13297287390029325,
+            "SQL Injection": 0.7,
+            "SSH-Bruteforce": 1.0
+          }
+        },
+        "et": {
+          "dr": 0.9299635663328842,
+          "far": 2.2638140195285654e-05,
+          "macro_f1": 0.9795336755969233,
+          "pr_auc": 0.9569611645067819,
+          "roc_auc": 0.9748499371299582,
+          "threshold": 0.30973993473037575,
+          "per_attack_recall": {
+            "Bot": 0.8258192839552946,
+            "Brute Force -Web": 0.9240506329113924,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624696863657818,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.09159640762463343,
+            "SQL Injection": 0.6,
+            "SSH-Bruteforce": 0.9999472601656031
+          }
+        },
+        "xgb": {
+          "dr": 0.935583702530913,
+          "far": 8.904335143479024e-05,
+          "macro_f1": 0.9810760524100917,
+          "pr_auc": 0.9581830104293344,
+          "roc_auc": 0.9724418588154409,
+          "threshold": 0.3058305379420519,
+          "per_attack_recall": {
+            "Bot": 0.9974426974805835,
+            "Brute Force -Web": 0.9367088607594937,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624696863657818,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.11977639296187684,
+            "SQL Injection": 0.6,
+            "SSH-Bruteforce": 0.9999472601656031
+          }
+        },
+        "lgbm": {
+          "dr": 0.9369517010865288,
+          "far": 7.364941610199598e-05,
+          "macro_f1": 0.9815184681504163,
+          "pr_auc": 0.9734467031424975,
+          "roc_auc": 0.9876028375911126,
+          "threshold": 0.4004792097022828,
+          "per_attack_recall": {
+            "Bot": 0.9973479825724569,
+            "Brute Force -Web": 0.8607594936708861,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624859621425432,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.1472232404692082,
+            "SQL Injection": 0.6,
+            "SSH-Bruteforce": 0.9998417804968093
+          }
+        },
+        "stack_explainable": {
+          "dr": 0.9360397020494516,
+          "far": 0.00020404510362684135,
+          "macro_f1": 0.980963742023736,
+          "pr_auc": 0.9586376383655103,
+          "roc_auc": 0.9743579198548131,
+          "threshold": 0.24075056655040253,
+          "per_attack_recall": {
+            "Bot": 0.9974426974805835,
+            "Brute Force -Web": 0.9367088607594937,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624859621425432,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.12875733137829912,
+            "SQL Injection": 0.6,
+            "SSH-Bruteforce": 0.9999472601656031
+          }
+        }
+      },
+      "cross": {
+        "rf": {
+          "dr": 0.0016758568493891231,
+          "far": 0.04085974194072027,
+          "macro_f1": 0.48073310585345014,
+          "pr_auc": 0.02718398849365401,
+          "roc_auc": 0.3373532863423474,
+          "threshold": 0.2143232715480496
+        },
+        "et": {
+          "dr": 0.0005946588820413017,
+          "far": 0.028195998607394055,
+          "macro_f1": 0.4835212878793801,
+          "pr_auc": 0.03631169345957677,
+          "roc_auc": 0.4879721688303936,
+          "threshold": 0.30973993473037575
+        },
+        "xgb": {
+          "dr": 0.0005405989836739107,
+          "far": 0.0006728080873668,
+          "macro_f1": 0.4906820904119186,
+          "pr_auc": 0.023877370011473165,
+          "roc_auc": 0.2277267374968499,
+          "threshold": 0.3058305379420519
+        },
+        "lgbm": {
+          "dr": 0.0030273543085739,
+          "far": 0.01568603997975168,
+          "macro_f1": 0.4885545391446465,
+          "pr_auc": 0.02647265801737215,
+          "roc_auc": 0.3132086293213138,
+          "threshold": 0.4004792097022828
+        },
+        "stack_explainable": {
+          "dr": 0.0007027786787760839,
+          "far": 0.0007731953257993067,
+          "macro_f1": 0.4908160754545554,
+          "pr_auc": 0.023703831899503407,
+          "roc_auc": 0.23738847418210796,
+          "threshold": 0.24075056655040253
+        }
+      },
+      "meta_weights": {
+        "rf": 0.05692823778788808,
+        "et": 0.031882625156142916,
+        "xgb": 0.8229130781125288,
+        "lgbm": 0.16769456417960193
+      },
+      "seconds": 5457.5
+    },
+    "drop_volume": {
+      "dropped": [
+        "out_pkts",
+        "out_bytes",
+        "in_byte_frac",
+        "bytes_per_pkt_out",
+        "in_pkt_frac",
+        "bytes_per_pkt_in"
+      ],
+      "n_kept": 19,
+      "in_domain": {
+        "rf": {
+          "dr": 0.9310676869945234,
+          "far": 0.00011469991032278064,
+          "macro_f1": 0.9796664094991929,
+          "pr_auc": 0.9702480311233092,
+          "roc_auc": 0.9856831454017668,
+          "threshold": 0.2712274957637949,
+          "per_attack_recall": {
+            "Bot": 0.8258192839552946,
+            "Brute Force -Web": 0.9493670886075949,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624696863657818,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.11336143695014662,
+            "SQL Injection": 0.6,
+            "SSH-Bruteforce": 0.9999472601656031
+          }
+        },
+        "et": {
+          "dr": 0.9357364739432154,
+          "far": 0.0015179627605612206,
+          "macro_f1": 0.9780451215069779,
+          "pr_auc": 0.9556629431929687,
+          "roc_auc": 0.9765039781394541,
+          "threshold": 0.09880512243381037,
+          "per_attack_recall": {
+            "Bot": 0.9972532676643303,
+            "Brute Force -Web": 0.9746835443037974,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624696863657818,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.12270894428152493,
+            "SQL Injection": 0.6,
+            "SSH-Bruteforce": 1.0
+          }
+        },
+        "xgb": {
+          "dr": 0.9361785851515446,
+          "far": 0.00018110512156228523,
+          "macro_f1": 0.9810548812772928,
+          "pr_auc": 0.9552400097202577,
+          "roc_auc": 0.9680602574117418,
+          "threshold": 0.24618300918473168,
+          "per_attack_recall": {
+            "Bot": 0.9973479825724569,
+            "Brute Force -Web": 0.8860759493670886,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624696863657818,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.1317815249266862,
+            "SQL Injection": 0.6,
+            "SSH-Bruteforce": 0.9999472601656031
+          }
+        },
+        "lgbm": {
+          "dr": 0.9323731881541972,
+          "far": 5.3124168991603665e-05,
+          "macro_f1": 0.9801916598527044,
+          "pr_auc": 0.9698701443495622,
+          "roc_auc": 0.9857184602646736,
+          "threshold": 0.5040284218205476,
+          "per_attack_recall": {
+            "Bot": 0.9025383595377913,
+            "Brute Force -Web": 0.8607594936708861,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624696863657818,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986552283793183,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.1027767595307918,
+            "SQL Injection": 0.5,
+            "SSH-Bruteforce": 0.9997363008280153
+          }
+        },
+        "stack_explainable": {
+          "dr": 0.9356693471105371,
+          "far": 9.568387255874069e-05,
+          "macro_f1": 0.9810873117672967,
+          "pr_auc": 0.9567804429304831,
+          "roc_auc": 0.974123902118297,
+          "threshold": 0.2730182103998151,
+          "per_attack_recall": {
+            "Bot": 0.9972532676643303,
+            "Brute Force -Web": 0.8860759493670886,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624696863657818,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.1217467008797654,
+            "SQL Injection": 0.6,
+            "SSH-Bruteforce": 0.9999472601656031
+          }
+        }
+      },
+      "cross": {
+        "rf": {
+          "dr": 0.0002702994918369553,
+          "far": 0.02356109844997832,
+          "macro_f1": 0.48452886734655387,
+          "pr_auc": 0.029456553130561017,
+          "roc_auc": 0.386843717724402,
+          "threshold": 0.2712274957637949
+        },
+        "et": {
+          "dr": 0.010271380689804302,
+          "far": 0.547133944342752,
+          "macro_f1": 0.304226901773775,
+          "pr_auc": 0.026442407646104102,
+          "roc_auc": 0.2831916271474431,
+          "threshold": 0.09880512243381037
+        },
+        "xgb": {
+          "dr": 0.0014055573575521678,
+          "far": 0.0005126156856128,
+          "macro_f1": 0.4915847299090925,
+          "pr_auc": 0.03537571522542074,
+          "roc_auc": 0.405982971045299,
+          "threshold": 0.24618300918473168
+        },
+        "lgbm": {
+          "dr": 0.020164342091036867,
+          "far": 0.03798909410128859,
+          "macro_f1": 0.49100678512592594,
+          "pr_auc": 0.030469649471680738,
+          "roc_auc": 0.3636475992478055,
+          "threshold": 0.5040284218205476
+        },
+        "stack_explainable": {
+          "dr": 0.006865607092658666,
+          "far": 0.003656658557371307,
+          "macro_f1": 0.49570841425203166,
+          "pr_auc": 0.03175165293542988,
+          "roc_auc": 0.37920258415345987,
+          "threshold": 0.2730182103998151
+        }
+      },
+      "meta_weights": {
+        "rf": 0.006869380944653514,
+        "et": 0.006119741203131237,
+        "xgb": 0.4884268069672954,
+        "lgbm": 0.49435870262870707
+      },
+      "seconds": 4160.1
+    },
+    "drop_timing_rate": {
+      "dropped": [
+        "duration_in_ms",
+        "dst_to_src_bytes_per_s",
+        "dst_to_src_throughput",
+        "src_to_dst_bytes_per_s",
+        "src_to_dst_throughput"
+      ],
+      "n_kept": 20,
+      "in_domain": {
+        "rf": {
+          "dr": 0.9361554379678625,
+          "far": 0.0002118929922278737,
+          "macro_f1": 0.9809813907390461,
+          "pr_auc": 0.9721887665430968,
+          "roc_auc": 0.9890505922254883,
+          "threshold": 0.2812749918433666,
+          "per_attack_recall": {
+            "Bot": 0.9972532676643303,
+            "Brute Force -Web": 0.8987341772151899,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624859621425432,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.1312774926686217,
+            "SQL Injection": 0.7,
+            "SSH-Bruteforce": 0.9998945203312062
+          }
+        },
+        "et": {
+          "dr": 0.9341115416487276,
+          "far": 3.954128487443227e-05,
+          "macro_f1": 0.9807423511806439,
+          "pr_auc": 0.9643854465804537,
+          "roc_auc": 0.9850999525629311,
+          "threshold": 0.3240205002527298,
+          "per_attack_recall": {
+            "Bot": 0.9939382458799015,
+            "Brute Force -Web": 0.9240506329113924,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624696863657818,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.09251282991202346,
+            "SQL Injection": 0.4,
+            "SSH-Bruteforce": 0.9998945203312062
+          }
+        },
+        "xgb": {
+          "dr": 0.9362873769148508,
+          "far": 6.157574133117698e-05,
+          "macro_f1": 0.9813459907692944,
+          "pr_auc": 0.9610524767522504,
+          "roc_auc": 0.9831668303782317,
+          "threshold": 0.35877333898873487,
+          "per_attack_recall": {
+            "Bot": 0.9974426974805835,
+            "Brute Force -Web": 0.45569620253164556,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624859621425432,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.13544721407624633,
+            "SQL Injection": 0.6,
+            "SSH-Bruteforce": 0.9998945203312062
+          }
+        },
+        "lgbm": {
+          "dr": 0.9368220768579087,
+          "far": 6.972547180147982e-05,
+          "macro_f1": 0.9814882168183392,
+          "pr_auc": 0.9583549049749598,
+          "roc_auc": 0.977690762596714,
+          "threshold": 0.4447542917575267,
+          "per_attack_recall": {
+            "Bot": 0.9972532676643303,
+            "Brute Force -Web": 0.8987341772151899,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624859621425432,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.14470307917888564,
+            "SQL Injection": 0.6,
+            "SSH-Bruteforce": 0.9996835609936184
+          }
+        },
+        "stack_explainable": {
+          "dr": 0.936268859167905,
+          "far": 4.4068912913489404e-05,
+          "macro_f1": 0.9813783428866835,
+          "pr_auc": 0.9591998609862858,
+          "roc_auc": 0.9794242404051227,
+          "threshold": 0.42675879125677973,
+          "per_attack_recall": {
+            "Bot": 0.9972532676643303,
+            "Brute Force -Web": 0.8987341772151899,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624859621425432,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.13370601173020527,
+            "SQL Injection": 0.6,
+            "SSH-Bruteforce": 0.9997363008280153
+          }
+        }
+      },
+      "cross": {
+        "rf": {
+          "dr": 0.0051897502432695424,
+          "far": 0.009530379955017973,
+          "macro_f1": 0.4921340670807055,
+          "pr_auc": 0.03221819810664388,
+          "roc_auc": 0.35674332803577113,
+          "threshold": 0.2812749918433666
+        },
+        "et": {
+          "dr": 0.0051897502432695424,
+          "far": 0.024065170540830908,
+          "macro_f1": 0.4874922051737563,
+          "pr_auc": 0.038639205734809653,
+          "roc_auc": 0.4932078564834722,
+          "threshold": 0.3240205002527298
+        },
+        "xgb": {
+          "dr": 0.004162612174289112,
+          "far": 0.009696980052842134,
+          "macro_f1": 0.4912496763209863,
+          "pr_auc": 0.033367225380053496,
+          "roc_auc": 0.3297596078147116,
+          "threshold": 0.35877333898873487
+        },
+        "lgbm": {
+          "dr": 0.010541680181641259,
+          "far": 0.009696980052842134,
+          "macro_f1": 0.49637233572340644,
+          "pr_auc": 0.040454318760310096,
+          "roc_auc": 0.4445265805528893,
+          "threshold": 0.4447542917575267
+        },
+        "stack_explainable": {
+          "dr": 0.004649151259595632,
+          "far": 0.009199315658059707,
+          "macro_f1": 0.4918055926115754,
+          "pr_auc": 0.037196517194649614,
+          "roc_auc": 0.3936752120393795,
+          "threshold": 0.42675879125677973
+        }
+      },
+      "meta_weights": {
+        "rf": 0.006589455462795299,
+        "et": 0.006017943942383377,
+        "xgb": 0.47133554987206655,
+        "lgbm": 0.511501303428255
+      },
+      "seconds": 4292.9
+    },
+    "drop_packet_size": {
+      "dropped": [
+        "longest_pkt",
+        "frac_pkts_le128",
+        "frac_pkts_1024_1514",
+        "frac_pkts_256_512",
+        "frac_pkts_512_1024",
+        "shortest_pkt",
+        "frac_pkts_128_256"
+      ],
+      "n_kept": 18,
+      "in_domain": {
+        "rf": {
+          "dr": 0.9345883736325801,
+          "far": 4.3767071044218925e-05,
+          "macro_f1": 0.9808760533670041,
+          "pr_auc": 0.9701594998308056,
+          "roc_auc": 0.9857595764591663,
+          "threshold": 0.33409284146738183,
+          "per_attack_recall": {
+            "Bot": 0.9974426974805835,
+            "Brute Force -Web": 0.8987341772151899,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624696863657818,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9978437282633897,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.10396810850439883,
+            "SQL Injection": 0.3,
+            "SSH-Bruteforce": 0.9996308211592215
+          }
+        },
+        "et": {
+          "dr": 0.9259753065844478,
+          "far": 9.719308190509306e-05,
+          "macro_f1": 0.9781706226336028,
+          "pr_auc": 0.9563144157751692,
+          "roc_auc": 0.9799895968172538,
+          "threshold": 0.24185727686297165,
+          "per_attack_recall": {
+            "Bot": 0.7326198143587801,
+            "Brute Force -Web": 0.8227848101265823,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 0.9975609756097561,
+            "DDoS attacks-LOIC-HTTP": 0.8565615794013769,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.998330628332947,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.07688782991202346,
+            "SQL Injection": 0.0,
+            "SSH-Bruteforce": 0.9994726016560308
+          }
+        },
+        "xgb": {
+          "dr": 0.9356624029554325,
+          "far": 0.00014609146472691008,
+          "macro_f1": 0.9809761904378251,
+          "pr_auc": 0.9551124446009891,
+          "roc_auc": 0.9687018447565741,
+          "threshold": 0.2625952614383009,
+          "per_attack_recall": {
+            "Bot": 0.9974426974805835,
+            "Brute Force -Web": 0.8860759493670886,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624696863657818,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.1218383431085044,
+            "SQL Injection": 0.2,
+            "SSH-Bruteforce": 0.9997890406624124
+          }
+        },
+        "lgbm": {
+          "dr": 0.9322713405459958,
+          "far": 0.0001213404314467311,
+          "macro_f1": 0.9800135066646631,
+          "pr_auc": 0.9690730531294989,
+          "roc_auc": 0.9861993221142974,
+          "threshold": 0.4741479341032325,
+          "per_attack_recall": {
+            "Bot": 0.9073688198522447,
+            "Brute Force -Web": 0.8607594936708861,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624696863657818,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986784140969163,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.09874450146627566,
+            "SQL Injection": 0.3,
+            "SSH-Bruteforce": 0.999367121987237
+          }
+        },
+        "stack_explainable": {
+          "dr": 0.932873167321732,
+          "far": 3.652286618172752e-05,
+          "macro_f1": 0.9803776053272991,
+          "pr_auc": 0.9571175384263608,
+          "roc_auc": 0.9742754711146597,
+          "threshold": 0.34689475097856814,
+          "per_attack_recall": {
+            "Bot": 0.9205341920818337,
+            "Brute Force -Web": 0.8860759493670886,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624696863657818,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.10392228739002933,
+            "SQL Injection": 0.3,
+            "SSH-Bruteforce": 0.9996308211592215
+          }
+        }
+      },
+      "cross": {
+        "rf": {
+          "dr": 5.405989836739107e-05,
+          "far": 4.271797380106667e-06,
+          "macro_f1": 0.49036738207096064,
+          "pr_auc": 0.11630933652153366,
+          "roc_auc": 0.6035480472660768,
+          "threshold": 0.33409284146738183
+        },
+        "et": {
+          "dr": 0.00010811979673478214,
+          "far": 0.02411216031201208,
+          "macro_f1": 0.48428418012706725,
+          "pr_auc": 0.07439845446071255,
+          "roc_auc": 0.6954897869757158,
+          "threshold": 0.24185727686297165
+        },
+        "xgb": {
+          "dr": 0.00043247918693912856,
+          "far": 0.0006514491004662667,
+          "macro_f1": 0.4905804227823052,
+          "pr_auc": 0.03332757920708981,
+          "roc_auc": 0.30533298930423064,
+          "threshold": 0.2625952614383009
+        },
+        "lgbm": {
+          "dr": 0.006703427397556493,
+          "far": 0.0008244568943605867,
+          "macro_f1": 0.4966950134021172,
+          "pr_auc": 0.0345306001467314,
+          "roc_auc": 0.3959327701817166,
+          "threshold": 0.4741479341032325
+        },
+        "stack_explainable": {
+          "dr": 0.00010811979673478214,
+          "far": 0.0006514491004662667,
+          "macro_f1": 0.4902584134840779,
+          "pr_auc": 0.032909892132702095,
+          "roc_auc": 0.349849443263296,
+          "threshold": 0.34689475097856814
+        }
+      },
+      "meta_weights": {
+        "rf": 0.006921276676394331,
+        "et": 0.005726340707006911,
+        "xgb": 0.48798313279855,
+        "lgbm": 0.4943412400164862
+      },
+      "seconds": 6638.3
+    },
+    "drop_tcp_behavior": {
+      "dropped": [
+        "client_psh",
+        "server_psh",
+        "server_fin",
+        "server_syn",
+        "tcp_win_in"
+      ],
+      "n_kept": 20,
+      "in_domain": {
+        "rf": {
+          "dr": 0.9350003935021226,
+          "far": 0.0001457896228576396,
+          "macro_f1": 0.980778701507611,
+          "pr_auc": 0.9571886033020608,
+          "roc_auc": 0.96800838086636,
+          "threshold": 0.251586372129631,
+          "per_attack_recall": {
+            "Bot": 0.9974426974805835,
+            "Brute Force -Web": 0.9873417721518988,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624859621425432,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9978437282633897,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9894347596407819,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.11162023460410557,
+            "SQL Injection": 0.7,
+            "SSH-Bruteforce": 0.9996308211592215
+          }
+        },
+        "et": {
+          "dr": 0.9213227226643335,
+          "far": 0.0058164928208420605,
+          "macro_f1": 0.9646352411777033,
+          "pr_auc": 0.9501093912325073,
+          "roc_auc": 0.963836875309829,
+          "threshold": 0.22780981118557522,
+          "per_attack_recall": {
+            "Bot": 0.8261981435878007,
+            "Brute Force -Web": 0.9493670886075949,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.855503653911883,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 0.0,
+            "DoS attacks-Slowloris": 0.9878499735868991,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.08096590909090909,
+            "SQL Injection": 0.6,
+            "SSH-Bruteforce": 0.9998945203312062
+          }
+        },
+        "xgb": {
+          "dr": 0.9357295297881106,
+          "far": 0.0002155150946591194,
+          "macro_f1": 0.9808461570282174,
+          "pr_auc": 0.9572448411061459,
+          "roc_auc": 0.9689262434506343,
+          "threshold": 0.21104972700352276,
+          "per_attack_recall": {
+            "Bot": 0.9974426974805835,
+            "Brute Force -Web": 0.9493670886075949,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624859621425432,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9978437282633897,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9889064976228209,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.12609970674486803,
+            "SQL Injection": 0.7,
+            "SSH-Bruteforce": 0.9997890406624124
+          }
+        },
+        "lgbm": {
+          "dr": 0.9309496363577443,
+          "far": 0.00011620911966913301,
+          "macro_f1": 0.9796276728241242,
+          "pr_auc": 0.9527703685199935,
+          "roc_auc": 0.9668612391114119,
+          "threshold": 0.46954710203815775,
+          "per_attack_recall": {
+            "Bot": 0.9039590831596893,
+            "Brute Force -Web": 0.8354430379746836,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.855503653911883,
+            "DoS attacks-GoldenEye": 0.9998195922785496,
+            "DoS attacks-Hulk": 0.9977857639693949,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9889064976228209,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.09773643695014662,
+            "SQL Injection": 0.2,
+            "SSH-Bruteforce": 0.9992616423184432
+          }
+        },
+        "stack_explainable": {
+          "dr": 0.9351277030123745,
+          "far": 0.00018533090773207187,
+          "macro_f1": 0.9807313055924121,
+          "pr_auc": 0.9557312804501423,
+          "roc_auc": 0.9683936301680626,
+          "threshold": 0.26357181053666495,
+          "per_attack_recall": {
+            "Bot": 0.9974426974805835,
+            "Brute Force -Web": 0.9493670886075949,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624859621425432,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9978437282633897,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9894347596407819,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.11455278592375366,
+            "SQL Injection": 0.4,
+            "SSH-Bruteforce": 0.9994726016560308
+          }
+        }
+      },
+      "cross": {
+        "rf": {
+          "dr": 0.0011893177640826035,
+          "far": 0.026856790128730615,
+          "macro_f1": 0.4842314676619054,
+          "pr_auc": 0.021848029888409632,
+          "roc_auc": 0.18102051685463047,
+          "threshold": 0.251586372129631
+        },
+        "et": {
+          "dr": 0.00854146394204779,
+          "far": 0.15092260143916852,
+          "macro_f1": 0.4514327082807247,
+          "pr_auc": 0.03220789165973199,
+          "roc_auc": 0.42473365476698804,
+          "threshold": 0.22780981118557522
+        },
+        "xgb": {
+          "dr": 0.0033517136987782463,
+          "far": 0.08247772791640946,
+          "macro_f1": 0.469949642515068,
+          "pr_auc": 0.022518094499096933,
+          "roc_auc": 0.21369376838726542,
+          "threshold": 0.21104972700352276
+        },
+        "lgbm": {
+          "dr": 0.0030273543085739,
+          "far": 0.02491312232078208,
+          "macro_f1": 0.48589288827390265,
+          "pr_auc": 0.026440920993849464,
+          "roc_auc": 0.32563887977313855,
+          "threshold": 0.46954710203815775
+        },
+        "stack_explainable": {
+          "dr": 0.0027570548167369447,
+          "far": 0.05287630797096032,
+          "macro_f1": 0.47795189706051866,
+          "pr_auc": 0.023920004757426616,
+          "roc_auc": 0.2565115071202455,
+          "threshold": 0.26357181053666495
+        }
+      },
+      "meta_weights": {
+        "rf": 0.10930514224884205,
+        "et": 0.04359997801719345,
+        "xgb": 0.741337160616764,
+        "lgbm": 0.2677618738736992
+      },
+      "seconds": 12230.0
+    },
+    "drop_retransmission": {
+      "dropped": [
+        "retrans_in_pkts"
+      ],
+      "n_kept": 24,
+      "in_domain": {
+        "rf": {
+          "dr": 0.9363313565638469,
+          "far": 0.0002278906112992089,
+          "macro_f1": 0.9809994156820968,
+          "pr_auc": 0.9707129411268138,
+          "roc_auc": 0.9863005491216478,
+          "threshold": 0.19651208256182984,
+          "per_attack_recall": {
+            "Bot": 0.9974426974805835,
+            "Brute Force -Web": 0.9873417721518988,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624859621425432,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.1342558651026393,
+            "SQL Injection": 0.7,
+            "SSH-Bruteforce": 1.0
+          }
+        },
+        "et": {
+          "dr": 0.9268988792133661,
+          "far": 1.4186567855712342e-05,
+          "macro_f1": 0.9786288908471023,
+          "pr_auc": 0.9555730014970278,
+          "roc_auc": 0.9730115874861879,
+          "threshold": 0.30509941855826905,
+          "per_attack_recall": {
+            "Bot": 0.7311990907368819,
+            "Brute Force -Web": 0.8987341772151899,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624696863657818,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.07693365102639296,
+            "SQL Injection": 0.4,
+            "SSH-Bruteforce": 0.9998945203312062
+          }
+        },
+        "xgb": {
+          "dr": 0.9352526978042581,
+          "far": 6.12738994619065e-05,
+          "macro_f1": 0.981037078053085,
+          "pr_auc": 0.9570443817098065,
+          "roc_auc": 0.9702397369347061,
+          "threshold": 0.3269945742171692,
+          "per_attack_recall": {
+            "Bot": 0.9974426974805835,
+            "Brute Force -Web": 0.9367088607594937,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624696863657818,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.11322397360703812,
+            "SQL Injection": 0.6,
+            "SSH-Bruteforce": 0.9999472601656031
+          }
+        },
+        "lgbm": {
+          "dr": 0.9346115208162623,
+          "far": 0.003663152925466489,
+          "macro_f1": 0.9731458491159322,
+          "pr_auc": 0.9563548763127214,
+          "roc_auc": 0.967721152214275,
+          "threshold": 0.5444764589023491,
+          "per_attack_recall": {
+            "Bot": 0.9974426974805835,
+            "Brute Force -Web": 0.8607594936708861,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624696863657818,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986784140969163,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.10126466275659823,
+            "SQL Injection": 0.5,
+            "SSH-Bruteforce": 0.9995253414904277
+          }
+        },
+        "stack_explainable": {
+          "dr": 0.9351948298450528,
+          "far": 4.346522917494845e-05,
+          "macro_f1": 0.9810582979161478,
+          "pr_auc": 0.9564404007947527,
+          "roc_auc": 0.967839959946867,
+          "threshold": 0.35807328767967994,
+          "per_attack_recall": {
+            "Bot": 0.9974426974805835,
+            "Brute Force -Web": 0.8860759493670886,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624696863657818,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.11226173020527859,
+            "SQL Injection": 0.6,
+            "SSH-Bruteforce": 0.9999472601656031
+          }
+        }
+      },
+      "cross": {
+        "rf": {
+          "dr": 0.002865174613471727,
+          "far": 0.044783387834348244,
+          "macro_f1": 0.48023931615798526,
+          "pr_auc": 0.02649824859831828,
+          "roc_auc": 0.3359367684459665,
+          "threshold": 0.19651208256182984
+        },
+        "et": {
+          "dr": 0.0005405989836739107,
+          "far": 0.006693906494627147,
+          "macro_f1": 0.4891027265420979,
+          "pr_auc": 0.038378391396713014,
+          "roc_auc": 0.5205671005559994,
+          "threshold": 0.30509941855826905
+        },
+        "xgb": {
+          "dr": 0.0005946588820413017,
+          "far": 0.0003823258655195467,
+          "macro_f1": 0.4908125828801044,
+          "pr_auc": 0.021723676381202206,
+          "roc_auc": 0.14507059905286374,
+          "threshold": 0.3269945742171692
+        },
+        "lgbm": {
+          "dr": 0.000756838577143475,
+          "far": 0.00021145397031528,
+          "macro_f1": 0.49102046805317,
+          "pr_auc": 0.02543827411893803,
+          "roc_auc": 0.2842660009889107,
+          "threshold": 0.5444764589023491
+        },
+        "stack_explainable": {
+          "dr": 0.0009190182722456482,
+          "far": 0.00026698733625666666,
+          "macro_f1": 0.4911679010298353,
+          "pr_auc": 0.022845063318276255,
+          "roc_auc": 0.20925231959250126,
+          "threshold": 0.35807328767967994
+        }
+      },
+      "meta_weights": {
+        "rf": 0.006774866733535845,
+        "et": 0.006071231628914077,
+        "xgb": 0.48750416456144485,
+        "lgbm": 0.49460112502955905
+      },
+      "seconds": 11453.4
+    },
+    "drop_protocol": {
+      "dropped": [
+        "is_tcp"
+      ],
+      "n_kept": 24,
+      "in_domain": {
+        "rf": {
+          "dr": 0.933183339583073,
+          "far": 4.3767071044218925e-05,
+          "macro_f1": 0.9804549593598064,
+          "pr_auc": 0.9710784331280558,
+          "roc_auc": 0.9862135694846861,
+          "threshold": 0.31979197639346646,
+          "per_attack_recall": {
+            "Bot": 0.9205341920818337,
+            "Brute Force -Web": 0.9240506329113924,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624859621425432,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9978437282633897,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.11290322580645161,
+            "SQL Injection": 0.6,
+            "SSH-Bruteforce": 0.9998417804968093
+          }
+        },
+        "et": {
+          "dr": 0.9272669194339125,
+          "far": 3.078787066558849e-05,
+          "macro_f1": 0.9787039534434587,
+          "pr_auc": 0.970672321263255,
+          "roc_auc": 0.9865512386147077,
+          "threshold": 0.27084209317160274,
+          "per_attack_recall": {
+            "Bot": 0.732430384542527,
+            "Brute Force -Web": 0.9240506329113924,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624696863657818,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.08348607038123167,
+            "SQL Injection": 0.4,
+            "SSH-Bruteforce": 0.9999472601656031
+          }
+        },
+        "xgb": {
+          "dr": 0.9359748899351416,
+          "far": 0.00021732614587474227,
+          "macro_f1": 0.9809156431234664,
+          "pr_auc": 0.956823061656136,
+          "roc_auc": 0.9700843713010275,
+          "threshold": 0.22703417390936087,
+          "per_attack_recall": {
+            "Bot": 0.9974426974805835,
+            "Brute Force -Web": 0.9620253164556962,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624696863657818,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.1274285190615836,
+            "SQL Injection": 0.6,
+            "SSH-Bruteforce": 0.9999472601656031
+          }
+        },
+        "lgbm": {
+          "dr": 0.9373359443356527,
+          "far": 0.0005448245740332081,
+          "macro_f1": 0.9806152889539794,
+          "pr_auc": 0.9717713620116929,
+          "roc_auc": 0.9870672082786316,
+          "threshold": 0.2526359454983774,
+          "per_attack_recall": {
+            "Bot": 0.9974426974805835,
+            "Brute Force -Web": 0.9620253164556962,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624859621425432,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.15437133431085043,
+            "SQL Injection": 0.5,
+            "SSH-Bruteforce": 0.9999472601656031
+          }
+        },
+        "stack_explainable": {
+          "dr": 0.9359748899351416,
+          "far": 0.00021792982961328322,
+          "macro_f1": 0.9809143380697074,
+          "pr_auc": 0.9568278342376343,
+          "roc_auc": 0.9700776304377332,
+          "threshold": 0.2158447623054943,
+          "per_attack_recall": {
+            "Bot": 0.9974426974805835,
+            "Brute Force -Web": 0.9620253164556962,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624696863657818,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.1274285190615836,
+            "SQL Injection": 0.6,
+            "SSH-Bruteforce": 0.9999472601656031
+          }
+        }
+      },
+      "cross": {
+        "rf": {
+          "dr": 0.0,
+          "far": 0.006582839762744374,
+          "macro_f1": 0.4886634656804547,
+          "pr_auc": 0.024665509890959454,
+          "roc_auc": 0.2863410780643414,
+          "threshold": 0.31979197639346646
+        },
+        "et": {
+          "dr": 0.0021623959346956426,
+          "far": 0.049572072697447817,
+          "macro_f1": 0.4785955660988597,
+          "pr_auc": 0.034732724336088,
+          "roc_auc": 0.47401393446726536,
+          "threshold": 0.27084209317160274
+        },
+        "xgb": {
+          "dr": 0.0013514974591847767,
+          "far": 0.0005638772541740801,
+          "macro_f1": 0.4915164743829358,
+          "pr_auc": 0.02543746319779004,
+          "roc_auc": 0.2924740087461548,
+          "threshold": 0.22703417390936087
+        },
+        "lgbm": {
+          "dr": 0.0026489350200021625,
+          "far": 0.006448278145271013,
+          "macro_f1": 0.49099456303545314,
+          "pr_auc": 0.025000742520176197,
+          "roc_auc": 0.24070384827467292,
+          "threshold": 0.2526359454983774
+        },
+        "stack_explainable": {
+          "dr": 0.0012974375608173856,
+          "far": 0.0005596054567939733,
+          "macro_f1": 0.4914640047441599,
+          "pr_auc": 0.025404049210320342,
+          "roc_auc": 0.2919831124760165,
+          "threshold": 0.2158447623054943
+        }
+      },
+      "meta_weights": {
+        "rf": 0.04196031585157085,
+        "et": 0.02088440011790795,
+        "xgb": 0.9760089546752851,
+        "lgbm": 0.0032334515584621424
+      },
+      "seconds": 10455.4
+    },
+    "drop_server_psh": {
+      "dropped": [
+        "server_psh"
+      ],
+      "n_kept": 24,
+      "in_domain": {
+        "rf": {
+          "dr": 0.9351277030123745,
+          "far": 4.829469908327606e-05,
+          "macro_f1": 0.9810277505323504,
+          "pr_auc": 0.9714987497713515,
+          "roc_auc": 0.9867280352583061,
+          "threshold": 0.3087340307091748,
+          "per_attack_recall": {
+            "Bot": 0.9974426974805835,
+            "Brute Force -Web": 0.9240506329113924,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624696863657818,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9982031068861581,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.1128115835777126,
+            "SQL Injection": 0.6,
+            "SSH-Bruteforce": 0.9998417804968093
+          }
+        },
+        "et": {
+          "dr": 0.9264012147641997,
+          "far": 2.2034456456744702e-05,
+          "macro_f1": 0.9784617681770936,
+          "pr_auc": 0.9552190857480541,
+          "roc_auc": 0.9711372688598878,
+          "threshold": 0.28296321804720515,
+          "per_attack_recall": {
+            "Bot": 0.7325250994506536,
+            "Brute Force -Web": 0.9240506329113924,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8554873781351215,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.08596041055718476,
+            "SQL Injection": 0.4,
+            "SSH-Bruteforce": 0.9999472601656031
+          }
+        },
+        "xgb": {
+          "dr": 0.9364100569883662,
+          "far": 0.00014639330659618055,
+          "macro_f1": 0.981199170051712,
+          "pr_auc": 0.9568340052192064,
+          "roc_auc": 0.9698501284540065,
+          "threshold": 0.2727852140204762,
+          "per_attack_recall": {
+            "Bot": 0.9974426974805835,
+            "Brute Force -Web": 0.9367088607594937,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624696863657818,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.13613453079178886,
+            "SQL Injection": 0.6,
+            "SSH-Bruteforce": 0.9999472601656031
+          }
+        },
+        "lgbm": {
+          "dr": 0.9340652472813633,
+          "far": 0.00027256320795123926,
+          "macro_f1": 0.9802245458167048,
+          "pr_auc": 0.9493129803389855,
+          "roc_auc": 0.9673127786172625,
+          "threshold": 0.5330349592682492,
+          "per_attack_recall": {
+            "Bot": 0.9971585527562038,
+            "Brute Force -Web": 0.5949367088607594,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 0.999967611036308,
+            "DDOS attack-LOIC-UDP": 0.9829268292682927,
+            "DDoS attacks-LOIC-HTTP": 0.8623720317052131,
+            "DoS attacks-GoldenEye": 0.9972938841782428,
+            "DoS attacks-Hulk": 0.9980755854393694,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.09585777126099707,
+            "SQL Injection": 0.5,
+            "SSH-Bruteforce": 0.9991561626496492
+          }
+        },
+        "stack_explainable": {
+          "dr": 0.936407742269998,
+          "far": 0.00015152461837377864,
+          "macro_f1": 0.9811873795691632,
+          "pr_auc": 0.9565343153327523,
+          "roc_auc": 0.9678583596212674,
+          "threshold": 0.25981903241122295,
+          "per_attack_recall": {
+            "Bot": 0.9974426974805835,
+            "Brute Force -Web": 0.9367088607594937,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624696863657818,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.13608870967741934,
+            "SQL Injection": 0.6,
+            "SSH-Bruteforce": 0.9999472601656031
+          }
+        }
+      },
+      "cross": {
+        "rf": {
+          "dr": 0.0002702994918369553,
+          "far": 0.010339885558548187,
+          "macro_f1": 0.4879334712721048,
+          "pr_auc": 0.024225030290151675,
+          "roc_auc": 0.2736825860304273,
+          "threshold": 0.3087340307091748
+        },
+        "et": {
+          "dr": 0.0005946588820413017,
+          "far": 0.008005348290319894,
+          "macro_f1": 0.48880528946910873,
+          "pr_auc": 0.03681952866680567,
+          "roc_auc": 0.49810501966668386,
+          "threshold": 0.28296321804720515
+        },
+        "xgb": {
+          "dr": 0.0011893177640826035,
+          "far": 0.0009141646393428267,
+          "macro_f1": 0.49125769633396327,
+          "pr_auc": 0.023440426369798192,
+          "roc_auc": 0.2326882077654301,
+          "threshold": 0.2727852140204762
+        },
+        "lgbm": {
+          "dr": 0.12358092766785599,
+          "far": 0.046951325004752374,
+          "macro_f1": 0.5329325972231603,
+          "pr_auc": 0.06715900096697379,
+          "roc_auc": 0.29324368419220126,
+          "threshold": 0.5330349592682492
+        },
+        "stack_explainable": {
+          "dr": 0.0011893177640826035,
+          "far": 0.0015549342463588268,
+          "macro_f1": 0.49107927334822254,
+          "pr_auc": 0.023519466795154962,
+          "roc_auc": 0.23786258797872992,
+          "threshold": 0.25981903241122295
+        }
+      },
+      "meta_weights": {
+        "rf": 0.043287005135439184,
+        "et": 0.020161966378030437,
+        "xgb": 0.9773050453705865,
+        "lgbm": 0.001988582270763228
+      },
+      "seconds": 3771.0
+    },
+    "drop_suspects": {
+      "dropped": [
+        "server_psh",
+        "src_to_dst_bytes_per_s",
+        "src_to_dst_throughput"
+      ],
+      "n_kept": 22,
+      "in_domain": {
+        "rf": {
+          "dr": 0.9352503830858899,
+          "far": 8.69304583498969e-05,
+          "macro_f1": 0.9809808668252192,
+          "pr_auc": 0.9717194709789554,
+          "roc_auc": 0.9886744242465262,
+          "threshold": 0.3108603468141623,
+          "per_attack_recall": {
+            "Bot": 0.9974426974805835,
+            "Brute Force -Web": 0.9620253164556962,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624696863657818,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.11308651026392962,
+            "SQL Injection": 0.7,
+            "SSH-Bruteforce": 0.9998945203312062
+          }
+        },
+        "et": {
+          "dr": 0.9287807452467258,
+          "far": 5.795363889993127e-05,
+          "macro_f1": 0.9791012983249491,
+          "pr_auc": 0.95644031846984,
+          "roc_auc": 0.972879700475497,
+          "threshold": 0.2331795366885146,
+          "per_attack_recall": {
+            "Bot": 0.8260087137715476,
+            "Brute Force -Web": 0.9240506329113924,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8554873781351215,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.08774743401759531,
+            "SQL Injection": 0.6,
+            "SSH-Bruteforce": 0.9999472601656031
+          }
+        },
+        "xgb": {
+          "dr": 0.9353568601308279,
+          "far": 8.059177909521692e-05,
+          "macro_f1": 0.9810264524535894,
+          "pr_auc": 0.957232116296113,
+          "roc_auc": 0.9717137859275012,
+          "threshold": 0.3080359654998435,
+          "per_attack_recall": {
+            "Bot": 0.9974426974805835,
+            "Brute Force -Web": 0.9493670886075949,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624696863657818,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.11528592375366568,
+            "SQL Injection": 0.6,
+            "SSH-Bruteforce": 0.9998945203312062
+          }
+        },
+        "lgbm": {
+          "dr": 0.9325606803420228,
+          "far": 6.187758320044745e-05,
+          "macro_f1": 0.9802289822903494,
+          "pr_auc": 0.9573534441536176,
+          "roc_auc": 0.9689476199192323,
+          "threshold": 0.5109103899254355,
+          "per_attack_recall": {
+            "Bot": 0.9040537980678158,
+            "Brute Force -Web": 0.8354430379746836,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624696863657818,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.10575513196480939,
+            "SQL Injection": 0.5,
+            "SSH-Bruteforce": 0.9996835609936184
+          }
+        },
+        "stack_explainable": {
+          "dr": 0.9350327995592776,
+          "far": 3.954128487443227e-05,
+          "macro_f1": 0.98101828384483,
+          "pr_auc": 0.9568622492998692,
+          "roc_auc": 0.9678252414192052,
+          "threshold": 0.40544260501522694,
+          "per_attack_recall": {
+            "Bot": 0.9974426974805835,
+            "Brute Force -Web": 0.9240506329113924,
+            "Brute Force -XSS": 1.0,
+            "DDOS attack-HOIC": 1.0,
+            "DDOS attack-LOIC-UDP": 1.0,
+            "DDoS attacks-LOIC-HTTP": 0.8624696863657818,
+            "DoS attacks-GoldenEye": 1.0,
+            "DoS attacks-Hulk": 0.9986900069557153,
+            "DoS attacks-SlowHTTPTest": 1.0,
+            "DoS attacks-Slowloris": 0.9899630216587427,
+            "FTP-BruteForce": 1.0,
+            "Infilteration": 0.10896260997067449,
+            "SQL Injection": 0.6,
+            "SSH-Bruteforce": 0.9998945203312062
+          }
+        }
+      },
+      "cross": {
+        "rf": {
+          "dr": 0.000810898475510866,
+          "far": 0.006371385792429093,
+          "macro_f1": 0.48942215221307445,
+          "pr_auc": 0.03033298387222351,
+          "roc_auc": 0.3743633836929033,
+          "threshold": 0.3108603468141623
+        },
+        "et": {
+          "dr": 0.012271596929397773,
+          "far": 0.03657299326978323,
+          "macro_f1": 0.4874559348643081,
+          "pr_auc": 0.04630966904810048,
+          "roc_auc": 0.597048404325224,
+          "threshold": 0.2331795366885146
+        },
+        "xgb": {
+          "dr": 0.0005405989836739107,
+          "far": 0.0007368850480684,
+          "macro_f1": 0.49066522072308905,
+          "pr_auc": 0.03617669803916034,
+          "roc_auc": 0.3615359078137054,
+          "threshold": 0.3080359654998435
+        },
+        "lgbm": {
+          "dr": 0.0018380365444912964,
+          "far": 0.04994585496820715,
+          "macro_f1": 0.4783473421994412,
+          "pr_auc": 0.02383128280616428,
+          "roc_auc": 0.23854710586682407,
+          "threshold": 0.5109103899254355
+        },
+        "stack_explainable": {
+          "dr": 0.00010811979673478214,
+          "far": 4.271797380106667e-05,
+          "macro_f1": 0.49041222762816766,
+          "pr_auc": 0.02506132375525459,
+          "roc_auc": 0.2727807643521787,
+          "threshold": 0.40544260501522694
+        }
+      },
+      "meta_weights": {
+        "rf": 0.11404389956972423,
+        "et": 0.045303478149973125,
+        "xgb": 0.7841785220815598,
+        "lgbm": 0.22571813058893592
+      },
+      "seconds": 2797.6
+    }
+  }
+}

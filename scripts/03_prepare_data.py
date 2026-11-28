@@ -22,6 +22,6 @@ csv_path = dataset_csv_path(cfg, args.dataset, args.raw_dir)
 proc_dir = Path(args.processed_dir) if args.processed_dir else resolve_path(cfg, "processed_dir")
 frac = args.sample_frac if args.sample_frac is not None else ds["sample_frac"]
 
-manifest = prepare_dataset(csv_path, proc_dir / args.dataset, cfg, ds["name"], frac)
+manifest = prepare_dataset(csv_path, proc_dir / args.dataset, cfg, ds["name"], frac, compact=ds.get("compact", False))
 stem = f"prepare_{args.dataset}" + (f"_{args.tag}" if args.tag else "")
 write_json(manifest, resolve_path(cfg, "reports_dir") / f"{stem}.json")

@@ -5,14 +5,12 @@ A. Trọng số meta-learner: vì sao một mô hình thành phần có trọng 
    từng mô hình; meta-learner ràng buộc trọng số không âm; khoảng bootstrap của trọng số. Mỗi biến thể được đánh giá
    trên tập test (ngưỡng chọn lại trên val) để biết dấu âm có đóng góp gì cho hiệu năng không.
 
-B. LIME: vì sao một đặc trưng luôn đứng hạng 1 (server_psh trên UNSW)?
-   Đo trực tiếp trên mô hình, không qua LIME: với từng luồng đã được LIME giải thích, thay MỘT đặc trưng bằng giá trị rút
-   từ tập train và ghi |Δz| trung bình. Đây là độ nhạy thật của mô hình với từng đặc trưng. Nếu đặc trưng hạng 1 của
-   LIME cũng đứng đầu ở phép đo này thì LIME phản ánh đúng mô hình; nếu không thì thứ hạng đó là sản phẩm của LIME.
+B. Tấn công bị bỏ sót: thuộc loại nào, bao nhiêu luồng bị mọi mô hình đơn cùng bỏ sót, bao nhiêu trùng vector với
+   luồng mang nhãn khác.
 
 Dùng:
     python scripts/18_diagnostics.py --dataset unsw            # cả hai phần
-    python scripts/18_diagnostics.py --dataset cse --part lime
+    python scripts/18_diagnostics.py --dataset cse --part missed
 Đầu ra: reports/diagnostics_<ds>.json và bảng in ra màn hình. Phần A mất khoảng thời gian của bước 4 (OOF).
 """
 import argparse
@@ -21,15 +19,13 @@ from pathlib import Path
 
 import joblib
 import numpy as np
-import pandas as pd
 from scipy.optimize import minimize
 from scipy.special import expit
-from scipy.stats import rankdata, spearmanr
+from scipy.stats import spearmanr
 
 import _bootstrap  # noqa: F401
 from xsids.config import load_config, resolve_path
-from xsids.explain.lime_stack import binary_columns
-from xsids.models.data import cap_train, load_feature_set, load_split, natural_prevalence, xyw
+from xsids.models.data import load_feature_set, load_split, natural_prevalence, xyw
 from xsids.models.evaluate import best_threshold, evaluate
 from xsids.models.stacking import fit_meta, oof_raw, raw_matrix, stack_logit
 from xsids.models.zoo import BASE_NAMES, get_params, load_models_cfg
@@ -38,10 +34,9 @@ from xsids.utils import get_logger, write_json
 log = get_logger()
 ap = argparse.ArgumentParser()
 ap.add_argument("--dataset", choices=["unsw", "cse"], required=True)
-ap.add_argument("--part", choices=["meta", "lime", "missed", "all"], default="all")
+ap.add_argument("--part", choices=["meta", "missed", "all"], default="all")
 ap.add_argument("--fast", action="store_true")
 ap.add_argument("--n-bootstrap", type=int, default=200, help="số lần bootstrap khi học lại meta-learner (phần A)")
-ap.add_argument("--n-draws", type=int, default=100, help="số giá trị thay thế rút từ train cho mỗi đặc trưng (phần B)")
 args = ap.parse_args()
 
 cfg, mcfg = load_config(), load_models_cfg()
@@ -78,7 +73,7 @@ def fit_nonneg(F, y, C):
 if args.part in ("meta", "all"):
     t0 = time.time()
     params = get_params(mcfg, args.fast)
-    tr = cap_train(load_split(proc, ds, "train"), mcfg["train_cap"].get(ds), seed)
+    tr = load_split(proc, ds, "train")
     va, te = load_split(proc, ds, "val"), load_split(proc, ds, "test")
     Xtr, ytr, _, atr = xyw(tr, feats)
     Xva, yva, wva, _ = xyw(va, feats)
@@ -154,92 +149,7 @@ if args.part in ("meta", "all"):
         print(f"  {name:22s}{v['oof_logloss']:>14.5f}{t['dr']:>9.4f}{t['far']:>10.5f}{t['macro_f1']:>10.4f}{t['pr_auc']:>9.4f}   {ws}")
     del tr, va, te
 
-# ───────────────────── B. độ nhạy thật của mô hình với từng đặc trưng ─────────────────────
-if args.part in ("lime", "all"):
-    t0 = time.time()
-    sp = proc / ds / "lime_sample.parquet"
-    if not sp.exists():
-        raise SystemExit(f"Chưa có {sp}; chạy bước lime trước.")
-    L = pd.read_parquet(sp)
-    te = load_split(proc, ds, "test")
-    X = xyw(te, feats)[0].iloc[L["test_idx"].to_numpy()].to_numpy(dtype="float64")
-    tr = load_split(proc, ds, "train")
-    Xtr, ytr = xyw(tr, feats)[:2]
-    bg = np.random.default_rng(seed + 2).choice(len(Xtr), size=min(mcfg["lime"]["background_size"], len(Xtr)), replace=False)
-    Xbg, ybg = Xtr.iloc[bg].to_numpy(dtype="float64"), ytr[bg]
-    w, b = st["w"], st["b"]
-
-    def zf(A):
-        return stack_logit(raw_matrix(models, pd.DataFrame(np.asarray(A, dtype="float32"), columns=feats)), w, b)
-
-    n, d = X.shape
-    z0 = zf(X)
-    rng = np.random.default_rng(seed + 5)
-    E = np.zeros((n, d))       # trung bình |Δz| khi thay đặc trưng j bằng giá trị rút từ train
-    Echg = np.zeros((n, d))    # như trên nhưng chỉ tính các lần giá trị thật sự đổi
-    for j in range(d):
-        draws = Xbg[rng.integers(0, len(Xbg), args.n_draws), j]
-        A = np.repeat(X, args.n_draws, axis=0)
-        A[:, j] = np.tile(draws, n)
-        dz = np.abs(zf(A) - np.repeat(z0, args.n_draws)).reshape(n, args.n_draws)
-        chg = (np.tile(draws, n).reshape(n, args.n_draws) != X[:, [j]])
-        E[:, j] = dz.mean(axis=1)
-        Echg[:, j] = np.where(chg.any(axis=1), (dz * chg).sum(axis=1) / np.maximum(chg.sum(axis=1), 1), 0.0)
-    lime = np.abs(L[[f"lime_{f}" for f in feats]].to_numpy())
-    shap = np.abs(L[[f"shap_{f}" for f in feats]].to_numpy())
-
-    def top1(M):
-        j, c = np.unique(np.argmax(M, axis=1), return_counts=True)
-        return {feats[a]: int(b) for a, b in sorted(zip(j, c), key=lambda t: -t[1])}
-
-    def rho(A, B):
-        ra, rb = rankdata(A, axis=1), rankdata(B, axis=1)
-        ra, rb = ra - ra.mean(1, keepdims=True), rb - rb.mean(1, keepdims=True)
-        return float(np.nanmean((ra * rb).sum(1) / np.sqrt((ra * ra).sum(1) * (rb * rb).sum(1))))
-
-    lime_top = max(top1(lime).items(), key=lambda t: t[1])[0]
-    jt = feats.index(lime_top)
-    binary = [feats[i] for i in binary_columns(pd.DataFrame(Xbg, columns=feats))]
-    rank_of = lambda M: (rankdata(-M, axis=1)[:, jt])  # noqa: E731  hạng của đặc trưng hạng 1 của LIME theo độ đo M
-    vals, cnt = np.unique(X[:, jt], return_counts=True)
-    out["lime_top1"] = {
-        "n_flows": int(n), "n_draws": args.n_draws, "lime_top1_feature": lime_top, "is_binary": lime_top in binary,
-        "binary_features": binary,
-        "value_in_explained_flows": ({str(v): int(c) for v, c in zip(vals, cnt)} if len(vals) <= 10 else
-                                     {"n_distinct": int(len(vals)), "median": float(np.median(X[:, jt]))}),
-        "train_mean_benign": float(Xbg[ybg == 0, jt].mean()), "train_mean_attack": float(Xbg[ybg == 1, jt].mean()),
-        "top1_counts": {"lime": top1(lime), "shap": top1(shap), "sensitivity": top1(E), "sensitivity_when_changed": top1(Echg)},
-        "median_rank_of_lime_top1": {"lime": float(np.median(rank_of(lime))), "shap": float(np.median(rank_of(shap))),
-                                     "sensitivity": float(np.median(rank_of(E))),
-                                     "sensitivity_when_changed": float(np.median(rank_of(Echg)))},
-        "mean_abs": {f: {"lime": float(lime[:, j].mean()), "shap": float(shap[:, j].mean()),
-                         "sensitivity": float(E[:, j].mean()), "sensitivity_when_changed": float(Echg[:, j].mean())}
-                     for j, f in enumerate(feats)},
-        "per_flow_spearman": {"lime_vs_sensitivity": rho(lime, E), "shap_vs_sensitivity": rho(shap, E),
-                              "lime_vs_sensitivity_when_changed": rho(lime, Echg),
-                              "shap_vs_sensitivity_when_changed": rho(shap, Echg)},
-        "seconds": round(time.time() - t0, 1),
-    }
-    q = out["lime_top1"]
-    print(f"\nB. ĐỘ NHẠY THẬT CỦA MÔ HÌNH VỚI TỪNG ĐẶC TRƯNG — {ds.upper()} ({n} luồng, {args.n_draws} giá trị thay thế mỗi đặc trưng)")
-    print("─" * 96)
-    print(f"  Đặc trưng hạng 1 của LIME: {lime_top} ({'nhị phân' if q['is_binary'] else 'liên tục'}); "
-          f"giá trị trong các luồng được giải thích: {q['value_in_explained_flows']}; "
-          f"trung bình trên train: lành tính {q['train_mean_benign']:.3f}, tấn công {q['train_mean_attack']:.3f}")
-    for lab, key in (("LIME", "lime"), ("SHAP gộp", "shap"), ("Độ nhạy (thay 1 đặc trưng)", "sensitivity"),
-                     ("Độ nhạy, chỉ khi giá trị đổi", "sensitivity_when_changed")):
-        tc = list(q["top1_counts"][key].items())[:4]
-        print(f"  {lab:30s} hạng trung vị của {lime_top}: {q['median_rank_of_lime_top1'][key]:>4.0f}   hạng 1: "
-              + ", ".join(f"{a} {c}/{n}" for a, c in tc))
-    ps = q["per_flow_spearman"]
-    print(f"  Spearman từng luồng với độ nhạy: LIME {ps['lime_vs_sensitivity']:.3f} · SHAP {ps['shap_vs_sensitivity']:.3f}"
-          f"   (chỉ khi giá trị đổi: LIME {ps['lime_vs_sensitivity_when_changed']:.3f} · SHAP {ps['shap_vs_sensitivity_when_changed']:.3f})")
-    order = np.argsort(-E.mean(axis=0))[:8]
-    print(f"\n  {'Đặc trưng':28s}{'độ nhạy':>10s}{'khi đổi':>10s}{'|SHAP|':>10s}{'|LIME|':>10s}")
-    for j in order:
-        print(f"  {feats[j]:28s}{E[:, j].mean():>10.3f}{Echg[:, j].mean():>10.3f}{shap[:, j].mean():>10.3f}{lime[:, j].mean():>10.3f}")
-
-# ───────────────────── C. tấn công bị bỏ sót thuộc loại nào ─────────────────────
+# ───────────────────── B. tấn công bị bỏ sót thuộc loại nào ─────────────────────
 if args.part in ("missed", "all"):
     import json as _json
 

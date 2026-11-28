@@ -10,17 +10,16 @@ from pathlib import Path
 
 from xsids.report.console import banner, bar, best_marks, heading, num, pct, table
 
-MODEL_ORDER = ["rf", "et", "xgb", "lgbm", "voting", "stack_explainable", "stack_on_probabilities"]
+MODEL_ORDER = ["rf", "et", "xgb", "lgbm", "stack_explainable"]
 MODEL_LABEL = {
-    "rf": "Random Forest", "et": "Extra Trees", "xgb": "XGBoost", "lgbm": "LightGBM", "voting": "Voting",
-    "stack_explainable": "Stacking (giải thích được)", "stack_on_probabilities": "Stacking (trên xác suất)",
+    "rf": "Random Forest", "et": "Extra Trees", "xgb": "XGBoost", "lgbm": "LightGBM",
+    "stack_explainable": "Stacking (giải thích được)",
 }
 MODEL_SHORT = {
-    "rf": "RF", "et": "ET", "xgb": "XGB", "lgbm": "LGBM", "voting": "Voting",
-    "stack_explainable": "Stack", "stack_on_probabilities": "Stack-P",
+    "rf": "RF", "et": "ET", "xgb": "XGB", "lgbm": "LGBM",
+    "stack_explainable": "Stack",
 }
 GROUP_ORDER = ["volume", "timing_rate", "packet_size", "tcp_behavior", "retransmission", "protocol"]
-READING_GUIDE = "(≥80%: gần tương đương SHAP · 50–80%: kém hơn · <50%: yếu, gần mức ngẫu nhiên)"
 
 
 # ── đọc dữ liệu ──────────────────────────────────────────────────────────────
@@ -33,7 +32,7 @@ def load_reports(reports_dir, datasets) -> dict:
     """Đọc mọi file kết quả hiện có. Thiếu file nào thì phần đó là None và bản tóm tắt bỏ qua."""
     rdir = Path(reports_dir)
     rep: dict = {"datasets": list(datasets)}
-    for name in ("baselines", "stacking", "explain", "stability", "ablation", "lime"):
+    for name in ("baselines", "stacking", "explain", "stability", "ablation"):
         rep[name] = {ds: load_json(rdir / f"{name}_{ds}.json") for ds in datasets}
     rep["cross_lofo"] = load_json(rdir / "cross_lofo.json")
     rep["shift"] = load_json(rdir / "shift.json")                                   # tùy chọn (scripts/16_shift.py)
@@ -44,58 +43,25 @@ def load_reports(reports_dir, datasets) -> dict:
     rep["trust"] = {ds: load_json(rdir / f"trust_{ds}.json") for ds in datasets}  # tùy chọn (scripts/21_trust_missed.py)
     rep["explain_checks"] = {ds: load_json(rdir / f"explain_checks_{ds}.json") for ds in datasets}  # tùy chọn (scripts/22)
     rep["sanity"] = {ds: load_json(rdir / f"sanity_{ds}.json") for ds in datasets}  # tùy chọn (scripts/23)
+    rep["group_shapley"] = {ds: load_json(rdir / f"group_shapley_{ds}.json") for ds in datasets}  # tùy chọn (scripts/24)
+    rep["attack_type"] = {ds: load_json(rdir / f"attack_type_{ds}.json") for ds in datasets}  # tùy chọn (scripts/26)
+    rep["label_audit"] = {ds: load_json(rdir / f"label_audit_{ds}.json") for ds in datasets}  # tùy chọn (scripts/27)
     return rep
 
 
 def collect_models(baselines: dict | None, stacking: dict | None) -> dict:
-    """Gộp kết quả mô hình đơn, voting và stacking thành {tên: kết quả đầy đủ} theo thứ tự cố định."""
+    """Gộp kết quả mô hình đơn và stacking thành {tên: kết quả đầy đủ} theo thứ tự cố định."""
     out: dict = {}
     for src in (baselines, stacking):
         for k, v in ((src or {}).get("results") or {}).items():
             if isinstance(v, dict) and "weighted" in v:
                 out[k] = v
-    return {k: out[k] for k in MODEL_ORDER if k in out} | {k: v for k, v in out.items() if k not in MODEL_ORDER}
-
-
-def deletion_ks(deletion: dict) -> list[str]:
-    return sorted((k for k in deletion if str(k).isdigit()), key=int)
-
-
-def relative_fidelity(d: dict) -> float | None:
-    """(LIME − ngẫu nhiên) / (SHAP − ngẫu nhiên) cho một giá trị k của phép xóa. 1,0 = LIME bằng SHAP; 0 = như ngẫu nhiên."""
-    try:
-        s, l, r = d["shap"]["mean_drop"], d["lime"]["mean_drop"], d["random"]["mean_drop"]
-    except (KeyError, TypeError):
-        return None
-    den = s - r
-    return (l - r) / den if den > 1e-9 else None
-
-
-def agreement_metrics(s: dict) -> list[tuple[str, float | None]]:
-    """Các chỉ số 0–1 đo mức đồng thuận, độ ổn định, độ khớp của LIME (dùng cho bảng và biểu đồ)."""
-    a, st, lf = s.get("agreement_shap_lime", {}), s.get("stability_lime", {}), s.get("local_fidelity", {})
-    k = s.get("top_k", 5)
-    dele = s.get("deletion_test", {})
-    ks = deletion_ks(dele)
-    rel = relative_fidelity(dele[ks[-1]]) if ks else None
-    g = lambda d, key: (d.get(key) or {}).get("mean")  # noqa: E731
-    return [
-        ("Spearman toàn cục SHAP–LIME", (s.get("global_importance") or {}).get("spearman")),
-        ("Spearman từng luồng", g(a, "feature_spearman_abs")),
-        (f"Jaccard top-{k}", g(a, "topk_jaccard")),
-        (f"Khớp dấu trong top-{k}", g(a, "topk_sign_agreement")),
-        ("Đồng thuận mức nhóm", g(a, "group_spearman")),
-        ("Cùng đặc trưng hạng 1", a.get("top1_same_rate")),
-        ("Ổn định LIME (Spearman)", g(st, "spearman")),
-        (f"Ổn định LIME (Jaccard top-{k})", g(st, "topk_jaccard")),
-        ("R² mô hình thay thế", g(lf, "lime_r2")),
-        (f"Trung thực tương đối (xóa {ks[-1] if ks else '?'})", None if rel is None else max(min(rel, 1.0), 0.0)),
-    ]
+    return {k: out[k] for k in MODEL_ORDER if k in out}
 
 
 # ── mô hình ──────────────────────────────────────────────────────────────────
 def models_text(ds: str, results: dict) -> str:
-    """Bảng so sánh mô hình đơn, voting, stacking trên tập test. ★ = tốt nhất theo cột."""
+    """Bảng so sánh 4 mô hình đơn và stacking trên tập test. ★ = tốt nhất theo cột."""
     if not results:
         return ""
     names = list(results)
@@ -289,8 +255,28 @@ def shift_text(sh: dict, top: int = 10) -> str:
     return "\n".join(out)
 
 
+def _stack_vs_base_rows(paired: dict, mets, corrected: bool) -> list[str]:
+    """Bảng chênh lệch Stacking − từng mô hình đơn (mỗi mô hình một bảng nhỏ)."""
+    out = []
+    for base, ent in paired.items():
+        rows = []
+        for m, lab, nd in mets:
+            if m not in ent:
+                continue
+            p = ent[m]
+            row = [lab, f"{num(p['mean_diff'], nd, True)} ± {num(p['std_diff'], nd)}", num(p.get("p_value_paired_t"), 4)]
+            if corrected:
+                row.append(num(p.get("p_value_corrected_t"), 4))
+            row += [num(p.get("p_value_wilcoxon"), 4), f"{p['a_better_in']}/{p['n']}"]
+            rows.append(row)
+        head = ["Chỉ số", "Chênh lệch TB ± ĐLC", "p (t)"] + (["p (t hiệu chỉnh)"] if corrected else []) + ["p (Wilcoxon)", "Stacking tốt hơn ở"]
+        out += ["", f"  Stacking (giải thích được) − {MODEL_LABEL.get(base, base)}:",
+                table(head, rows, "<" + ">" * (len(head) - 1), indent=4)]
+    return out
+
+
 def multiseed_text(ds: str, ms: dict) -> str:
-    """Trung bình ± độ lệch chuẩn qua nhiều seed huấn luyện và chênh lệch ghép cặp Stacking − Voting (scripts/17_multiseed.py)."""
+    """Trung bình ± độ lệch chuẩn qua nhiều seed huấn luyện và chênh lệch ghép cặp Stacking − từng mô hình đơn (scripts/17_multiseed.py)."""
     if not ms or not ms.get("metrics"):
         return ""
     mets = [("dr", "DR", 4), ("far", "FAR", 5), ("macro_f1", "macro-F1", 4), ("pr_auc", "PR-AUC", 4)]
@@ -299,14 +285,10 @@ def multiseed_text(ds: str, ms: dict) -> str:
     seeds = ms.get("seeds") or []
     out = [heading(f"NHIỀU SEED — {ds.upper()}: trung bình ± độ lệch chuẩn qua {len(seeds)} lần huấn luyện ({', '.join(map(str, seeds))})"),
            table(["Mô hình"] + [lab for _, lab, _ in mets], rows)]
-    paired = ms.get("stack_minus_voting") or {}
+    paired = ms.get("stack_vs_base") or {}
     if paired:
-        rows = [[lab, f"{num(paired[m]['mean_diff'], nd, True)} ± {num(paired[m]['std_diff'], nd)}",
-                 num(paired[m].get("p_value_paired_t"), 4), num(paired[m].get("p_value_wilcoxon"), 4),
-                 f"{paired[m]['stack_better_in']}/{paired[m]['n_seeds']}"] for m, lab, nd in mets if m in paired]
-        out += ["", "  Stacking (giải thích được) − Voting, ghép cặp theo seed:",
-                table(["Chỉ số", "Chênh lệch TB ± ĐLC", "p (t)", "p (Wilcoxon)", "Stacking tốt hơn ở"], rows, "<>>>>", indent=4),
-                "  |chênh lệch| nhỏ hơn độ lệch chuẩn: chưa đủ cơ sở nói stacking hơn hay kém Voting. Độ lệch chuẩn chỉ phản ánh"
+        out += _stack_vs_base_rows(paired, mets, corrected=False)
+        out += ["  |chênh lệch| nhỏ hơn độ lệch chuẩn: chưa đủ cơ sở xếp hạng hai mô hình. Độ lệch chuẩn chỉ phản ánh"
                 "\n  tính ngẫu nhiên của huấn luyện (phép chia train/val/test giữ nguyên)."]
     return "\n".join(out)
 
@@ -322,16 +304,10 @@ def multisplit_text(ds: str, ms: dict) -> str:
     out = [heading(f"NHIỀU PHÉP CHIA — {ds.upper()}: trung bình ± độ lệch chuẩn qua {len(splits)} phép chia "
                    f"train/val/test (seed chia {', '.join(map(str, splits))})"),
            table(["Mô hình"] + [lab for _, lab, _ in mets], rows)]
-    paired = ms.get("stack_minus_voting") or {}
+    paired = ms.get("stack_vs_base") or {}
     if paired:
-        rows = [[lab, f"{num(paired[m]['mean_diff'], nd, True)} ± {num(paired[m]['std_diff'], nd)}",
-                 num(paired[m]["p_value_paired_t"], 4), num(paired[m].get("p_value_corrected_t"), 4),
-                 num(paired[m].get("p_value_wilcoxon"), 4), f"{paired[m]['a_better_in']}/{paired[m]['n']}"]
-                for m, lab, nd in mets if m in paired]
-        out += ["", "  Stacking (giải thích được) − Voting, ghép cặp theo phép chia (hai phía; t hiệu chỉnh: Nadeau-Bengio):",
-                table(["Chỉ số", "Chênh lệch TB ± ĐLC", "p (t)", "p (t hiệu chỉnh)", "p (Wilcoxon)", "Stacking tốt hơn ở"],
-                      rows, "<>>>>>", indent=4),
-                "  Độ lệch chuẩn gồm cả ngẫu nhiên của việc chia dữ liệu. 25 đặc trưng giữ nguyên ở mọi phép chia."]
+        out += ["  t hiệu chỉnh: Nadeau-Bengio; kiểm định hai phía."] + _stack_vs_base_rows(paired, mets, corrected=True)
+        out += ["  Độ lệch chuẩn gồm cả ngẫu nhiên của việc chia dữ liệu. 25 đặc trưng giữ nguyên ở mọi phép chia."]
     return "\n".join(out)
 
 
@@ -371,14 +347,12 @@ def explain_checks_text(ds: str, ec: dict, sn: dict | None) -> str:
                 f"    path ↔ interventional: Spearman từng luồng {num(f['path_vs_int']['spearman_flow_mean'], 3)}, "
                 f"top-5 Jaccard {num(f['path_vs_int']['topk_jaccard_mean'], 3)}, τ nhóm toàn cục {num(g['path_vs_int']['global_kendall'], 3)}",
                 f"    hai tập nền khác nhau: Spearman {num(f['int_vs_int_other_bg']['spearman_flow_mean'], 3)}, "
-                f"τ nhóm {num(g['int_vs_int_other_bg']['global_kendall'], 3)}",
-                f"    LIME ↔ path: τ đặc trưng toàn cục {num(f['lime_vs_path']['global_kendall'], 3)} | LIME ↔ interventional: "
-                f"{num(f['lime_vs_int']['global_kendall'], 3)}"]
+                f"τ nhóm {num(g['int_vs_int_other_bg']['global_kendall'], 3)}"]
     kn = ec.get("knn")
     if kn:
         rows = []
         for k in sorted(int(x) for x in kn["knn_fill"] if x.isdigit()):
-            for m, lab in (("shap_path", "SHAP path"), ("shap_int", "SHAP interventional"), ("lime", "LIME"), ("random", "Ngẫu nhiên")):
+            for m, lab in (("shap_path", "SHAP path"), ("shap_int", "SHAP interventional"), ("random", "Ngẫu nhiên")):
                 rows.append([str(k), lab, pct(kn["knn_fill"][str(k)][m]["flip_rate"]), pct(kn["median_fill"][str(k)][m]["flip_rate"])])
         out += ["", "  Phép xóa trong phân phối (tỷ lệ luồng mất cảnh báo):",
                 table(["k", "Phương pháp", "Thay bằng láng giềng", "Thay bằng trung vị"], rows, "<<>>", indent=4)]
@@ -391,7 +365,7 @@ def explain_checks_text(ds: str, ec: dict, sn: dict | None) -> str:
             c = d.get("ci95")
             return f"{num(d['mean_diff'], 3)} [{num(c[0], 3)}; {num(c[1], 3)}]" if c else num(d["mean_diff"], 3)
 
-        for tag, block in (("cùng luồng với LIME", kn), ("toàn mẫu giải thích", kn.get("full") or {})):
+        for tag, block in (("mẫu con", kn), ("toàn mẫu giải thích", kn.get("full") or {})):
             gr = block.get("group")
             if not gr:
                 continue
@@ -399,14 +373,14 @@ def explain_checks_text(ds: str, ec: dict, sn: dict | None) -> str:
             out.append(f"  Xóa trọn nhóm đặc trưng, thay bằng láng giềng ({tag}{n_txt}):")
             for g in sorted(gr, key=int):
                 r = gr[g]
-                meths = [m for m in ("shap_path", "shap_int", "lime") if m in r]
+                meths = [m for m in ("shap_path", "shap_int") if m in r]
                 parts = ", ".join(f"{m} {pct(r[m]['flip_rate'])}" for m in meths)
                 line = (f"    {g} nhóm: mất cảnh báo {parts}; ngẫu nhiên cùng số đặc trưng {pct(r['random_features']['flip_rate'])}, "
                         f"nhóm ngẫu nhiên {pct(r['random_groups']['flip_rate'])}")
                 if "vs_random_features" in r["shap_path"]:
                     line += f" | chênh lệch mức giảm xác suất SHAP path − ngẫu nhiên cùng số đặc trưng: {ci(r['shap_path']['vs_random_features'])}"
                 out.append(line)
-            kf = block.get("knn_fill") if tag != "cùng luồng với LIME" else None
+            kf = block.get("knn_fill") if tag != "mẫu con" else None
             if kf:
                 ks_ = sorted(int(x) for x in kf if x.isdigit())
                 out.append("    Xóa k đặc trưng (SHAP path / ngẫu nhiên): " + ", ".join(
@@ -418,9 +392,6 @@ def explain_checks_text(ds: str, ec: dict, sn: dict | None) -> str:
             out.append(f"  Nhiễu ±{float(rel) * 100:.0f}%: SHAP path Spearman {num(lv['shap_path']['spearman_flow_mean'], 3)}, "
                        f"top-5 Jaccard {num(lv['shap_path']['topk_jaccard_mean'], 3)}; SHAP interventional Spearman "
                        f"{num(lv['shap_int']['spearman_flow_mean'], 3)}; |Δz| trung vị {num(lv['median_abs_dz'], 3)}")
-        if rb.get("lime"):
-            out.append(f"  LIME (±{rb['lime']['rel'] * 100:.0f}%): Spearman {num(rb['lime']['input_and_seed']['spearman_flow_mean'], 3)}"
-                       f" khi đổi đầu vào, {num(rb['lime']['seed_only']['spearman_flow_mean'], 3)} khi chỉ đổi seed")
     sd = ec.get("seeds")
     if sd:
         pf, pg = sd["path"]["feature"], sd["path"]["group"]
@@ -435,6 +406,84 @@ def explain_checks_text(ds: str, ec: dict, sn: dict | None) -> str:
     if wg:
         out.append(f"  Thứ hạng nhóm có trọng số theo dòng cảnh báo thật: {', '.join(wg['rank_weighted'])} (τ với không trọng số "
                    f"{num(wg['kendall'], 3)})")
+    return "\n".join(out)
+
+
+GS_LABELS = {"shap_path": "SHAP gộp (path)", "shap_int": "SHAP gộp (interventional)", "group_shapley": "Shapley nhóm",
+             "oracle": "Oracle (mức tối đa)", "random": "Ngẫu nhiên (kỳ vọng)"}
+
+
+def group_shapley_text(ds: str, gs: dict) -> str:
+    """Shapley nhóm trong phân phối: độ trung thực so với oracle (scripts/24_group_shapley.py)."""
+    if not gs or gs.get("fast"):
+        return ""
+    out = [heading(f"SHAPLEY NHÓM TRONG PHÂN PHỐI — {ds.upper()}")]
+    for tag, block in (("mẫu con", gs.get("group")), ("toàn mẫu giải thích", gs.get("full"))):
+        if not block:
+            continue
+        dl, fc = block["deletion"], block["faithfulness_correlation"]
+        gks = sorted((k for k in dl if k.isdigit()), key=int)
+        meths = [m for m in GS_LABELS if m in dl[gks[0]]]
+        rows = [[GS_LABELS[m]] + [pct(dl[g][m]["flip_rate"], 1) for g in gks]
+                + [num(fc[m]["mean"], 2) if m in fc else "-"] for m in meths]
+        out += [f"  Xóa g nhóm trong phân phối ({tag}, {dl['n_flows']} luồng): tỷ lệ mất cảnh báo và tương quan trung thực",
+                table(["Phương pháp"] + [f"g={g}" for g in gks] + ["Tương quan"], rows, "<" + ">" * (len(gks) + 1), indent=4),
+                f"    Trần của tương quan (Shapley nhóm tính bằng chính phép đo): {num(fc['ceiling_same_operator']['mean'], 2)}"]
+    g = gs.get("group")
+    if g:
+        s = g["stability_ref_B_vs_C"]
+        out.append(f"  Đổi tập tham chiếu lành tính: Spearman {num(s['spearman_signed_mean'], 2)}, trùng hạng 1 "
+                   f"{pct(s['top1_signed_same'])}; {num(g['seconds_per_flow_one_table'], 2)} s mỗi luồng")
+        if "kernel_check_max_abs_diff" in g:
+            out.append(f"  Kiểm tra chéo bằng kernel Shapley trên đủ liên minh: sai lệch lớn nhất {g['kernel_check_max_abs_diff']:.1e}")
+    fe = gs.get("feature")
+    if fe:
+        v, sp = fe["kernelshap_vs_exact_interventional"], fe["seconds_per_flow"]
+        out.append(f"  Mức đặc trưng ({fe['n_flows']} luồng, {fe['n_coalitions']} liên minh): KernelSHAP so với SHAP gộp "
+                   f"interventional chính xác, Spearman {num(v['spearman_signed_mean'], 2)}; thời gian mỗi luồng: SHAP gộp "
+                   f"chính xác {num(sp['shap_stack_exact_interventional'], 3)} s, KernelSHAP {num(sp['sampled_kernelshap'], 2)} s")
+    return "\n".join(out)
+
+
+def attack_type_text(ds: str, at: dict | None) -> str:
+    """Bước hai đa lớp gọi tên loại tấn công (scripts/26_attack_type.py)."""
+    if not at or at.get("fast"):
+        return ""
+    t, e = at["test"], at["end_to_end"]["overall"]
+    rows = [[c, f"{v['n_weighted']:,}", num(v["precision"], 3), num(v["recall"], 3), num(v["f1"], 3),
+             at["explain"].get(c, {}).get("top_group", "-")] for c, v in t["per_class"].items() if v["n_vectors"]]
+    return "\n".join([
+        heading(f"GỌI TÊN LOẠI TẤN CÔNG (BƯỚC HAI ĐA LỚP) — {ds.upper()}"),
+        f"  Cấu hình chọn trên val: {at['config']}",
+        f"  Test (vector tấn công): độ chính xác {num(t['accuracy'], 4)}, macro-F1 {num(t['macro_f1'], 4)}; "
+        f"trần do vector trùng nhiều tên {num(at['ceiling']['accuracy_ceiling'], 4)}",
+        f"  Đầu cuối: gắn cờ {pct(e['detected'], 1)}, gắn cờ và gọi đúng tên {pct(e['detected_and_named'], 1)} "
+        f"({pct(e['named_given_detected'], 1)} trong số luồng bị gắn cờ)",
+        table(["Loại", "Luồng test", "Precision", "Recall", "F1", "Nhóm SHAP lớn nhất"], rows, "<>>>><", indent=4)])
+
+
+def label_audit_text(ds: str, la: dict | None) -> str:
+    """Kiểm toán nhãn: trùng vector khác nhãn, học tự tin, ảnh hưởng (scripts/27_label_audit.py)."""
+    if not la or la.get("fast"):
+        return ""
+    ov, cl, ef = la["overlap"], la["confident_learning"], la["effect"]
+    att = {c: v for c, v in ov["by_attack"].items() if v["label"] == 1}
+    rows = [[c, f"{v['n_weighted']:,}", pct(v["shared_with_other_label"], 1), pct(v["unreachable"], 1),
+             pct(cl["by_attack"][c]["suspect_share_weighted"], 1)] for c, v in att.items()]
+    b = cl["by_attack"].get("Benign", {})
+    out = [heading(f"KIỂM TOÁN NHÃN — {ds.upper()}"),
+           f"  Trần recall do trùng 25 đặc trưng với luồng Benign chiếm đa số: {pct(ov['overall']['attack_recall_ceiling'], 2)}",
+           f"  Học tự tin (OOF LightGBM): nghi sai nhãn {pct(cl['suspect_share_vectors'], 2)} vector, "
+           f"{pct(cl['suspect_share_weighted'], 2)} luồng; Benign nghi sai {pct(b.get('suspect_share_weighted', 0), 3)}",
+           table(["Loại", "Luồng", "Trùng với nhãn khác", "Không thể bắt", "Nghi sai nhãn"], rows, "<>>>>", indent=4)]
+    m0, m1 = ef["main_model"]["test_all"]["weighted"], ef["main_model"]["test_without_suspects"]["weighted"]
+    out.append(f"  Mô hình chính: DR {num(m0['dr'], 4)} -> {num(m1['dr'], 4)}, FAR {num(m0['far'], 6)} -> {num(m1['far'], 6)} "
+               f"khi bỏ {ef['n_test_suspects']:,} vector test nghi sai nhãn (cận trên)")
+    rt = ef.get("retrained_without_suspects")
+    if rt:
+        a, c = rt["test_all"]["weighted"], rt["test_without_suspects"]["weighted"]
+        out.append(f"  Huấn luyện lại không có vector nghi sai: test đầy đủ DR {num(a['dr'], 4)}, FAR {num(a['far'], 6)}, "
+                   f"PR-AUC {num(a['pr_auc'], 4)}; test đã bỏ vector nghi sai DR {num(c['dr'], 4)}, FAR {num(c['far'], 6)}")
     return "\n".join(out)
 
 
@@ -474,76 +523,12 @@ def missed_text(ds: str, dg: dict) -> str:
     return "\n".join(out)
 
 
-# ── LIME ─────────────────────────────────────────────────────────────────────
-def lime_text(ds: str, s: dict) -> str:
-    """LIME so với SHAP gộp: trung thực, đồng thuận, ổn định, độ khớp mô hình thay thế, đặc trưng theo họ."""
-    if not s:
-        return ""
-    k = s.get("top_k", 5)
-    head = (f"LIME so với SHAP gộp — {ds.upper()}  ({s.get('n_lime', '?')} luồng bị gắn cờ · target={s.get('target')} · "
-            f"{s.get('num_perturbations', '?')} điểm nhiễu · rời rạc hóa {s.get('discretizer')})")
-    out = [banner(head)]
-
-    dele = s.get("deletion_test", {})
-    ks = deletion_ks(dele)
-    if ks:
-        rows = []
-        for kk in ks:
-            d = dele[kk]
-            sh, li, ra = d["shap"]["mean_drop"], d["lime"]["mean_drop"], d["random"]["mean_drop"]
-            rel = relative_fidelity(d)
-            rows.append([kk, f"{num(sh, 3)} {bar(sh, 1, 8)}", f"{num(li, 3)} {bar(li, 1, 8)}", f"{num(ra, 3)} {bar(ra, 1, 8)}",
-                         f"{pct(d['shap']['flip_rate'])} / {pct(d['lime']['flip_rate'])} / {pct(d['random']['flip_rate'])}",
-                         "-" if rel is None else pct(rel)])
-        out += ["", "1) TRUNG THỰC CỤC BỘ — xóa k đặc trưng mạnh nhất, xác suất tấn công giảm bao nhiêu (cao hơn = giải thích đúng hơn)",
-                table(["k", "SHAP", "LIME", "Ngẫu nhiên", "Luồng đổi nhãn S/L/N", "LIME so với SHAP"], rows, ">>>>>>"),
-                f"   LIME so với SHAP = (LIME − ngẫu nhiên)/(SHAP − ngẫu nhiên) {READING_GUIDE}",
-                f"   Chỉ xét đặc trưng khác giá trị nền: TB {num(dele.get('n_eligible_mean'), 1)}/25 đặc trưng mỗi luồng"]
-
-    rows = [[label, num(v, 3), bar(v, 1.0, 14)] for label, v in agreement_metrics(s)[:6]]
-    go = s.get("global_importance", {})
-    rows.insert(1, [f"Trùng top-{k} toàn cục", f"{go.get('topk_overlap', '?')}/{k}", bar((go.get("topk_overlap") or 0) / k, 1.0, 14)])
-    out += ["", "2) ĐỒNG THUẬN SHAP–LIME (1,0 = giống hệt)", table(["Chỉ số", "Giá trị", "(thang 0–1)"], rows, "<>>")]
-    c1, c2 = s.get("lime_top1_feature_counts", {}), s.get("shap_top1_feature_counts", {})
-    if c1 and c2:
-        n = s.get("n_lime", 1) or 1
-        fmt = lambda c: ", ".join(f"{f} {v}/{n}" for f, v in sorted(c.items(), key=lambda kv: -kv[1])[:3])  # noqa: E731
-        out += [f"   Hạng 1 của LIME: {fmt(c1)}", f"   Hạng 1 của SHAP: {fmt(c2)}"]
-
-    st = s.get("stability_lime", {})
-    if st:
-        out += ["", f"3) ỔN ĐỊNH CỦA LIME ({st.get('n_flows', '?')} luồng × {st.get('repeats', '?')} lần chạy, seed khác nhau; SHAP luôn = 1,000)",
-                table(["Chỉ số", "Giá trị", "(thang 0–1)"],
-                      [["Spearman giữa các lần", num(st["spearman"]["mean"], 3), bar(st["spearman"]["mean"], 1.0, 14)],
-                       [f"Jaccard top-{k} giữa các lần", num(st["topk_jaccard"]["mean"], 3), bar(st["topk_jaccard"]["mean"], 1.0, 14)],
-                       ["Cùng hạng 1 giữa các lần", num(st.get("top1_same_rate"), 3), bar(st.get("top1_same_rate"), 1.0, 14)]], "<>>")]
-
-    lf = s.get("local_fidelity", {})
-    if lf:
-        r2 = lf["lime_r2"]
-        out += ["", "4) ĐỘ KHỚP CỦA MÔ HÌNH THAY THẾ TUYẾN TÍNH",
-                table(["Chỉ số", "Giá trị"],
-                      [["R² trung bình (p10 – p90)", f"{num(r2['mean'], 3)}  ({num(r2['p10'], 3)} – {num(r2['p90'], 3)})"],
-                       ["Tỷ lệ luồng có R² < 0,5", pct(lf.get("frac_r2_below_0.5"))],
-                       ["Sai số |dự đoán cục bộ − thật| trung bình", num(lf["local_pred_abs_error"]["mean"], 3)]], "<>"),
-                "   R² thấp nghĩa là trọng số LIME phản ánh chưa chính xác hành vi cục bộ của mô hình."]
-
-    fam = s.get("importance_by_family", {})
-    if fam:
-        rows = [[f, v["n"], ", ".join(v["shap_top"][:3]), ", ".join(v["lime_top"][:3]), f"{v['overlap']}/{v['k']}"]
-                for f, v in fam.items()]
-        out += ["", f"5) ĐẶC TRƯNG QUAN TRỌNG THEO HỌ TẤN CÔNG (top-3 theo mean |đóng góp|; trùng = số đặc trưng chung trong top-{k})",
-                table(["Họ", "Số luồng", "SHAP", "LIME", "Trùng"], rows, "<><<>")]
-    return "\n".join(out) + "\n"
-
-
 # ── so sánh hai bộ dữ liệu ───────────────────────────────────────────────────
 def compare_text(rep: dict) -> str:
     """Bảng đối chiếu các chỉ số chính giữa các bộ dữ liệu, mỗi dataset một cột."""
-    dss = [ds for ds in rep["datasets"] if (rep.get("lime") or {}).get(ds)]
+    dss = [ds for ds in rep["datasets"] if (rep.get("stacking") or {}).get(ds)]
     if not dss:
         return ""
-    L = {ds: rep["lime"][ds] for ds in dss}
     rows: list[list] = []
 
     def add(label, fn, nd=3, as_pct=False):
@@ -551,7 +536,7 @@ def compare_text(rep: dict) -> str:
         for ds in dss:
             try:
                 v = fn(ds)
-            except (KeyError, TypeError, IndexError):
+            except (KeyError, TypeError, IndexError, AttributeError):
                 v = None
             vals.append(pct(v, 1) if as_pct else num(v, nd))
         rows.append([label] + vals)
@@ -566,25 +551,18 @@ def compare_text(rep: dict) -> str:
     add("Kendall τ thứ hạng nhóm (bootstrap)", lambda ds: rep["stability"][ds]["stability"]["kendall_tau_mean"])
     add("Kendall τ thứ hạng đặc trưng (bootstrap)", lambda ds: rep["stability"][ds]["stability_feature"]["kendall_tau_mean"])
     add("A(x) đồng thuận 4 mô hình", lambda ds: rep["explain"][ds]["agreement"]["mean"])
-    ks_ref = {ds: deletion_ks(L[ds].get("deletion_test", {})) for ds in dss}
-    rows.append(["TRUNG THỰC: XÓA k ĐẶC TRƯNG (k lớn nhất)"])
-    add("Xác suất giảm — SHAP", lambda ds: L[ds]["deletion_test"][ks_ref[ds][-1]]["shap"]["mean_drop"])
-    add("Xác suất giảm — LIME", lambda ds: L[ds]["deletion_test"][ks_ref[ds][-1]]["lime"]["mean_drop"])
-    add("Xác suất giảm — ngẫu nhiên", lambda ds: L[ds]["deletion_test"][ks_ref[ds][-1]]["random"]["mean_drop"])
-    add("LIME so với SHAP", lambda ds: relative_fidelity(L[ds]["deletion_test"][ks_ref[ds][-1]]), as_pct=True)
-    rows.append(["ĐỒNG THUẬN SHAP–LIME"])
-    names = [m[0] for m in agreement_metrics(L[dss[0]])]
-    for i in (0, 1, 2, 3, 4, 5):
-        add(names[i], lambda ds, i=i: agreement_metrics(L[ds])[i][1])
-    rows.append(["ĐỘ ỔN ĐỊNH VÀ ĐỘ KHỚP CỦA LIME"])
-    for i in (6, 7, 8):
-        add(names[i], lambda ds, i=i: agreement_metrics(L[ds])[i][1])
-    add("Luồng có R² < 0,5", lambda ds: L[ds]["local_fidelity"]["frac_r2_below_0.5"], as_pct=True)
+    gsf = {ds: (((rep.get("group_shapley") or {}).get(ds) or {}).get("full") or {}).get("deletion", {}).get("1", {}) for ds in dss}
+    if any(gsf.values()):
+        rows.append(["TRUNG THỰC: XÓA 1 NHÓM TRONG PHÂN PHỐI (toàn mẫu giải thích)"])
+        add("Mất cảnh báo — SHAP gộp", lambda ds: gsf[ds]["shap_path"]["flip_rate"], as_pct=True)
+        add("Mất cảnh báo — Shapley nhóm", lambda ds: gsf[ds]["group_shapley"]["flip_rate"], as_pct=True)
+        add("Mất cảnh báo — oracle", lambda ds: gsf[ds]["oracle"]["flip_rate"], as_pct=True)
+        add("Mất cảnh báo — ngẫu nhiên", lambda ds: gsf[ds]["random"]["flip_rate"], as_pct=True)
     return heading("SO SÁNH GIỮA CÁC BỘ DỮ LIỆU — các chỉ số chính") + "\n" + table(["Chỉ số"] + [d.upper() for d in dss], rows)
 
 
 def render_all(rep: dict) -> str:
-    """Toàn bộ bản tóm tắt: mô hình, SHAP, ổn định, ablation, cross/LOFO, LIME và bảng so sánh."""
+    """Toàn bộ bản tóm tắt: mô hình, SHAP, ổn định, ablation, cross/LOFO và bảng so sánh."""
     parts = [banner("TỔNG HỢP KẾT QUẢ HỆ THỐNG EXPLAINABLE STACKING IDS")]
     for ds in rep["datasets"]:
         parts.append(models_text(ds, collect_models(rep["baselines"].get(ds), rep["stacking"].get(ds))))
@@ -596,6 +574,9 @@ def render_all(rep: dict) -> str:
         parts.append(missed_text(ds, (rep.get("diagnostics") or {}).get(ds)))
         parts.append(trust_text(ds, (rep.get("trust") or {}).get(ds)))
         parts.append(explain_checks_text(ds, (rep.get("explain_checks") or {}).get(ds), (rep.get("sanity") or {}).get(ds)))
+        parts.append(group_shapley_text(ds, (rep.get("group_shapley") or {}).get(ds)))
+        parts.append(attack_type_text(ds, (rep.get("attack_type") or {}).get(ds)))
+        parts.append(label_audit_text(ds, (rep.get("label_audit") or {}).get(ds)))
     for ds in rep["datasets"]:
         parts.append(explain_text(ds, rep["explain"].get(ds)))
     for ds in rep["datasets"]:
@@ -606,7 +587,5 @@ def render_all(rep: dict) -> str:
         parts.append(retrain_text(ds, (rep.get("retrain") or {}).get(ds)))
     parts.append(cross_text(rep.get("cross_lofo")))
     parts.append(shift_text(rep.get("shift")))
-    for ds in rep["datasets"]:
-        parts.append(lime_text(ds, rep["lime"].get(ds)))
     parts.append(compare_text(rep))
     return "\n".join(p for p in parts if p) + "\n"

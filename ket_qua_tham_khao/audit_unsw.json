@@ -555,7 +555,7 @@
     ]
   ],
   "load": {
-    "file": "<duong_dan>/NF-UNSW-NB15-v2.csv",
+    "file": "D:\\DA IDS\\Explainable-Stacking-IDS-LIME-source\\data\\raw\\NF-UNSW-NB15-v2.csv",
     "rows_in_file": 2390275,
     "rows_loaded": 2390275,
     "sample_frac": 1.0,
